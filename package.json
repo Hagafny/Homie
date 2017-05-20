@@ -15,7 +15,8 @@
     "webpack-dev-server": "^2.4.5"
   },
   "scripts": {
-    "start": "webpack && node server/app.js",
+    "start": "node server/app.js",
+    "webpack": "webpack -p",
     "test": "webpack-dev-server"
   },
   "devDependencies": {
