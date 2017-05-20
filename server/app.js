@@ -3,14 +3,14 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-const dataService = require('./dataService.js');
+const logicService = require('./logicService.js');
 
 app.set('port', (process.env.PORT || 8000));
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/api/assignment/', function (req, res) {
-    dataService.getAssingments((assignments) => {
+    logicService.getAssingments((assignments) => {
         res.json(assignments);
     });
 

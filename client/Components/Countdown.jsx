@@ -21,7 +21,7 @@ export default class Countdown extends Component {
 
   tick() {
     let startDate = new Date();
-    let endDate = this.props.endDate;
+    let endDate = new Date(this.props.endDate);
     this.setState({
       nodes: dateBetween(startDate, endDate)
     });

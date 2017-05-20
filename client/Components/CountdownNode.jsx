@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 
-export default class CountdownNode extends Component {
+export default class CountdownNode extends React.Component {
 
   constructor(props) {
     super(props)

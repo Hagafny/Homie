@@ -4,22 +4,20 @@ import Countdown from './Countdown.jsx';
 import MoodleLink from './MoodleLink.jsx';
 import PiazzaLink from './PiazzaLink.jsx';
 import DownloadLink from './DownloadLink.jsx'
+import Resources from './Resources.jsx';
+
 export default class Assignment extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            endDate: setDateTime(this.props.data.end_date, this.props.data.end_time)
-        }
+        console.log(props);
     }
 
     render() {
         return (
             <div>
                 <h1>{this.props.data.title}</h1>
-                <MoodleLink url={this.props.data.moodle_url} />
-                <Countdown endDate={this.state.endDate} />
-                <PiazzaLink url={this.props.data.piazza_url} />
-                <DownloadLink url={this.props.data.homework_url} />
+                <Countdown endDate={this.props.data.end_date} />
+                <Resources data={this.props.data.resources} />
             </div>
         );
     }
