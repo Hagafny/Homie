@@ -11110,26 +11110,30 @@ module.exports = function spread(callback) {
 "use strict";
 
 
-var dateBetween = function dateBetween(startDate, endDate) {
+var dateUntil = function dateUntil(endDate) {
   var second = 1000;
   var minute = second * 60;
   var hour = minute * 60;
   var day = hour * 24;
-  var distance = endDate - startDate;
+  var distance = endDate - new Date(); //distance = endDate - current date
 
   if (distance < 0) {
     return false;
   }
 
-  var days = formatDate(Math.floor(distance / day), "day");
-  var hours = formatDate(Math.floor(distance % day / hour), "hour");
-  var minutes = formatDate(Math.floor(distance % hour / minute), "minute");
-  var seconds = formatDate(Math.floor(distance % minute / second), "second");
+  var days = formatDate(Math.floor(distance / day), "day", true);
+  var hours = formatDate(Math.floor(distance % day / hour), "hour", true);
+  var minutes = formatDate(Math.floor(distance % hour / minute), "minute", true);
+
+  var removeSecondsFromCouner = !(days || hours || minutes); // De-Morgan FTW - only remove the seconds bar after is 0.
+  var seconds = formatDate(Math.floor(distance % minute / second), "second", removeSecondsFromCouner);
 
   return [days, hours, minutes, seconds];
 };
 
-var formatDate = function formatDate(dateNumber, timeFix) {
+var formatDate = function formatDate(dateNumber, timeFix, removeOnZero) {
+  if (dateNumber < 1 && removeOnZero) return false;
+
   var title = "" + timeFix + (dateNumber != 1 ? 's' : '');
   return {
     number: dateNumber,
@@ -11138,7 +11142,7 @@ var formatDate = function formatDate(dateNumber, timeFix) {
 };
 
 module.exports = {
-  dateBetween: dateBetween
+  dateUntil: dateUntil
 };
 
 /***/ }),
@@ -11404,26 +11408,24 @@ var Countdown = function (_Component) {
   }, {
     key: 'tick',
     value: function tick() {
-      var startDate = new Date();
       var endDate = new Date(this.props.endDate);
+      var dUntil = (0, _helpers.dateUntil)(endDate);
       this.setState({
-        nodes: (0, _helpers.dateBetween)(startDate, endDate)
+        nodes: dUntil
       });
 
-      //TODO: Make the event "expired" bubble up the chain so we call a normal call back (ajax call to refresh in the future) ~Ron 
-      // if (remaining === false) {
-      //   window.clearInterval(this.interval)
-      //   this.props.options['cb'] ? this.props.options.cb() : false
-      // }
-
+      // If everything is 0, stop the interval
+      if (dUntil[3] === false && dUntil[2] === false && dUntil[1] === false && dUntil[0] === false) {
+        window.clearInterval(this.interval);
+      }
     }
   }, {
     key: 'render',
     value: function render() {
-      var countdown = this.state.nodes.map(function (countdownNode) {
+      var countdown = this.state.nodes.map(function (countdownNode, index) {
         return _react2.default.createElement(
           _CountdownNode2.default,
-          { number: countdownNode.number, key: countdownNode.number + countdownNode.title },
+          { number: countdownNode.number, key: index },
           countdownNode.title
         );
       });
@@ -11676,10 +11678,16 @@ var Resources = function (_React$Component) {
   _createClass(Resources, [{
     key: "render",
     value: function render() {
+      if (!this.props.url) return false;
+
       return _react2.default.createElement(
-        "a",
-        { href: this.props.url, target: "_blank" },
-        this.props.children
+        "li",
+        null,
+        _react2.default.createElement(
+          "a",
+          { href: this.props.url, target: "_blank" },
+          this.props.children
+        )
       );
     }
   }]);
@@ -11735,31 +11743,19 @@ var Resources = function (_React$Component) {
                 'ul',
                 null,
                 _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _Resource2.default,
-                        { url: this.props.data.homework },
-                        'HW'
-                    )
+                    _Resource2.default,
+                    { url: this.props.data.homework },
+                    'HW'
                 ),
                 _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _Resource2.default,
-                        { url: this.props.data.moodle },
-                        'Moodle'
-                    )
+                    _Resource2.default,
+                    { url: this.props.data.moodle },
+                    'Moodle'
                 ),
                 _react2.default.createElement(
-                    'li',
-                    null,
-                    _react2.default.createElement(
-                        _Resource2.default,
-                        { url: this.props.data.piazza },
-                        'Piazza'
-                    )
+                    _Resource2.default,
+                    { url: this.props.data.piazza },
+                    'Piazza'
                 )
             );
         }

@@ -1,4 +1,4 @@
-import { dateBetween } from './../Helpers/helpers.js'
+import { dateUntil } from './../Helpers/helpers.js'
 import React, { Component, PropTypes } from 'react'
 import CountdownNode from './CountdownNode.jsx';
 export default class Countdown extends Component {
@@ -20,24 +20,21 @@ export default class Countdown extends Component {
   }
 
   tick() {
-    let startDate = new Date();
     let endDate = new Date(this.props.endDate);
+    let dUntil = dateUntil(endDate);
     this.setState({
-      nodes: dateBetween(startDate, endDate)
+      nodes: dUntil
     });
 
-    //TODO: Make the event "expired" bubble up the chain so we call a normal call back (ajax call to refresh in the future) ~Ron 
-    // if (remaining === false) {
-    //   window.clearInterval(this.interval)
-    //   this.props.options['cb'] ? this.props.options.cb() : false
-    // }
-
-
+    // If everything is 0, stop the interval
+    if (dUntil[3] === false && dUntil[2] === false && dUntil[1] === false && dUntil[0] === false) {
+      window.clearInterval(this.interval)
+    }
   }
 
   render() {
-    let countdown = this.state.nodes.map(countdownNode => {
-      return <CountdownNode number={countdownNode.number} key={countdownNode.number+countdownNode.title}>{countdownNode.title}</CountdownNode>
+    let countdown = this.state.nodes.map((countdownNode, index) => {
+      return <CountdownNode number={countdownNode.number} key={index}>{countdownNode.title}</CountdownNode>
     })
 
     return (

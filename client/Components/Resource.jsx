@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 
 export default class Resources extends React.Component {
 
@@ -7,8 +7,11 @@ export default class Resources extends React.Component {
   }
 
   render() {
+    if (!this.props.url)
+      return false;
+
     return (
-        <a href={this.props.url} target="_blank">{this.props.children}</a>
+      <li><a href={this.props.url} target="_blank">{this.props.children}</a></li>
     )
   };
 }
