@@ -9,7 +9,7 @@ export default class CountdownNode extends Component {
   render() {
     return (
       <div className="countdown-node">
-        <span>{this.props.number}</span>
+        <span>{this.props.number} </span>
         <span>{this.props.children}</span>
       </div>
     )

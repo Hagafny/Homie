@@ -1,5 +1,5 @@
 import React from 'react';
-import CountdownList from './CountdownList.jsx';
+import AssignmentList from './AssignmentList.jsx';
 import axios from 'axios';
 
 export default class CountdownPage extends React.Component {
@@ -20,8 +20,8 @@ export default class CountdownPage extends React.Component {
     render() {
         return (
             <div style={{ textAlign: 'center' }}>
-                <h1>Countdown Page</h1>
-                <CountdownList assignments={this.state.assignments} />
+                <h1>Assignment Page</h1>
+                <AssignmentList assignments={this.state.assignments} />
             </div>);
     }
 }

@@ -15,10 +15,10 @@ let DateBetween = (startDate, endDate) => {
   let seconds = formatDate(Math.floor((distance % minute) / second), "second");
 
   return [
-    days: days,
-    hours: hours,
-    minutes: minutes,
-    seconds: seconds
+    days,
+    hours,
+    minutes,
+    seconds
   ];
 }
 
@@ -27,8 +27,6 @@ let formatDate = function formatDate(dateNumber, timeFix) {
     return false;
 
   let title = `${timeFix}${dateNumber > 1 ? 's' : ''}`;
-
-
   return {
     number: dateNumber,
     title: title

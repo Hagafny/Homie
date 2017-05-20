@@ -1,10 +1,10 @@
 import React from 'react';
-import CountdownPage from './CountdownPage.jsx';
+import AssignmentPage from './AssignmentPage.jsx';
 
 export default class App extends React.Component {
     render() {
         return (
-            <CountdownPage />
+            <AssignmentPage />
         )
     }
 }
