@@ -9,10 +9,11 @@ app.set('port', (process.env.PORT || 8000));
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
-
 app.get('/api/assignment/', function (req, res) {
-    let assignments = dataService.getAssingments();
-    res.json(assignments);
+    dataService.getAssingments((assignments) => {
+        res.json(assignments);
+    });
+
 })
 
 app.listen(app.get('port'), function () {

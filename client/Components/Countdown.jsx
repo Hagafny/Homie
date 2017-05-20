@@ -1,4 +1,4 @@
-import DateBetween from './DateBetween'
+import { dateBetween } from './../Helpers/helpers.js'
 import React, { Component, PropTypes } from 'react'
 import CountdownNode from './CountdownNode.jsx';
 export default class Countdown extends Component {
@@ -20,10 +20,10 @@ export default class Countdown extends Component {
   }
 
   tick() {
-    let startDate = new Date()
-    let endDate = new Date(this.props.endDate)
+    let startDate = new Date();
+    let endDate = this.props.endDate;
     this.setState({
-      nodes: DateBetween(startDate, endDate)
+      nodes: dateBetween(startDate, endDate)
     });
 
     //TODO: Make the event "expired" bubble up the chain so we call a normal call back (ajax call to refresh in the future) ~Ron 
