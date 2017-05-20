@@ -20,7 +20,6 @@ export default class CountdownPage extends React.Component {
     render() {
         return (
             <div style={{ textAlign: 'center' }}>
-                <h1>Assignment Page</h1>
                 <AssignmentList assignments={this.state.assignments} />
             </div>);
     }

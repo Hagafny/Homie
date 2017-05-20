@@ -38,7 +38,7 @@ export default class Countdown extends Component {
     })
 
     return (
-      <div className="react-count-down">
+      <div className="react-count-down col">
         {countdown}
       </div>
     )

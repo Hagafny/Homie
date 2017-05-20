@@ -11,7 +11,9 @@ export default class Resources extends React.Component {
       return false;
 
     return (
-      <li><a href={this.props.url} target="_blank">{this.props.children}</a></li>
+      <div>
+        <a href={this.props.url} target="_blank">{this.props.children}</a>
+      </div>
     )
   };
 }

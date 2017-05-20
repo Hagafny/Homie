@@ -10,11 +10,11 @@ export default class Resources extends React.Component {
     render() {
 
         return (
-            <ul>
-                <Resource url={this.props.data.homework}>HW</Resource>
-                <Resource url={this.props.data.moodle}>Moodle</Resource>
-                <Resource url={this.props.data.piazza}>Piazza</Resource>
-            </ul>
+            <div className="col">
+                    <Resource url={this.props.data.homework}>HW</Resource>
+                    <Resource url={this.props.data.moodle}>Submit</Resource>
+                    <Resource url={this.props.data.piazza}>Piazza</Resource>
+            </div>
         )
     };
 }

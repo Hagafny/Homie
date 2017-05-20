@@ -8,8 +8,10 @@ export default class AssignmentList extends React.Component {
         });
 
         return (
-            <div>
+            <div className="container">
                 {assignments}
             </div>);
+
+
     }
 }
