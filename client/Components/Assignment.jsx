@@ -17,7 +17,7 @@ export default class Assignment extends React.Component {
             <div>
                 <h1>{this.props.data.title}</h1>
                 <MoodleLink url={this.props.data.moodle_url} />
-                < Countdown endDate={this.state.endDate} />
+                <Countdown endDate={this.state.endDate} />
                 <PiazzaLink url={this.props.data.piazza_url} />
                 <DownloadLink url={this.props.data.homework_url} />
             </div>
