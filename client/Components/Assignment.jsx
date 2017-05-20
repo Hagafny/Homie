@@ -1,23 +1,21 @@
 import React from 'react';
-import { setDateTime } from './../Helpers/helpers.js'
+import Header from './Header.jsx';
 import Countdown from './Countdown.jsx';
-import MoodleLink from './MoodleLink.jsx';
-import PiazzaLink from './PiazzaLink.jsx';
-import DownloadLink from './DownloadLink.jsx'
 import Resources from './Resources.jsx';
+import DueDate from './DueDate.jsx';
 
 export default class Assignment extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
     }
 
     render() {
         return (
             <div>
-                <h1>{this.props.data.title}</h1>
+                <Header title={this.props.data.title} ex={this.props.data.ex} />
                 <Countdown endDate={this.props.data.end_date} />
                 <Resources data={this.props.data.resources} />
+                <DueDate endDate={this.props.data.end_date} />
             </div>
         );
     }

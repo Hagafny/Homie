@@ -30,35 +30,6 @@ let formatDate = function formatDate(dateNumber, timeFix) {
   }
 }
 
-function setDateTime(date, time) {
-    date = new Date(date);
-    var index = time.indexOf(":");
-    var index2 = nthIndex(time,":", 2);
-
-    var hours = time.substring(0, index);
-    var minutes = time.substring(index + 1, index2);
-
-    var mer = time.substring(index2 + 1, time.length);
-    if (mer == "PM") {
-        hours = hours + 12;
-    }
-
-    date.setHours(hours);
-    date.setMinutes(minutes);
-    date.setSeconds("00");
-
-    return date;
-};
-
-function nthIndex(str, pat, n){
-    var L= str.length, i= -1;
-    while(n-- && i++<L){
-        i= str.indexOf(pat, i);
-        if (i < 0) break;
-    }
-    return i;
-}
 module.exports = {
-    setDateTime: setDateTime,
     dateBetween: dateBetween
 }
