@@ -4,8 +4,8 @@ import Countdown from './Countdown.jsx';
 export default class CountdownList extends React.Component {
     render() {
 
-        let countdowns = this.props.endDates.map(endDate => {
-            return <Countdown endDate={endDate} key={endDate} />
+        let countdowns = this.props.assignments.map(assignment => {
+            return <Countdown endDate={assignment.endDate} key={assignment.endDate} />
         });
 
         return (
