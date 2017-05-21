@@ -5,7 +5,6 @@ Made Using Node and React
 ~Ron
 
 TODO:
-
 * Fix times in server
 
 * Fix Phone view
@@ -19,4 +18,7 @@ TODO:
 * Design
 * Add ESLINT
 
+* Add Footer
+
 * Cordova Wrapper?
+

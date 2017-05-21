@@ -10771,6 +10771,10 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
+
+            var d = new Date();
+            var n = d.getTimezoneOffset();
+            console.log(n);
             return _react2.default.createElement(_AssignmentPage2.default, null);
         }
     }]);
