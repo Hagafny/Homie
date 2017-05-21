@@ -12037,7 +12037,7 @@ var Countdown = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'react-count-down col-sm-4' },
+        { className: 'react-count-down col-sm-3' },
         countdown
       );
     }
@@ -12209,7 +12209,7 @@ var Resources = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4' },
+                { className: 'col-sm-3' },
                 _react2.default.createElement(
                     _Resource2.default,
                     { url: this.props.data.homework },
@@ -12291,7 +12291,7 @@ var Title = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'col-sm-4' },
+                { className: 'col-sm-3' },
                 _react2.default.createElement(_Header2.default, { title: this.props.title, ex: this.props.ex }),
                 _react2.default.createElement(_DueDate2.default, { endDate: this.props.endDate })
             );

@@ -5,18 +5,12 @@ Made Using Node and React
 ~Ron
 
 TODO:
-* Fix Phone view
-
 * Put a constraint on assignments.course_id and courses.id
-
 * Add ajax call every 30 minutes
-* Add minimization option
 * Add localStorage
-
+* Add minimization option
 * Design
 * Add ESLINT
-
 * Add Footer
-
 * Cordova Wrapper?
 
