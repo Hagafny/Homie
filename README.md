@@ -5,8 +5,6 @@ Made Using Node and React
 ~Ron
 
 TODO:
-* Fix times in server
-
 * Fix Phone view
 
 * Put a constraint on assignments.course_id and courses.id

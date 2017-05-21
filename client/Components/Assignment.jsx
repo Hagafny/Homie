@@ -29,9 +29,10 @@ export default class Assignment extends React.Component {
 function getTimezonedDate(dateString) {
     let endDate = new Date(dateString);
 
-    if (location.hostname != "localhost")
+    if (location.hostname != "localhost") {
         endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
-
+    }
+    
     return endDate;
 }
 
