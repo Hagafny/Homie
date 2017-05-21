@@ -16,8 +16,7 @@
   },
   "scripts": {
     "start": "node server/app.js",
-    "webpack": "webpack -p",
-    "test": "webpack-dev-server"
+    "test": "webpack && npm start"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

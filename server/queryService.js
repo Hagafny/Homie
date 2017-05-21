@@ -10,7 +10,7 @@ FROM
    FROM assignments AS ass
    WHERE end_date > CURRENT_TIMESTAMP + INTERVAL '3 hours' ) AS ass
 LEFT JOIN courses AS cr ON ass.course_id = cr.id
-ORDER BY CURRENT_TIMESTAMP ASC;`;
+ORDER BY end_date ASC;`;
 }
 
 let saveAssignment = () => {
