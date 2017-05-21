@@ -20,8 +20,7 @@ export default class Countdown extends Component {
   }
 
   tick() {
-    let endDate = new Date(this.props.endDate);
-    let dUntil = dateUntil(endDate);
+    let dUntil = dateUntil(this.props.endDate);
     this.setState({
       nodes: dUntil
     });

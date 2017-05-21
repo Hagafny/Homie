@@ -7416,15 +7416,13 @@ exports.default = DueDate;
 
 
 var formatDate = function formatDate(dueDate) {
-    var d = new Date(dueDate);
-
-    var years = d.getFullYear();
-    var months = formatNumber(d.getMonth() + 1);
-    var days = formatNumber(d.getDate());
+    var years = dueDate.getFullYear();
+    var months = formatNumber(dueDate.getMonth() + 1);
+    var days = formatNumber(dueDate.getDate());
     var date = days + '/' + months + '/' + years;
 
-    var hours = formatNumber(d.getHours());
-    var minutes = formatNumber(d.getMinutes());
+    var hours = formatNumber(dueDate.getHours());
+    var minutes = formatNumber(dueDate.getMinutes());
     var time = hours + ':' + minutes;
 
     return {
@@ -10771,10 +10769,6 @@ var App = function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
-
-            var d = new Date();
-            var n = d.getTimezoneOffset();
-            console.log(n);
             return _react2.default.createElement(_AssignmentPage2.default, null);
         }
     }]);
@@ -11792,7 +11786,14 @@ var Assignment = function (_React$Component) {
     function Assignment(props) {
         _classCallCheck(this, Assignment);
 
-        return _possibleConstructorReturn(this, (Assignment.__proto__ || Object.getPrototypeOf(Assignment)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Assignment.__proto__ || Object.getPrototypeOf(Assignment)).call(this, props));
+
+        console.log('n');
+        var endDate = getTimezonedDate(_this.props.data.end_date);
+        _this.state = {
+            endDate: endDate
+        };
+        return _this;
     }
 
     _createClass(Assignment, [{
@@ -11801,8 +11802,8 @@ var Assignment = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'row assignment' },
-                _react2.default.createElement(_Title2.default, { title: this.props.data.title, ex: this.props.data.ex, endDate: this.props.data.end_date }),
-                _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date }),
+                _react2.default.createElement(_Title2.default, { title: this.props.data.title, ex: this.props.data.ex, endDate: this.state.endDate }),
+                _react2.default.createElement(_Countdown2.default, { endDate: this.state.endDate }),
                 _react2.default.createElement(_Resources2.default, { data: this.props.data.resources })
             );
         }
@@ -11812,6 +11813,15 @@ var Assignment = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Assignment;
+
+
+function getTimezonedDate(dateString) {
+    var endDate = new Date(dateString);
+
+    if (location.hostname != "localhost") endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
+
+    return endDate;
+}
 
 /***/ }),
 /* 116 */
@@ -12002,8 +12012,7 @@ var Countdown = function (_Component) {
   }, {
     key: 'tick',
     value: function tick() {
-      var endDate = new Date(this.props.endDate);
-      var dUntil = (0, _helpers.dateUntil)(endDate);
+      var dUntil = (0, _helpers.dateUntil)(this.props.endDate);
       this.setState({
         nodes: dUntil
       });

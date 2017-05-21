@@ -17,15 +17,13 @@ export default class DueDate extends React.Component {
 }
 
 let formatDate = (dueDate) => {
-    let d = new Date(dueDate);
-
-    let years = d.getFullYear();
-    let months = formatNumber(d.getMonth() + 1);
-    let days = formatNumber(d.getDate());
+    let years = dueDate.getFullYear();
+    let months = formatNumber(dueDate.getMonth() + 1);
+    let days = formatNumber(dueDate.getDate());
     let date = `${days}/${months}/${years}`;
 
-    let hours = formatNumber(d.getHours());
-    let minutes = formatNumber(d.getMinutes());
+    let hours = formatNumber(dueDate.getHours());
+    let minutes = formatNumber(dueDate.getMinutes());
     let time = `${hours}:${minutes}`;
 
     return {
