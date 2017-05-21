@@ -11,7 +11,7 @@ module.exports = {
   entry: './client/index.js',
   output: {
     path: path.resolve('dist'),
-    filename: 'index_bundle.js'
+    filename: 'app.js'
   },
   module: {
     rules: [

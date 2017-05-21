@@ -20,6 +20,7 @@ let getAssingments = (cb) => {
     })
 }
 
+
 let saveAssignment = (assignment, cb) => {
     pg.connect(dbConnection, (err, client) => {
         if (err) throw err;
