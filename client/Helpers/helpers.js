@@ -10,10 +10,10 @@ let dateUntil = (endDate) => {
   }
 
   let days = formatDate(Math.floor(distance / day), "day", true);
-  let hours = formatDate(Math.floor((distance % day) / hour), "hour", true);
-  let minutes = formatDate(Math.floor((distance % hour) / minute), "minute", true);
+  let hours = formatDate(Math.floor((distance % day) / hour), "hour", !days);
+  let minutes = formatDate(Math.floor((distance % hour) / minute), "minute", !(days || hours));
 
-  let removeSecondsFromCouner = !(days || hours || minutes); // De-Morgan FTW - only remove the seconds bar after is 0.
+  let removeSecondsFromCouner = !(days || hours || minutes); // De-Morgan FTW - only remove the seconds bar after everything is 0.
   let seconds = formatDate(Math.floor((distance % minute) / second), "second", removeSecondsFromCouner);
 
   return [

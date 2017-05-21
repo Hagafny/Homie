@@ -10,9 +10,10 @@ export default class Resources extends React.Component {
     if (!this.props.url)
       return false;
 
+    let url = this.props.prefix ? `${this.props.prefix}${this.props.url}` : this.props.url;
     return (
       <div>
-        <a href={this.props.url} target="_blank">{this.props.children}</a>
+        <a href={url} target="_blank">{this.props.children}</a>
       </div>
     )
   };

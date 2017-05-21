@@ -20,26 +20,26 @@ let getAssingments = (cb) => {
     })
 }
 
-
+//Legacy - need to fix.
 let saveAssignment = (assignment, cb) => {
-    pg.connect(dbConnection, (err, client) => {
-        if (err) throw err;
-        let sql = queryService.saveAssignment();
+    // pg.connect(dbConnection, (err, client) => {
+    //     if (err) throw err;
+    //     let sql = queryService.saveAssignment();
 
-        let values = [
-            assignment.title,
-            assignment.endDate,
-            assignment.moodleUrl,
-            assignment.piazzaUrl,
-            assignment.homeworkUrl
-        ]
+    //     let values = [
+    //         assignment.title,
+    //         assignment.endDate,
+    //         assignment.moodleUrl,
+    //         assignment.piazzaUrl,
+    //         assignment.homeworkUrl
+    //     ]
 
-        client.query(sql, values, (err, values) => {
-            if (err) throw err;
-            if (typeof cb === typeof Function)
-                cb();
-        });
-    })
+    //     client.query(sql, values, (err, values) => {
+    //         if (err) throw err;
+    //         if (typeof cb === typeof Function)
+    //             cb();
+    //     });
+    // })
 }
 
 let service = {

@@ -11,9 +11,11 @@ export default class Resources extends React.Component {
 
         return (
             <div className="col">
-                    <Resource url={this.props.data.homework}>HW</Resource>
-                    <Resource url={this.props.data.moodle}>Submit</Resource>
-                    <Resource url={this.props.data.piazza}>Piazza</Resource>
+                <Resource url={this.props.data.homework}>HW</Resource>
+                <Resource url={this.props.data.moodle}>Submit</Resource>
+                <Resource url={this.props.data.lecture}>Lecture</Resource>
+                <Resource url={this.props.data.recitation}>Recitation</Resource>
+                <Resource prefix={"https://piazza.com/class/"} url={this.props.data.piazza}>Piazza</Resource>
             </div>
         )
     };

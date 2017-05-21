@@ -3,8 +3,10 @@
 let getAssingments = () => {
     return `SELECT ass.*,
        cr.title,
-       cr.piazza_url,
-       cr.year
+       cr.piazza_id,
+       cr.year,
+       cr.drive_lectures_url,
+       cr.drive_recitations_url
 FROM
   (SELECT *
    FROM assignments AS ass

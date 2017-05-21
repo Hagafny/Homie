@@ -24,7 +24,9 @@ let assignmentMapper = (assignment) => {
         resources: {
             homework: assignment.homework_url,
             moodle: moodleUrl,
-            piazza: assignment.piazza_url
+            piazza: assignment.piazza_id,
+            lecture: assignment.drive_lectures_url,
+            recitation: assignment.drive_recitations_url
         }
     }
 }

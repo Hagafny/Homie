@@ -6,13 +6,17 @@ Made Using Node and React
 
 TODO:
 
-* Add webpack.production.config.js
-* Add ajax call every 39 minutes
-* Adde minimization option
-* Adde localStorage
-* Create animation for minimization
-* Update Piazza
-* Better Design
-* Add JSHINT
-* Jquery?
-* Corduva Wrapper?
+* Fix times in server
+
+* Fix Phone view
+
+* Put a constraint on assignments.course_id and courses.id
+
+* Add ajax call every 30 minutes
+* Add minimization option
+* Add localStorage
+
+* Design
+* Add ESLINT
+
+* Cordova Wrapper?
