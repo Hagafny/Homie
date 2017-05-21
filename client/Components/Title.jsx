@@ -10,7 +10,7 @@ export default class Title extends React.Component {
 
     render() {
         return (
-            <div className="col">
+            <div className="col-sm-4">
                 <Header title={this.props.title} ex={this.props.ex} />
                 <DueDate endDate={this.props.endDate} />
             </div>

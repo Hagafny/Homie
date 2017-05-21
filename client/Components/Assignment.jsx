@@ -7,8 +7,7 @@ import Title from './Title.jsx';
 
 export default class Assignment extends React.Component {
     constructor(props) {
-        super(props);
-        console.log('n');
+        super(props);;
         let endDate = getTimezonedDate(this.props.data.end_date);
         this.state = {
             endDate: endDate
@@ -32,7 +31,7 @@ function getTimezonedDate(dateString) {
     if (location.hostname != "localhost") {
         endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
     }
-    
+
     return endDate;
 }
 

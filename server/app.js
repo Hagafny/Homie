@@ -11,6 +11,7 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/api/assignment/', function (req, res) {
     logicService.getAssingments((assignments) => {
+        console.log('Got Assignments');
         res.json(assignments);
     });
 
