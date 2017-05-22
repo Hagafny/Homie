@@ -1,3 +1,6 @@
+import 'jquery';
+import 'tether';
+import 'bootstrap';
 import './css/bootstrap.min.css';
 import './css/countdown.css';
 import './css/style.css';

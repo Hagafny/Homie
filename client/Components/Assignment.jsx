@@ -21,15 +21,15 @@ export default class Assignment extends React.Component {
                 <div className="col-sm-3">
                     <Title title={this.props.data.title} ex={this.props.data.ex} endDate={this.state.endDate} />
                 </div>
-                {/*<div className="col-sm-3">
+                <div className="col-sm-3">
                     <Countdown endDate={this.state.endDate} />
-                </div>*/}
+                </div>
                 <div className="col-sm-3">
                     <Resources data={this.props.data.resources} />
                 </div>
-                <div className="col-sm-3">
+                {/*<div className="col-sm-3">
                     <Countdown2 endDate={this.state.endDate} />
-                </div>
+                </div>*/}
             </div>
         )
     }
