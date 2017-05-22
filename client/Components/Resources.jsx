@@ -10,7 +10,7 @@ export default class Resources extends React.Component {
     render() {
 
         return (
-            <div className="col-sm-3">
+            <div>
                 <Resource url={this.props.data.homework}>HW</Resource>
                 <Resource url={this.props.data.moodle}>Submit</Resource>
                 <Resource url={this.props.data.lecture}>Lecture</Resource>

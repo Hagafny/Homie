@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header.jsx';
 import Countdown from './Countdown.jsx';
+import Countdown2 from './Countdown2.jsx';
 import Resources from './Resources.jsx';
 import DueDate from './DueDate.jsx';
 import Title from './Title.jsx';
@@ -17,11 +18,20 @@ export default class Assignment extends React.Component {
     render() {
         return (
             <div className="row assignment">
-                <Title title={this.props.data.title} ex={this.props.data.ex} endDate={this.state.endDate} />
-                <Countdown endDate={this.state.endDate} />
-                <Resources data={this.props.data.resources} />
+                <div className="col-sm-3">
+                    <Title title={this.props.data.title} ex={this.props.data.ex} endDate={this.state.endDate} />
+                </div>
+                {/*<div className="col-sm-3">
+                    <Countdown endDate={this.state.endDate} />
+                </div>*/}
+                <div className="col-sm-3">
+                    <Resources data={this.props.data.resources} />
+                </div>
+                <div className="col-sm-3">
+                    <Countdown2 endDate={this.state.endDate} />
+                </div>
             </div>
-        );
+        )
     }
 }
 

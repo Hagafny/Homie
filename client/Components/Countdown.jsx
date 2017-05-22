@@ -1,7 +1,7 @@
 import { dateUntil } from './../Helpers/helpers.js'
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
 import CountdownNode from './CountdownNode.jsx';
-export default class Countdown extends Component {
+export default class Countdown extends React.Component {
 
   constructor(props) {
     super(props)
