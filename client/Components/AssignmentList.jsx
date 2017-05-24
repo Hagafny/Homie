@@ -14,31 +14,29 @@ export default class AssignmentList extends React.Component {
 
     componentDidMount() {
         this.refreshAssignments();
-            let timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
-            this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
+        let timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
+        this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
     }
 
     refreshAssignments() {
         axios.get(`/api/assignment`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
-
-                assignments = assignments.map((assignment) => {
-                    assignment.end_date = getTimezonedDate(assignment.end_date);
-                    return assignment;
-                })
-
                 localStorageService.setupAssignmentsState(assignments, () => {
-                    this.refreshViewState(assignments);
+                    this.performClientSideModifications(assignments);
                 });
             });
     }
 
-    refreshViewState(assignments) {
+    performClientSideModifications(assignments) {
         assignments = assignments || this.state.assignments;
         assignments = localStorageService.refreshViewState(assignments);
-        assignments.sort(assignmentSorter);
+        assignments = assignments.map((assignment) => {
+            assignment.end_date = getTimezonedDate(assignment.end_date);
+            return assignment;
+        })
 
+        assignments.sort(assignmentSorter);
         this.setState({ assignments: assignments });
     }
     render() {
@@ -53,13 +51,13 @@ export default class AssignmentList extends React.Component {
     }
     onDoneCheckedCallback(id, doneState) {
         localStorageService.changeDoneState(id, doneState, () => {
-            this.refreshViewState();
+            this.performClientSideModifications();
         });
     }
 
     onShowCallback(id, showState) {
         localStorageService.changeShowState(id, showState, () => {
-            this.refreshViewState();
+            this.performClientSideModifications();
         });
     }
 

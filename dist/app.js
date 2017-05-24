@@ -27359,10 +27359,26 @@ var Assignment = function (_React$Component) {
     function Assignment(props) {
         _classCallCheck(this, Assignment);
 
-        return _possibleConstructorReturn(this, (Assignment.__proto__ || Object.getPrototypeOf(Assignment)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Assignment.__proto__ || Object.getPrototypeOf(Assignment)).call(this, props));
+
+        var status = _this.getAssignmentStatus(_this.props.data.viewState.done, _this.props.data_end_date);
+        _this.state = { status: status };
+
+        return _this;
     }
 
     _createClass(Assignment, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            var status = this.getAssignmentStatus(nextProps.data.viewState.done, nextProps.data.end_date);
+            this.setState({ status: status });
+        }
+    }, {
+        key: 'getAssignmentStatus',
+        value: function getAssignmentStatus(doneState, endDate) {
+            if (doneState) return 3;else return 0;
+        }
+    }, {
         key: 'toggleShow',
         value: function toggleShow(showState) {
             this.props.onShowCallback(this.props.id, true);
@@ -27373,7 +27389,7 @@ var Assignment = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'card' },
-                _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, endDate: this.props.data.end_date, onShowCallback: this.props.onShowCallback }),
+                _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, status: this.state.status, endDate: this.props.data.end_date, onShowCallback: this.props.onShowCallback }),
                 _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked })
             );
         }
@@ -27503,10 +27519,21 @@ var AssignmentTitle = function (_React$Component) {
     function AssignmentTitle(props) {
         _classCallCheck(this, AssignmentTitle);
 
-        return _possibleConstructorReturn(this, (AssignmentTitle.__proto__ || Object.getPrototypeOf(AssignmentTitle)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (AssignmentTitle.__proto__ || Object.getPrototypeOf(AssignmentTitle)).call(this, props));
+
+        _this.state = {
+            color: _this.getHeaderColor(_this.props.status)
+        };
+        return _this;
     }
 
     _createClass(AssignmentTitle, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            console.log(nextProps);
+            this.setState({ color: this.getHeaderColor(nextProps.status) });
+        }
+    }, {
         key: 'onCollapse',
         value: function onCollapse(e) {
             e.stopPropagation();
@@ -27519,11 +27546,33 @@ var AssignmentTitle = function (_React$Component) {
             }, 500);
         }
     }, {
+        key: 'getHeaderColor',
+        value: function getHeaderColor(status) {
+            var color = "";
+            switch (status) {
+                case 0:
+                default:
+                    color = "primary";
+                    break;
+                case 1:
+                    color = "warning";
+                    break;
+                case 2:
+                    color = "danger";
+                    break;
+                case 3:
+                    color = "success";
+                    break;
+            }
+
+            return 'card-' + color;
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { 'data-toggle': 'collapse', href: '#' + this.props.data.id, 'aria-expanded': this.props.data.viewState.show, 'aria-controls': this.props.data.id, className: 'card-header', role: 'tab', onClick: this.onCollapse.bind(this) },
+                { 'data-toggle': 'collapse', href: '#' + this.props.data.id, 'aria-expanded': this.props.data.viewState.show, 'aria-controls': this.props.data.id, className: 'card-header ' + this.state.color, role: 'tab', onClick: this.onCollapse.bind(this) },
                 _react2.default.createElement(
                     'h5',
                     { className: 'mb-0' },
@@ -27606,24 +27655,22 @@ var AssignmentList = function (_React$Component) {
 
             _axios2.default.get('/api/assignment').then(function (assignmentsRes) {
                 var assignments = assignmentsRes.data;
-
-                assignments = assignments.map(function (assignment) {
-                    assignment.end_date = getTimezonedDate(assignment.end_date);
-                    return assignment;
-                });
-
                 _localStorageService2.default.setupAssignmentsState(assignments, function () {
-                    _this2.refreshViewState(assignments);
+                    _this2.performClientSideModifications(assignments);
                 });
             });
         }
     }, {
-        key: 'refreshViewState',
-        value: function refreshViewState(assignments) {
+        key: 'performClientSideModifications',
+        value: function performClientSideModifications(assignments) {
             assignments = assignments || this.state.assignments;
             assignments = _localStorageService2.default.refreshViewState(assignments);
-            assignments.sort(assignmentSorter);
+            assignments = assignments.map(function (assignment) {
+                assignment.end_date = getTimezonedDate(assignment.end_date);
+                return assignment;
+            });
 
+            assignments.sort(assignmentSorter);
             this.setState({ assignments: assignments });
         }
     }, {
@@ -27647,7 +27694,7 @@ var AssignmentList = function (_React$Component) {
             var _this4 = this;
 
             _localStorageService2.default.changeDoneState(id, doneState, function () {
-                _this4.refreshViewState();
+                _this4.performClientSideModifications();
             });
         }
     }, {
@@ -27656,7 +27703,7 @@ var AssignmentList = function (_React$Component) {
             var _this5 = this;
 
             _localStorageService2.default.changeShowState(id, showState, function () {
-                _this5.refreshViewState();
+                _this5.performClientSideModifications();
             });
         }
     }]);
@@ -27714,16 +27761,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CountdownPage = function (_React$Component) {
-    _inherits(CountdownPage, _React$Component);
+var AssignmentsPage = function (_React$Component) {
+    _inherits(AssignmentsPage, _React$Component);
 
-    function CountdownPage() {
-        _classCallCheck(this, CountdownPage);
+    function AssignmentsPage() {
+        _classCallCheck(this, AssignmentsPage);
 
-        return _possibleConstructorReturn(this, (CountdownPage.__proto__ || Object.getPrototypeOf(CountdownPage)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (AssignmentsPage.__proto__ || Object.getPrototypeOf(AssignmentsPage)).apply(this, arguments));
     }
 
-    _createClass(CountdownPage, [{
+    _createClass(AssignmentsPage, [{
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -27734,10 +27781,10 @@ var CountdownPage = function (_React$Component) {
         }
     }]);
 
-    return CountdownPage;
+    return AssignmentsPage;
 }(_react2.default.Component);
 
-exports.default = CountdownPage;
+exports.default = AssignmentsPage;
 
 /***/ }),
 /* 123 */
@@ -30000,7 +30047,7 @@ exports = module.exports = __webpack_require__(36)(undefined);
 
 
 // module
-exports.push([module.i, ".assignment {\r\n    background-color:#e0b981;\r\n    margin-top: 13px;\r\n}", ""]);
+exports.push([module.i, "\r\n\r\n", ""]);
 
 // exports
 
