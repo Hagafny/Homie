@@ -12,7 +12,7 @@ export default class Countdown2 extends React.Component {
 
     componentDidMount() {
         this.tick()
-         this.interval = setInterval(this.tick.bind(this), 1000)
+        this.interval = setInterval(this.tick.bind(this), 1000)
     }
 
     componentWillUnmount() {
@@ -30,7 +30,7 @@ export default class Countdown2 extends React.Component {
         //     window.clearInterval(this.interval)
         // }
     }
-    
+
     render() {
         if (!this.state.tiles) //Just validating against weird behaviour
             return false

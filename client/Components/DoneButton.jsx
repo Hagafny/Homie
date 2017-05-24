@@ -10,7 +10,7 @@ export default class DoneButton extends React.Component {
     }
     render() {
         return (
-            <input type="checkbox" onChange={this.doneChecked.bind(this)} checked={this.props.done} />
+            <input type="checkbox" data-toggle="toggle" onChange={this.doneChecked.bind(this)} checked={this.props.done} />
         )
     };
 }
