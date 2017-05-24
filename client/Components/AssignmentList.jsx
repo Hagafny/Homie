@@ -39,16 +39,7 @@ export default class AssignmentList extends React.Component {
         assignments.sort(assignmentSorter);
         this.setState({ assignments: assignments });
     }
-    render() {
-        let assignments = this.state.assignments.map(assignment => {
-            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} />
-        });
 
-        return (
-            <div className="container" role="tablist" id="assignmentsList">
-                {assignments}
-            </div>);
-    }
     onDoneCheckedCallback(id, doneState) {
         localStorageService.changeDoneState(id, doneState, () => {
             this.performClientSideModifications();
@@ -59,6 +50,19 @@ export default class AssignmentList extends React.Component {
         localStorageService.changeShowState(id, showState, () => {
             this.performClientSideModifications();
         });
+    }
+
+
+        render() {
+
+        let assignments = this.state.assignments.map(assignment => {
+            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} />
+        });
+
+        return (
+            <div className="container" role="tablist" id="assignmentsList">
+                {assignments}
+            </div>);
     }
 
 }
