@@ -32,20 +32,14 @@ export default class Countdown2 extends React.Component {
     }
 
     render() {
+        console.log(this.state);
         let tiles = this.state.tiles.map((countdownNode, index) => {
-            return <CountdownTile number={countdownNode.number} key={index}></CountdownTile>
-        })
-
-        let labels = this.state.tiles.map((countdownNode, index) => {
-            return <li key={index}>{countdownNode.title}</li>
+            return <CountdownTile number={countdownNode.number} title={countdownNode.title} key={index}></CountdownTile>
         })
 
         return (
-            <div className="countdown2">
-                <div className='tiles'>{tiles}</div>
-                <div className="labels">
-                    {labels}
-                </div>
+            <div className="clockClass">
+                {tiles}
             </div>
         )
     };

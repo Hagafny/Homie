@@ -18,8 +18,9 @@ export default class Assignment extends React.Component {
     getAssignmentStatus(doneState, endDate) {
         if (doneState)
             return 3;
-        else
+        else {
             return 0;
+        }
     }
 
 

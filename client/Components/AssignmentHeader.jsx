@@ -4,15 +4,14 @@ export default class AssignmentTitle extends React.Component {
 
     constructor(props) {
         super(props)
- 
+
         this.state = {
             color: this.getHeaderColor(this.props.status)
         }
     }
 
     componentWillReceiveProps(nextProps) {
-               console.log(nextProps);
-        this.setState({color: this.getHeaderColor(nextProps.status)})
+        this.setState({ color: this.getHeaderColor(nextProps.status) })
     }
 
     onCollapse(e) {

@@ -27376,7 +27376,9 @@ var Assignment = function (_React$Component) {
     }, {
         key: 'getAssignmentStatus',
         value: function getAssignmentStatus(doneState, endDate) {
-            if (doneState) return 3;else return 0;
+            if (doneState) return 3;else {
+                return 0;
+            }
         }
     }, {
         key: 'toggleShow',
@@ -27438,6 +27440,10 @@ var _DoneButton = __webpack_require__(123);
 
 var _DoneButton2 = _interopRequireDefault(_DoneButton);
 
+var _Countdown = __webpack_require__(237);
+
+var _Countdown2 = _interopRequireDefault(_Countdown);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27473,7 +27479,8 @@ var AssignmentBody = function (_React$Component) {
                         this.props.data.ex
                     ),
                     _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked }),
-                    _react2.default.createElement(_Resources2.default, { data: this.props.data.resources })
+                    _react2.default.createElement(_Resources2.default, { data: this.props.data.resources }),
+                    _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date })
                 )
             );
         }
@@ -27530,7 +27537,6 @@ var AssignmentTitle = function (_React$Component) {
     _createClass(AssignmentTitle, [{
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            console.log(nextProps);
             this.setState({ color: this.getHeaderColor(nextProps.status) });
         }
     }, {
@@ -30033,7 +30039,7 @@ exports = module.exports = __webpack_require__(36)(undefined);
 
 
 // module
-exports.push([module.i, ".countdown2{\r\n\twidth: 465px;\r\n\theight: 112px;\r\n\ttext-align: center;\r\n\tbackground: #222;\r\n\tbackground-image: -webkit-linear-gradient(top, #222, #333, #333, #222); \r\n\tbackground-image:    -moz-linear-gradient(top, #222, #333, #333, #222);\r\n\tbackground-image:     -ms-linear-gradient(top, #222, #333, #333, #222);\r\n\tbackground-image:      -o-linear-gradient(top, #222, #333, #333, #222);\r\n\tborder: 1px solid #111;\r\n\tborder-radius: 5px;\r\n\tbox-shadow: 0px 0px 8px rgba(0, 0, 0, 0.6);\r\n\tmargin: auto;\r\n\tpadding: 24px 0;\r\n  top: 0; bottom: 0; left: 0; right: 0;\r\n}\r\n\r\n.countdown2:before{\r\n\tcontent:\"\";\r\n\twidth: 8px;\r\n\theight: 65px;\r\n\tbackground: #444;\r\n\tbackground-image: -webkit-linear-gradient(top, #555, #444, #444, #555); \r\n\tbackground-image:    -moz-linear-gradient(top, #555, #444, #444, #555);\r\n\tbackground-image:     -ms-linear-gradient(top, #555, #444, #444, #555);\r\n\tbackground-image:      -o-linear-gradient(top, #555, #444, #444, #555);\r\n\tborder: 1px solid #111;\r\n\tborder-top-left-radius: 6px;\r\n\tborder-bottom-left-radius: 6px;\r\n\tdisplay: block;\r\n\ttop: 48px; left: -10px;\r\n}\r\n\r\n.countdown2:after{\r\n\tcontent:\"\";\r\n\twidth: 8px;\r\n\theight: 65px;\r\n\tbackground: #444;\r\n\tbackground-image: -webkit-linear-gradient(top, #555, #444, #444, #555); \r\n\tbackground-image:    -moz-linear-gradient(top, #555, #444, #444, #555);\r\n\tbackground-image:     -ms-linear-gradient(top, #555, #444, #444, #555);\r\n\tbackground-image:      -o-linear-gradient(top, #555, #444, #444, #555);\r\n\tborder: 1px solid #111;\r\n\tborder-top-right-radius: 6px;\r\n\tborder-bottom-right-radius: 6px;\r\n\tdisplay: block;\r\n\ttop: 48px; right: -10px;\r\n}\r\n\r\n.countdown2 .tiles{\r\n\tposition: relative;\r\n\tz-index: 1;\r\n}\r\n\r\n.countdown2 .tiles > span{\r\n\twidth: 92px;\r\n\tmax-width: 92px;\r\n\tfont: bold 48px 'Droid Sans', Arial, sans-serif;\r\n\ttext-align: center;\r\n\tcolor: #111;\r\n\tbackground-color: #ddd;\r\n\tbackground-image: -webkit-linear-gradient(top, #bbb, #eee); \r\n\tbackground-image:    -moz-linear-gradient(top, #bbb, #eee);\r\n\tbackground-image:     -ms-linear-gradient(top, #bbb, #eee);\r\n\tbackground-image:      -o-linear-gradient(top, #bbb, #eee);\r\n\tborder-top: 1px solid #fff;\r\n\tborder-radius: 3px;\r\n\tbox-shadow: 0px 0px 12px rgba(0, 0, 0, 0.7);\r\n\tmargin: 0 7px;\r\n\tpadding: 18px 0;\r\n\tdisplay: inline-block;\r\n\tposition: relative;\r\n}\r\n\r\n.countdown2 .tiles > span:before{\r\n\tcontent:\"\";\r\n\twidth: 100%;\r\n\theight: 13px;\r\n\tbackground: #111;\r\n\tdisplay: block;\r\n\tpadding: 0 3px;\r\n\tposition: absolute;\r\n\ttop: 41%; left: -3px;\r\n\tz-index: -1;\r\n}\r\n\r\n.countdown2 .tiles > span:after{\r\n\tcontent:\"\";\r\n\twidth: 100%;\r\n\theight: 1px;\r\n\tbackground: #eee;\r\n\tborder-top: 1px solid #333;\r\n\tdisplay: block;\r\n\ttop: 48%; left: 0;\r\n}\r\n\r\n.countdown2 .labels{\r\n\twidth: 100%;\r\n\theight: 25px;\r\n\ttext-align: center;\r\n\tbottom: 8px;\r\n}\r\n\r\n.countdown2 .labels li{\r\n\twidth: 102px;\r\n\tfont: bold 15px 'Droid Sans', Arial, sans-serif;\r\n\tcolor: #f47321;\r\n\ttext-shadow: 1px 1px 0px #000;\r\n\ttext-align: center;\r\n\ttext-transform: uppercase;\r\n\tdisplay: inline-block;\r\n}", ""]);
+exports.push([module.i, ".clockClass{\r\n\tfont-family: sans-serif;\r\n\tcolor: #fff;\r\n\tdisplay: inline-block;\r\n\tfont-weight: 100;\r\n\ttext-align: center;\r\n\tfont-size: 30px;\r\n}\r\n\r\n.clockClass > div{\r\n\tpadding: 10px;\r\n\tborder-radius: 3px;\r\n\tbackground: #00BF96;\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.clockClass div > span{\r\n\tpadding: 15px;\r\n\tborder-radius: 3px;\r\n\tbackground: #00816A;\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.smalltext{\r\n\tpadding-top: 5px;\r\n\tfont-size: 16px;\r\n}", ""]);
 
 // exports
 
@@ -42750,6 +42756,197 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+/* 236 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var dateUntil = function dateUntil(endDate) {
+  var second = 1000;
+  var minute = second * 60;
+  var hour = minute * 60;
+  var day = hour * 24;
+  var distance = endDate - new Date(); //distance = endDate - current date
+
+  if (distance < 0) {
+    return false;
+  }
+
+  var days = formatDate(Math.floor(distance / day), "Day", true);
+  var hours = formatDate(Math.floor(distance % day / hour), "Hour", !days);
+  var minutes = formatDate(Math.floor(distance % hour / minute), "Minute", !(days || hours));
+
+  var removeSecondsFromCouner = !(days || hours || minutes); // De-Morgan FTW - only remove the seconds bar after everything is 0.
+  var seconds = formatDate(Math.floor(distance % minute / second), "Second", removeSecondsFromCouner);
+
+  return [days, hours, minutes, seconds];
+};
+
+var formatDate = function formatDate(dateNumber, timeFix, removeOnZero) {
+  if (dateNumber < 1 && removeOnZero) return false;
+
+  var title = "" + timeFix + (dateNumber != 1 ? 's' : '');
+  return {
+    number: dateNumber,
+    title: title
+  };
+};
+
+module.exports = {
+  dateUntil: dateUntil
+};
+
+/***/ }),
+/* 237 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _helpers = __webpack_require__(236);
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _CountdownTile = __webpack_require__(238);
+
+var _CountdownTile2 = _interopRequireDefault(_CountdownTile);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Countdown2 = function (_React$Component) {
+    _inherits(Countdown2, _React$Component);
+
+    function Countdown2(props) {
+        _classCallCheck(this, Countdown2);
+
+        var _this = _possibleConstructorReturn(this, (Countdown2.__proto__ || Object.getPrototypeOf(Countdown2)).call(this, props));
+
+        _this.state = {
+            tiles: []
+        };
+        return _this;
+    }
+
+    _createClass(Countdown2, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.tick();
+            this.interval = setInterval(this.tick.bind(this), 1000);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            clearInterval(this.interval);
+        }
+    }, {
+        key: 'tick',
+        value: function tick() {
+            var dUntil = (0, _helpers.dateUntil)(this.props.endDate);
+            this.setState({
+                tiles: dUntil
+            });
+
+            // If everything is 0, stop the interval
+            // if (dUntil[3] === false && dUntil[2] === false && dUntil[1] === false && dUntil[0] === false) {
+            //     window.clearInterval(this.interval)
+            // }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            console.log(this.state);
+            var tiles = this.state.tiles.map(function (countdownNode, index) {
+                return _react2.default.createElement(_CountdownTile2.default, { number: countdownNode.number, title: countdownNode.title, key: index });
+            });
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'clockClass' },
+                tiles
+            );
+        }
+    }]);
+
+    return Countdown2;
+}(_react2.default.Component);
+
+exports.default = Countdown2;
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CountdownTile = function (_React$Component) {
+    _inherits(CountdownTile, _React$Component);
+
+    function CountdownTile(props) {
+        _classCallCheck(this, CountdownTile);
+
+        return _possibleConstructorReturn(this, (CountdownTile.__proto__ || Object.getPrototypeOf(CountdownTile)).call(this, props));
+    }
+
+    _createClass(CountdownTile, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "span",
+                    null,
+                    this.props.number
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "smalltext" },
+                    this.props.title
+                )
+            );
+        }
+    }]);
+
+    return CountdownTile;
+}(_react2.default.Component);
+
+exports.default = CountdownTile;
 
 /***/ })
 /******/ ]);

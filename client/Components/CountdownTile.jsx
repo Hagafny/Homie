@@ -8,7 +8,10 @@ export default class CountdownTile extends React.Component {
 
     render() {
         return (
-            <span className="countdown-tile">{this.props.number}</span>
+            <div>
+                <span>{this.props.number}</span>
+                <div className="smalltext">{this.props.title}</div>
+            </div>
         )
     };
 }
