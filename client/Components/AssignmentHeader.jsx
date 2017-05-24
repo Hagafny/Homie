@@ -6,8 +6,8 @@ export default class AssignmentTitle extends React.Component {
         super(props)
     }
     onCollapse(e) {
-        let self = this;
         e.stopPropagation();
+        let self = this;
         let $assignmentHeader = $(e.currentTarget);
         let id = $assignmentHeader.attr('aria-controls');
         let showState = $(e.currentTarget).attr('aria-expanded') == "true";

@@ -20,6 +20,12 @@ export default class AssignmentList extends React.Component {
         axios.get(`/api/assignment`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
+
+                assignments = assignments.map((assignment) => {
+                    assignment.end_date = getTimezonedDate(assignment.end_date);
+                    return assignment;
+                })
+
                 localStorageService.setupAssignmentsState(assignments, () => {
                     this.refreshViewState(assignments);
                 });
@@ -29,11 +35,14 @@ export default class AssignmentList extends React.Component {
     refreshViewState(assignments) {
         assignments = assignments || this.state.assignments;
         assignments = localStorageService.refreshViewState(assignments);
+        console.log(assignments);
+        assignments.sort(assignmentSorter);
+
         this.setState({ assignments: assignments });
     }
     render() {
         let assignments = this.state.assignments.map(assignment => {
-            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)}/>
+            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} />
         });
 
         return (
@@ -42,6 +51,7 @@ export default class AssignmentList extends React.Component {
             </div>);
     }
     onDoneCheckedCallback(id, doneState) {
+        console.log(`id ${id} became ${doneState}`);
         localStorageService.changeDoneState(id, doneState, () => {
             this.refreshViewState();
         });
@@ -55,8 +65,25 @@ export default class AssignmentList extends React.Component {
 
 }
 
+function assignmentSorter(a, b) {
+    if (a.viewState.done != b.viewState.done) {
+        return a.viewState.done ? 1 : -1;
+    }
+    else {
+        return a.end_date - b.end_date;
+    }
+}
 
 
+function getTimezonedDate(dateString) {
+    let endDate = new Date(dateString);
+
+    if (location.hostname != "localhost") {
+        endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
+    }
+
+    return endDate;
+}
 
 
 

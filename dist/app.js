@@ -27359,13 +27359,7 @@ var Assignment = function (_React$Component) {
     function Assignment(props) {
         _classCallCheck(this, Assignment);
 
-        var _this = _possibleConstructorReturn(this, (Assignment.__proto__ || Object.getPrototypeOf(Assignment)).call(this, props));
-
-        var endDate = getTimezonedDate(_this.props.data.end_date);
-        _this.state = {
-            endDate: endDate
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Assignment.__proto__ || Object.getPrototypeOf(Assignment)).call(this, props));
     }
 
     _createClass(Assignment, [{
@@ -27379,7 +27373,7 @@ var Assignment = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'card' },
-                _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, endDate: this.state.endDate, onShowCallback: this.props.onShowCallback }),
+                _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, endDate: this.props.data.end_date, onShowCallback: this.props.onShowCallback }),
                 _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked })
             );
         }
@@ -27387,19 +27381,6 @@ var Assignment = function (_React$Component) {
 
     return Assignment;
 }(_react2.default.Component);
-
-exports.default = Assignment;
-
-
-function getTimezonedDate(dateString) {
-    var endDate = new Date(dateString);
-
-    if (location.hostname != "localhost") {
-        endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
-    }
-
-    return endDate;
-}
 
 /*<div className="row assignment">
     <div className="col-sm-3">
@@ -27412,6 +27393,9 @@ function getTimezonedDate(dateString) {
         <Countdown2 endDate={this.state.endDate} />
     </div>
 </div>*/
+
+
+exports.default = Assignment;
 
 /***/ }),
 /* 119 */
@@ -27525,8 +27509,8 @@ var AssignmentTitle = function (_React$Component) {
     _createClass(AssignmentTitle, [{
         key: 'onCollapse',
         value: function onCollapse(e) {
-            var self = this;
             e.stopPropagation();
+            var self = this;
             var $assignmentHeader = $(e.currentTarget);
             var id = $assignmentHeader.attr('aria-controls');
             var showState = $(e.currentTarget).attr('aria-expanded') == "true";
@@ -27620,6 +27604,12 @@ var AssignmentList = function (_React$Component) {
 
             _axios2.default.get('/api/assignment').then(function (assignmentsRes) {
                 var assignments = assignmentsRes.data;
+
+                assignments = assignments.map(function (assignment) {
+                    assignment.end_date = getTimezonedDate(assignment.end_date);
+                    return assignment;
+                });
+
                 _localStorageService2.default.setupAssignmentsState(assignments, function () {
                     _this2.refreshViewState(assignments);
                 });
@@ -27630,6 +27620,9 @@ var AssignmentList = function (_React$Component) {
         value: function refreshViewState(assignments) {
             assignments = assignments || this.state.assignments;
             assignments = _localStorageService2.default.refreshViewState(assignments);
+            console.log(assignments);
+            assignments.sort(assignmentSorter);
+
             this.setState({ assignments: assignments });
         }
     }, {
@@ -27652,6 +27645,7 @@ var AssignmentList = function (_React$Component) {
         value: function onDoneCheckedCallback(id, doneState) {
             var _this4 = this;
 
+            console.log('id ' + id + ' became ' + doneState);
             _localStorageService2.default.changeDoneState(id, doneState, function () {
                 _this4.refreshViewState();
             });
@@ -27671,6 +27665,25 @@ var AssignmentList = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = AssignmentList;
+
+
+function assignmentSorter(a, b) {
+    if (a.viewState.done != b.viewState.done) {
+        return a.viewState.done ? 1 : -1;
+    } else {
+        return a.end_date - b.end_date;
+    }
+}
+
+function getTimezonedDate(dateString) {
+    var endDate = new Date(dateString);
+
+    if (location.hostname != "localhost") {
+        endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
+    }
+
+    return endDate;
+}
 
 /***/ }),
 /* 122 */

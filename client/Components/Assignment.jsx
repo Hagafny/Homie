@@ -5,10 +5,6 @@ import AssignmentBody from './AssignmentBody.jsx';
 export default class Assignment extends React.Component {
     constructor(props) {
         super(props);
-        let endDate = getTimezonedDate(this.props.data.end_date);
-        this.state = {
-            endDate: endDate
-        }
     }
 
     toggleShow(showState) {
@@ -18,22 +14,14 @@ export default class Assignment extends React.Component {
     render() {
         return (
             <div className="card" >
-                <AssignmentHeader data={this.props.data} endDate={this.state.endDate} onShowCallback={this.props.onShowCallback} />
+                <AssignmentHeader data={this.props.data} endDate={this.props.data.end_date} onShowCallback={this.props.onShowCallback} />
                 <AssignmentBody data={this.props.data} onDoneChecked={this.props.onDoneChecked} />
             </div>
         )
     }
 }
 
-function getTimezonedDate(dateString) {
-    let endDate = new Date(dateString);
 
-    if (location.hostname != "localhost") {
-        endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
-    }
-
-    return endDate;
-}
 
 
 
