@@ -14,6 +14,8 @@ export default class AssignmentList extends React.Component {
 
     componentDidMount() {
         this.refreshAssignments();
+            let timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
+            this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
     }
 
     refreshAssignments() {
@@ -35,7 +37,6 @@ export default class AssignmentList extends React.Component {
     refreshViewState(assignments) {
         assignments = assignments || this.state.assignments;
         assignments = localStorageService.refreshViewState(assignments);
-        console.log(assignments);
         assignments.sort(assignmentSorter);
 
         this.setState({ assignments: assignments });
@@ -51,7 +52,6 @@ export default class AssignmentList extends React.Component {
             </div>);
     }
     onDoneCheckedCallback(id, doneState) {
-        console.log(`id ${id} became ${doneState}`);
         localStorageService.changeDoneState(id, doneState, () => {
             this.refreshViewState();
         });
@@ -73,7 +73,6 @@ function assignmentSorter(a, b) {
         return a.end_date - b.end_date;
     }
 }
-
 
 function getTimezonedDate(dateString) {
     let endDate = new Date(dateString);

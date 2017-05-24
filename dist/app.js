@@ -27596,6 +27596,8 @@ var AssignmentList = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.refreshAssignments();
+            var timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
+            this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
         }
     }, {
         key: 'refreshAssignments',
@@ -27620,7 +27622,6 @@ var AssignmentList = function (_React$Component) {
         value: function refreshViewState(assignments) {
             assignments = assignments || this.state.assignments;
             assignments = _localStorageService2.default.refreshViewState(assignments);
-            console.log(assignments);
             assignments.sort(assignmentSorter);
 
             this.setState({ assignments: assignments });
@@ -27645,7 +27646,6 @@ var AssignmentList = function (_React$Component) {
         value: function onDoneCheckedCallback(id, doneState) {
             var _this4 = this;
 
-            console.log('id ' + id + ' became ' + doneState);
             _localStorageService2.default.changeDoneState(id, doneState, function () {
                 _this4.refreshViewState();
             });
