@@ -9,7 +9,8 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const ProvidePlugin = new webpack.ProvidePlugin({
   $: "jquery",
-  jQuery: "jquery"
+  jQuery: "jquery",
+  Tether: "tether"
 });
 
 module.exports = {

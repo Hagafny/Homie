@@ -4,12 +4,11 @@ export default class DoneButton extends React.Component {
     constructor(props) {
         super(props)
     }
-
+    wut() {
+    }
     render() {
         return (
-            <div className="col-sm-3">
-                <checkbox checked={this.state.finished}></checkbox>
-            </div>
+            <input type="checkbox" onChange={this.wut} checked={this.props.finished} />
         )
     };
 }

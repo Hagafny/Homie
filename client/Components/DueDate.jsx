@@ -9,9 +9,7 @@ export default class DueDate extends React.Component {
 
     render() {
         return (
-            <div>
-                <span>{this.state.date}, {this.state.time}</span>
-            </div>
+                <span>{this.state.date} {this.state.time}</span>
         )
     };
 }

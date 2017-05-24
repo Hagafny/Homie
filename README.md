@@ -5,12 +5,15 @@ Made Using Node and React
 ~Ron
 
 TODO:
-* Put a constraint on assignments.course_id and courses.id
-* Add ajax call every 30 minutes
-* Add localStorage
-* Add minimization option
-* Design
-* Add ESLINT
+* Done Switch
+* LocalStorage Service
+* Change all tasks to assignments 
+* Implement new timer
+* Add ajax call every 30 minutes (move the Assignment list from props to state)
+* Add bootstrap modal with class info
 * Add Footer
+* Sass bootstrap
+* Add ESLINT
+* Put a constraint on assignments.course_id and courses.id
 * Cordova Wrapper?
 

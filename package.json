@@ -1,5 +1,5 @@
 {
-  "name": "idctasks",
+  "name": "Homey",
   "version": "1.0.0",
   "description": "IDC Assignments Page",
   "author": "Ron Hagafny",
@@ -10,6 +10,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "express": "^4.15.3",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
     "path": "^0.12.7",
     "pg": "^6.2.2",
     "react": "^15.5.4",
