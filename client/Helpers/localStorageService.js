@@ -18,6 +18,15 @@ let changeDoneState = (assignmentId, doneState, cb) => {
         cb();
 }
 
+let changeShowState = (assignmentId, showState, cb) => {
+    let assignmentsState = getAssignmentsState();
+    assignmentsState[assignmentId].show = showState;
+    saveAssignmentsState(assignmentsState);
+
+    if (typeof cb === typeof Function)
+        cb();
+}
+
 let setupAssignmentsState = (assignments, cb) => {
 
     /*TODO: REMOVE UNNECCARY IDS */
@@ -62,6 +71,7 @@ function saveAssignmentsState(assignmentsState) {
 module.exports = {
     setupAssignmentsState: setupAssignmentsState,
     changeDoneState: changeDoneState,
+    changeShowState: changeShowState,
     refreshViewState: refreshViewState
 
 }

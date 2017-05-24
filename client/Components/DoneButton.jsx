@@ -5,6 +5,7 @@ export default class DoneButton extends React.Component {
         super(props)
     }
     doneChecked(e) {
+        e.stopPropagation();
         this.props.onDoneChecked(this.props.id, e.target.checked);
     }
     render() {

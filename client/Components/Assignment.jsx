@@ -1,12 +1,6 @@
 import React from 'react';
 import AssignmentHeader from './AssignmentHeader.jsx';
 import AssignmentBody from './AssignmentBody.jsx';
-// import Header from './Header.jsx';
-// import Countdown from './Countdown.jsx';
-// import Countdown2 from './Countdown2.jsx';
-// import Resources from './Resources.jsx';
-// import DueDate from './DueDate.jsx';
-// import Title from './Title.jsx';
 
 export default class Assignment extends React.Component {
     constructor(props) {
@@ -17,12 +11,16 @@ export default class Assignment extends React.Component {
         }
     }
 
+    toggleShow(showState) {
+        this.props.onShowCallback(this.props.id, true)
+    }
+
     render() {
         return (
-     <div className="card">
-            <AssignmentHeader data={this.props.data} endDate={this.state.endDate} />
-            <AssignmentBody data={this.props.data} onDoneChecked={this.props.onDoneChecked}/>
-        </div>
+            <div className="card" >
+                <AssignmentHeader data={this.props.data} endDate={this.state.endDate} onShowCallback={this.props.onShowCallback} />
+                <AssignmentBody data={this.props.data} onDoneChecked={this.props.onDoneChecked} />
+            </div>
         )
     }
 }
@@ -39,11 +37,11 @@ function getTimezonedDate(dateString) {
 
 
 
-                    
-                
-            
 
-            
+
+
+
+
 
             /*<div className="row assignment">
                 <div className="col-sm-3">

@@ -33,18 +33,22 @@ export default class AssignmentList extends React.Component {
     }
     render() {
         let assignments = this.state.assignments.map(assignment => {
-            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} />
+            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)}/>
         });
 
         return (
-            <div className="container" role="tablist">
+            <div className="container" role="tablist" id="assignmentsList">
                 {assignments}
             </div>);
-
-
     }
     onDoneCheckedCallback(id, doneState) {
         localStorageService.changeDoneState(id, doneState, () => {
+            this.refreshViewState();
+        });
+    }
+
+    onShowCallback(id, showState) {
+        localStorageService.changeShowState(id, showState, () => {
             this.refreshViewState();
         });
     }

@@ -1,5 +1,5 @@
 export default class AssignmentState {
-  constructor(show = false, done = false) {
+  constructor(show = true, done = false) {
     this.show = show;
     this.done = done;
   }
