@@ -27239,6 +27239,8 @@ exports.default = AssignmentState;
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _AssignmentState = __webpack_require__(116);
 
 var _AssignmentState2 = _interopRequireDefault(_AssignmentState);
@@ -27254,13 +27256,15 @@ function initializeAssignmentsState() {
     if (!assignmentsState) saveAssignmentsState({});
 }
 
-var finishAssignment = function finishAssignment(assignmentId) {
+var changeDoneState = function changeDoneState(assignmentId, doneState, cb) {
     var assignmentsState = getAssignmentsState();
-    assignmentsState.push(assignmentId);
+    assignmentsState[assignmentId].done = doneState;
     saveAssignmentsState(assignmentsState);
+
+    if ((typeof cb === 'undefined' ? 'undefined' : _typeof(cb)) === (typeof Function === 'undefined' ? 'undefined' : _typeof(Function))) cb();
 };
 
-var setupAssignmentsState = function setupAssignmentsState(assignments) {
+var setupAssignmentsState = function setupAssignmentsState(assignments, cb) {
 
     /*TODO: REMOVE UNNECCARY IDS */
     // put the good stuff here
@@ -27274,21 +27278,23 @@ var setupAssignmentsState = function setupAssignmentsState(assignments) {
 
     for (var i = 0; i < assignmentsLength; i++) {
         var assignment = assignments[i];
-        var assignmentID = 'a' + assignment.id;
+        var assignmentID = assignment.id;
         if (!assignmentsState[assignmentID]) {
             assignmentsState[assignmentID] = new _AssignmentState2.default();
         }
     }
 
-    assignments = assignments.map(function (assignment) {
+    saveAssignmentsState(assignmentsState);
+    if ((typeof cb === 'undefined' ? 'undefined' : _typeof(cb)) === (typeof Function === 'undefined' ? 'undefined' : _typeof(Function))) cb();
+};
 
-        assignment.viewState = assignmentsState['a' + assignment.id];
+function refreshViewState(assignments) {
+    var assignmentsState = getAssignmentsState();
+    return assignments.map(function (assignment) {
+        assignment.viewState = assignmentsState[assignment.id];
         return assignment;
     });
-
-    saveAssignmentsState(assignmentsState);
-    return assignments;
-};
+}
 
 function getAssignmentsState() {
     return JSON.parse(localStorage.getItem(assignmentsStateKey));
@@ -27299,8 +27305,10 @@ function saveAssignmentsState(assignmentsState) {
 }
 
 module.exports = {
-    finishAssignment: finishAssignment,
-    setupAssignmentsState: setupAssignmentsState
+    setupAssignmentsState: setupAssignmentsState,
+    changeDoneState: changeDoneState,
+    refreshViewState: refreshViewState
+
 };
 
 /***/ }),
@@ -27353,8 +27361,7 @@ var Assignment = function (_React$Component) {
 
         var endDate = getTimezonedDate(_this.props.data.end_date);
         _this.state = {
-            endDate: endDate,
-            assignmentId: 'assignment' + _this.props.data.id
+            endDate: endDate
         };
         return _this;
     }
@@ -27365,8 +27372,8 @@ var Assignment = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'card' },
-                _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, endDate: this.state.endDate, assignmentId: this.state.assignmentId }),
-                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, assignmentId: this.state.assignmentId })
+                _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, endDate: this.state.endDate }),
+                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked })
             );
         }
     }]);
@@ -27446,7 +27453,7 @@ var AssignmentBody = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { id: this.props.assignmentId, className: 'collapse show', role: 'tabpanel', 'aria-labelledby': 'headingOne' },
+                { id: this.props.data.id, className: 'collapse show', role: 'tabpanel', 'aria-labelledby': 'headingOne' },
                 _react2.default.createElement(
                     'div',
                     { className: 'card-block' },
@@ -27456,7 +27463,7 @@ var AssignmentBody = function (_React$Component) {
                         'EX ',
                         this.props.data.ex
                     ),
-                    _react2.default.createElement(_DoneButton2.default, { finished: true }),
+                    _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked }),
                     _react2.default.createElement(_Resources2.default, { data: this.props.data.resources })
                 )
             );
@@ -27517,7 +27524,7 @@ var AssignmentTitle = function (_React$Component) {
                     { className: 'mb-0' },
                     _react2.default.createElement(
                         'a',
-                        { 'data-toggle': 'collapse', href: '#' + this.props.assignmentId, 'aria-expanded': 'true', 'aria-controls': this.props.assignmentId },
+                        { 'data-toggle': 'collapse', href: '#' + this.props.data.id, 'aria-expanded': 'true', 'aria-controls': this.props.data.id },
                         this.props.data.title,
                         ' - ',
                         _react2.default.createElement(_DueDate2.default, { endDate: this.props.endDate })
@@ -27586,20 +27593,34 @@ var AssignmentList = function (_React$Component) {
     _createClass(AssignmentList, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
+            this.refreshAssignments();
+        }
+    }, {
+        key: 'refreshAssignments',
+        value: function refreshAssignments() {
             var _this2 = this;
 
             _axios2.default.get('/api/assignment').then(function (assignmentsRes) {
-                var assignments = _localStorageService2.default.setupAssignmentsState(assignmentsRes.data);
-
-                _this2.setState({ assignments: assignments });
+                var assignments = assignmentsRes.data;
+                _localStorageService2.default.setupAssignmentsState(assignments, function () {
+                    _this2.refreshViewState(assignments);
+                });
             });
+        }
+    }, {
+        key: 'refreshViewState',
+        value: function refreshViewState(assignments) {
+            assignments = assignments || this.state.assignments;
+            assignments = _localStorageService2.default.refreshViewState(assignments);
+            this.setState({ assignments: assignments });
         }
     }, {
         key: 'render',
         value: function render() {
+            var _this3 = this;
+
             var assignments = this.state.assignments.map(function (assignment) {
-                console.log(assignment);
-                return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id });
+                return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id, onDoneChecked: _this3.onDoneCheckedCallback.bind(_this3) });
             });
 
             return _react2.default.createElement(
@@ -27607,6 +27628,15 @@ var AssignmentList = function (_React$Component) {
                 { className: 'container', role: 'tablist' },
                 assignments
             );
+        }
+    }, {
+        key: 'onDoneCheckedCallback',
+        value: function onDoneCheckedCallback(id, doneState) {
+            var _this4 = this;
+
+            _localStorageService2.default.changeDoneState(id, doneState, function () {
+                _this4.refreshViewState();
+            });
         }
     }]);
 
@@ -27704,12 +27734,14 @@ var DoneButton = function (_React$Component) {
     }
 
     _createClass(DoneButton, [{
-        key: "wut",
-        value: function wut() {}
+        key: "doneChecked",
+        value: function doneChecked(e) {
+            this.props.onDoneChecked(this.props.id, e.target.checked);
+        }
     }, {
         key: "render",
         value: function render() {
-            return _react2.default.createElement("input", { type: "checkbox", onChange: this.wut, checked: this.props.finished });
+            return _react2.default.createElement("input", { type: "checkbox", onChange: this.doneChecked.bind(this), checked: this.props.done });
         }
     }]);
 

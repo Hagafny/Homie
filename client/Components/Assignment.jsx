@@ -13,16 +13,15 @@ export default class Assignment extends React.Component {
         super(props);
         let endDate = getTimezonedDate(this.props.data.end_date);
         this.state = {
-            endDate: endDate,
-            assignmentId: `assignment${this.props.data.id}`
+            endDate: endDate
         }
     }
 
     render() {
         return (
      <div className="card">
-            <AssignmentHeader data={this.props.data} endDate={this.state.endDate} assignmentId={this.state.assignmentId}/>
-            <AssignmentBody data={this.props.data} assignmentId={this.state.assignmentId}/>
+            <AssignmentHeader data={this.props.data} endDate={this.state.endDate} />
+            <AssignmentBody data={this.props.data} onDoneChecked={this.props.onDoneChecked}/>
         </div>
         )
     }

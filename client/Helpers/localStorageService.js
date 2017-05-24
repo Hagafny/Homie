@@ -7,16 +7,18 @@ function initializeAssignmentsState() {
     let assignmentsState = getAssignmentsState();
     if (!assignmentsState)
         saveAssignmentsState({});
-
 }
 
-let finishAssignment = (assignmentId) => {
+let changeDoneState = (assignmentId, doneState, cb) => {
     let assignmentsState = getAssignmentsState();
-    assignmentsState.push(assignmentId);
+    assignmentsState[assignmentId].done = doneState;
     saveAssignmentsState(assignmentsState);
+
+    if (typeof cb === typeof Function)
+        cb();
 }
 
-let setupAssignmentsState = (assignments) => {
+let setupAssignmentsState = (assignments, cb) => {
 
     /*TODO: REMOVE UNNECCARY IDS */
     // put the good stuff here
@@ -30,20 +32,23 @@ let setupAssignmentsState = (assignments) => {
 
     for (let i = 0; i < assignmentsLength; i++) {
         let assignment = assignments[i];
-        let assignmentID = `a${assignment.id}`;
+        let assignmentID = assignment.id;
         if (!assignmentsState[assignmentID]) {
             assignmentsState[assignmentID] = new AssignmentState();
         }
     }
 
-    assignments = assignments.map((assignment) => {
+    saveAssignmentsState(assignmentsState);
+    if (typeof cb === typeof Function)
+        cb();
+}
 
-        assignment.viewState = assignmentsState[`a${assignment.id}`];
+function refreshViewState(assignments) {
+    let assignmentsState = getAssignmentsState();
+    return assignments.map((assignment) => {
+        assignment.viewState = assignmentsState[assignment.id];
         return assignment;
     });
-
-    saveAssignmentsState(assignmentsState);
-    return assignments;
 }
 
 function getAssignmentsState() {
@@ -55,6 +60,8 @@ function saveAssignmentsState(assignmentsState) {
 }
 
 module.exports = {
-    finishAssignment: finishAssignment,
-    setupAssignmentsState: setupAssignmentsState
+    setupAssignmentsState: setupAssignmentsState,
+    changeDoneState: changeDoneState,
+    refreshViewState: refreshViewState
+
 }

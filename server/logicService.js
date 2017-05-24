@@ -9,7 +9,7 @@ let getAssingments = (cb) => {
 
 let getHardcodedAssingments = (cb) => {
     let assignments = [{
-        id: '23',
+        id: 'a23',
         title: 'C',
         end_date: new Date("2017-05-23 16:00.000"),
         ex: '3',
@@ -23,7 +23,7 @@ let getHardcodedAssingments = (cb) => {
         }
     },
     {
-        id: '18',
+        id: 'a18',
         title: 'Logic & Set Theory',
         end_date: new Date("2017-05-26 11:00.000"),
         ex: '5',
@@ -37,7 +37,7 @@ let getHardcodedAssingments = (cb) => {
         }
     },
     {
-        id: '1',
+        id: 'a1',
         title: 'Linear 2',
         end_date: new Date("2017-05-26 18:00.000"),
         ex: '5',
@@ -51,7 +51,7 @@ let getHardcodedAssingments = (cb) => {
         }
     },
     {
-        id: '20',
+        id: 'a20',
         title: 'Calculus 2',
         end_date: new Date("2017-05-28 22:55.000"),
         ex: '6',
@@ -65,7 +65,7 @@ let getHardcodedAssingments = (cb) => {
         }
     },
     {
-        id: '22',
+        id: 'a22',
         title: 'Data Structures',
         end_date: new Date("2017-05-29 08:00.000"),
         ex: '3',
@@ -92,7 +92,7 @@ let assignmentMapper = (assignment) => {
     var moodleUrl = assignment.moodle_id ? `http://moodle.idc.ac.il/${assignment.year}/mod/assign/view.php?id=${assignment.moodle_id}` : null;
 
     return {
-        id: assignment.id,
+        id: `a${assignment.id}`,
         title: assignment.title,
         end_date: assignment.end_date,
         ex: assignment.ex,

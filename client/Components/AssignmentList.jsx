@@ -13,17 +13,27 @@ export default class AssignmentList extends React.Component {
     }
 
     componentDidMount() {
+        this.refreshAssignments();
+    }
+
+    refreshAssignments() {
         axios.get(`/api/assignment`)
             .then(assignmentsRes => {
-                let assignments = localStorageService.setupAssignmentsState(assignmentsRes.data);
-
-                this.setState({ assignments: assignments });
+                let assignments = assignmentsRes.data;
+                localStorageService.setupAssignmentsState(assignments, () => {
+                    this.refreshViewState(assignments);
+                });
             });
+    }
+
+    refreshViewState(assignments) {
+        assignments = assignments || this.state.assignments;
+        assignments = localStorageService.refreshViewState(assignments);
+        this.setState({ assignments: assignments });
     }
     render() {
         let assignments = this.state.assignments.map(assignment => {
-            console.log(assignment);
-            return <Assignment data={assignment} key={assignment.id} />
+            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} />
         });
 
         return (
@@ -33,8 +43,14 @@ export default class AssignmentList extends React.Component {
 
 
     }
+    onDoneCheckedCallback(id, doneState) {
+        localStorageService.changeDoneState(id, doneState, () => {
+            this.refreshViewState();
+        });
+    }
 
 }
+
 
 
 
