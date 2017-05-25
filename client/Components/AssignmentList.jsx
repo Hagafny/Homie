@@ -1,7 +1,8 @@
 import React from 'react';
-import Assignment from './Assignment.jsx';
 import axios from 'axios';
+import FlipMove from 'react-flip-move';
 import localStorageService from './../Helpers/localStorageService.js';
+import Assignment from './Assignment.jsx';
 
 export default class AssignmentList extends React.Component {
 
@@ -61,12 +62,23 @@ export default class AssignmentList extends React.Component {
     render() {
 
         let assignments = this.state.assignments.map(assignment => {
-            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} refreshAssignments={this.refreshAssignments.bind(this)}/>
+            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} refreshAssignments={this.refreshAssignments.bind(this)} />
         });
+
+        /*const assignments =  this.state.assignments.map(assignment => (
+            <FlipMove duration={750} easing="ease-out">
+                {articles.map(article => (
+                    <Article key={article.id} {...article} />
+                ))}
+            </FlipMove>
+        );*/
+
 
         return (
             <div className="container" role="tablist" id="assignmentsList">
-                {assignments}
+                <FlipMove duration={750} easing="ease">
+                    {assignments}
+                </FlipMove>
             </div>);
     }
 
