@@ -28,26 +28,8 @@ let changeShowState = (assignmentId, showState, cb) => {
 }
 
 let setupAssignmentsState = (assignments, cb) => {
-
-    /*TODO: REMOVE UNNECCARY IDS */
-    // put the good stuff here
-
-    /* REMOVE UNNECCARY IDS */
-
-    //Add default values
-
-    let assignmentsState = getAssignmentsState();
-    let assignmentsLength = assignments.length;
-
-    for (let i = 0; i < assignmentsLength; i++) {
-        let assignment = assignments[i];
-        let assignmentID = assignment.id;
-        if (!assignmentsState[assignmentID]) {
-            assignmentsState[assignmentID] = new AssignmentState();
-        }
-    }
-
-    saveAssignmentsState(assignmentsState);
+    removeOldAssignments(assignments);
+    createDefaultStateForNewAssignments(assignments);
     if (typeof cb === typeof Function)
         cb();
 }
@@ -74,4 +56,44 @@ module.exports = {
     changeShowState: changeShowState,
     refreshViewState: refreshViewState
 
+}
+
+
+function createDefaultStateForNewAssignments(assignments) {
+    let assignmentsState = getAssignmentsState();
+    let assignmentsLength = assignments.length;
+
+    for (let i = 0; i < assignmentsLength; i++) {
+        let assignment = assignments[i];
+        let assignmentID = assignment.id;
+        if (!assignmentsState[assignmentID]) {
+            assignmentsState[assignmentID] = new AssignmentState();
+        }
+    }
+
+    saveAssignmentsState(assignmentsState);
+}
+
+function removeOldAssignments(assignments) {
+    let assignmentsState = getAssignmentsState();
+    let newAssignments = {};
+    for (let id in assignmentsState) {
+        if (assignmetsContains(assignments, id)) {
+            newAssignments[id] = assignmentsState[id];
+        }
+    }
+    saveAssignmentsState(newAssignments);
+}
+
+function assignmetsContains(assignmets, id) {
+    let found = false;
+    let assignmentsLength = assignmets.length;
+
+    for (let i = 0; i < assignmentsLength; i++) {
+        if (assignmets[i].id == id) {
+            found = true;
+            break;
+        }
+    }
+    return found;
 }

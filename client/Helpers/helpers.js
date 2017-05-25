@@ -10,11 +10,9 @@ let dateUntil = (endDate) => {
   }
 
   let days = formatDate(Math.floor(distance / day), "Day", true);
-  let hours = formatDate(Math.floor((distance % day) / hour), "Hour", !days);
-  let minutes = formatDate(Math.floor((distance % hour) / minute), "Minute", !(days || hours));
-
-  let removeSecondsFromCouner = !(days || hours || minutes); // De-Morgan FTW - only remove the seconds bar after everything is 0.
-  let seconds = formatDate(Math.floor((distance % minute) / second), "Second", removeSecondsFromCouner);
+  let hours = formatDate(Math.floor((distance % day) / hour), "Hour");
+  let minutes = formatDate(Math.floor((distance % hour) / minute), "Minute");
+  let seconds = formatDate(Math.floor((distance % minute) / second), "Second");
 
   return [
     days,
@@ -24,9 +22,7 @@ let dateUntil = (endDate) => {
   ];
 }
 
-let formatDate = function formatDate(dateNumber, timeFix, removeOnZero) {
- if (dateNumber < 1 && removeOnZero)
-   return false
+let formatDate = function formatDate(dateNumber, timeFix) {
 
   let title = `${timeFix}${dateNumber != 1 ? 's' : ''}`;
   return {
@@ -36,5 +32,5 @@ let formatDate = function formatDate(dateNumber, timeFix, removeOnZero) {
 }
 
 module.exports = {
-    dateUntil: dateUntil
+  dateUntil: dateUntil
 }

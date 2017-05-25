@@ -8,21 +8,22 @@ let getAssingments = (cb) => {
 }
 
 let getHardcodedAssingments = (cb) => {
-     let assignments = [{
-    //     id: 'a23',
-    //     title: 'C',
-    //     end_date: new Date("2017-05-23 16:00.000"),
-    //     ex: '3',
-    //     resources:
-    //     {
-    //         homework: 'http://moodle.idc.ac.il/2017/mod/resource/view.php?id=62662',
-    //         moodle: null,
-    //         piazza: 'j0jo4j7ubbn1ta',
-    //         lecture: null,
-    //         recitation: null
-    //     }
-    // },
-   // {
+     let assignments = [
+//          {
+//         id: 'a23',
+//         title: 'C',
+//         end_date: new Date("2017-05-23 16:00.000"),
+//         ex: '3',
+//         resources:
+//         {
+//             homework: 'http://moodle.idc.ac.il/2017/mod/resource/view.php?id=62662',
+//             moodle: null,
+//             piazza: 'j0jo4j7ubbn1ta',
+//             lecture: null,
+//             recitation: null
+//         }
+//     },
+   {
         id: 'a18',
         title: 'Logic & Set Theory',
         end_date: new Date("2017-05-26 11:00.000"),

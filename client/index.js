@@ -3,6 +3,7 @@ import 'tether';
 import 'bootstrap';
 import './css/bootstrap.min.css';
 import './css/countdown.css';
+import './css/toggleButton.css';
 import './css/style.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
