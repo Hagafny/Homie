@@ -12,7 +12,7 @@ export default class Resources extends React.Component {
 
     let url = this.props.prefix ? `${this.props.prefix}${this.props.url}` : this.props.url;
     return (
-        <a className="card-link" href={url} target="_blank">{this.props.children}</a>
+      <li> <a href={url} target="_blank">{this.props.children}</a></li>
     )
   };
 }

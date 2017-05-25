@@ -51,7 +51,7 @@ export default class Countdown extends React.Component {
 
 
         return (
-            <div className="clockClass">
+            <div className="countdown">
                 {tiles}
             </div>
         )

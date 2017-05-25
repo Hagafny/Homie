@@ -1,23 +1,25 @@
-.clockClass{
+.countdown{
 	font-family: sans-serif;
-	color: #fff;
+	color: black;
 	display: inline-block;
 	font-weight: 100;
 	text-align: center;
 	font-size: 30px;
 }
 
-.clockClass > div{
+.countdown > div{
 	padding: 10px;
 	border-radius: 3px;
-	background: #00BF96;
+	background:darkgray
+	;
+		
 	display: inline-block;
 }
 
-.clockClass div > span{
+.countdown div > span{
 	padding: 15px;
 	border-radius: 3px;
-	background: #00816A;
+	background: grey;
 	display: inline-block;
 }
 

@@ -16,9 +16,9 @@ export default class DoneButton extends React.Component {
 
 
             <label>
-                <span>Done</span>
+                <span>Done</span><br/>
                 <Toggle
-                    defaultChecked={this.props.done}
+                    defaultChecked={this.props.done} 
                     onChange={this.doneChecked.bind(this)} />
             </label>
            

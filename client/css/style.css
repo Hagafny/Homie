@@ -5,6 +5,7 @@ html {
 
 body {
     margin: 0 0 10px;
+    background-color:whitesmoke
     /* bottom = footer height */
 
 }
@@ -25,3 +26,12 @@ body {
   overflow:hidden;
 
 }
+
+.assignmentList {
+  text-align: center;
+}
+
+.resourceList li{
+  list-style-type: none;
+}
+

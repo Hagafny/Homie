@@ -28090,9 +28090,26 @@ var AssignmentBody = function (_React$Component) {
                         'EX ',
                         this.props.data.ex
                     ),
-                    _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked }),
-                    _react2.default.createElement(_Resources2.default, { data: this.props.data.resources }),
-                    _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date, refreshAssignments: this.props.refreshAssignments, tickCB: this.props.tickCB })
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'row' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-4' },
+                            ' ',
+                            _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date, refreshAssignments: this.props.refreshAssignments, tickCB: this.props.tickCB })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-4' },
+                            _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked })
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-4' },
+                            _react2.default.createElement(_Resources2.default, { data: this.props.data.resources })
+                        )
+                    )
                 )
             );
         }
@@ -28329,7 +28346,7 @@ var AssignmentList = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'container', role: 'tablist', id: 'assignmentsList' },
+                { className: 'container assignmentList', role: 'tablist' },
                 _react2.default.createElement(
                     _reactFlipMove2.default,
                     { duration: 750, easing: 'ease' },
@@ -28509,7 +28526,7 @@ var Countdown = function (_React$Component) {
 
             return _react2.default.createElement(
                 'div',
-                { className: 'clockClass' },
+                { className: 'countdown' },
                 tiles
             );
         }
@@ -28634,6 +28651,7 @@ var DoneButton = function (_React$Component) {
                     null,
                     'Done'
                 ),
+                _react2.default.createElement('br', null),
                 _react2.default.createElement(_reactToggle2.default, {
                     defaultChecked: this.props.done,
                     onChange: this.doneChecked.bind(this) })
@@ -28763,9 +28781,14 @@ var Resources = function (_React$Component) {
 
       var url = this.props.prefix ? "" + this.props.prefix + this.props.url : this.props.url;
       return _react2.default.createElement(
-        "a",
-        { className: "card-link", href: url, target: "_blank" },
-        this.props.children
+        "li",
+        null,
+        " ",
+        _react2.default.createElement(
+          "a",
+          { href: url, target: "_blank" },
+          this.props.children
+        )
       );
     }
   }]);
@@ -28818,8 +28841,8 @@ var Resources = function (_React$Component) {
         value: function render() {
 
             return _react2.default.createElement(
-                'div',
-                null,
+                'ul',
+                { className: 'resourceList' },
                 _react2.default.createElement(
                     _Resource2.default,
                     { url: this.props.data.homework },
@@ -30898,7 +30921,7 @@ exports = module.exports = __webpack_require__(27)(undefined);
 
 
 // module
-exports.push([module.i, ".clockClass{\r\n\tfont-family: sans-serif;\r\n\tcolor: #fff;\r\n\tdisplay: inline-block;\r\n\tfont-weight: 100;\r\n\ttext-align: center;\r\n\tfont-size: 30px;\r\n}\r\n\r\n.clockClass > div{\r\n\tpadding: 10px;\r\n\tborder-radius: 3px;\r\n\tbackground: #00BF96;\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.clockClass div > span{\r\n\tpadding: 15px;\r\n\tborder-radius: 3px;\r\n\tbackground: #00816A;\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.smalltext{\r\n\tpadding-top: 5px;\r\n\tfont-size: 16px;\r\n}", ""]);
+exports.push([module.i, ".countdown{\r\n\tfont-family: sans-serif;\r\n\tcolor: black;\r\n\tdisplay: inline-block;\r\n\tfont-weight: 100;\r\n\ttext-align: center;\r\n\tfont-size: 30px;\r\n}\r\n\r\n.countdown > div{\r\n\tpadding: 10px;\r\n\tborder-radius: 3px;\r\n\tbackground:darkgray\r\n\t;\r\n\t\t\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.countdown div > span{\r\n\tpadding: 15px;\r\n\tborder-radius: 3px;\r\n\tbackground: grey;\r\n\tdisplay: inline-block;\r\n}\r\n\r\n.smalltext{\r\n\tpadding-top: 5px;\r\n\tfont-size: 16px;\r\n}", ""]);
 
 // exports
 
@@ -30912,7 +30935,7 @@ exports = module.exports = __webpack_require__(27)(undefined);
 
 
 // module
-exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    /* bottom = footer height */\r\n\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}", ""]);
+exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    background-color:whitesmoke\r\n    /* bottom = footer height */\r\n\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}\r\n\r\n.assignmentList {\r\n  text-align: center;\r\n}\r\n\r\n.resourceList li{\r\n  list-style-type: none;\r\n}\r\n\r\n", ""]);
 
 // exports
 
