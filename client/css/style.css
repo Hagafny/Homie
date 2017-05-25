@@ -1,3 +1,27 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 10px;
+    /* bottom = footer height */
+
+}
+
 .card-header {
   cursor: pointer;
+}
+
+#footer {
+  background-color: #DFE2DB;
+  position:absolute;
+  bottom:0;
+  left: 0;
+  width:100%;
+  border-top: 1px solid;
+  font-size: smaller;
+  height: 20px;
+  overflow:hidden;
+
 }

@@ -28280,7 +28280,6 @@ var AssignmentList = function (_React$Component) {
         value: function refreshAssignments() {
             var _this2 = this;
 
-            console.log('fetching uus');
             _axios2.default.get('/api/assignment').then(function (assignmentsRes) {
                 var assignments = assignmentsRes.data;
                 _localStorageService2.default.setupAssignmentsState(assignments, function () {
@@ -28327,14 +28326,6 @@ var AssignmentList = function (_React$Component) {
             var assignments = this.state.assignments.map(function (assignment) {
                 return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id, onDoneChecked: _this5.onDoneCheckedCallback.bind(_this5), onShowCallback: _this5.onShowCallback.bind(_this5), refreshAssignments: _this5.refreshAssignments.bind(_this5) });
             });
-
-            /*const assignments =  this.state.assignments.map(assignment => (
-                <FlipMove duration={750} easing="ease-out">
-                    {articles.map(article => (
-                        <Article key={article.id} {...article} />
-                    ))}
-                </FlipMove>
-            );*/
 
             return _react2.default.createElement(
                 'div',
@@ -28393,6 +28384,10 @@ var _AssignmentList = __webpack_require__(124);
 
 var _AssignmentList2 = _interopRequireDefault(_AssignmentList);
 
+var _Footer = __webpack_require__(256);
+
+var _Footer2 = _interopRequireDefault(_Footer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28416,7 +28411,8 @@ var AssignmentsPage = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_AssignmentList2.default, null)
+                _react2.default.createElement(_AssignmentList2.default, null),
+                _react2.default.createElement(_Footer2.default, null)
             );
         }
     }]);
@@ -28493,7 +28489,7 @@ var Countdown = function (_React$Component) {
             this.setState({
                 tiles: dUntil
             });
-            console.log(dUntil);
+
             this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
             // If everything is 0, stop the interval
             if (dUntil[3].number == 0 && dUntil[2].number == 0 && dUntil[1].number == 0 && dUntil[0].number == 0) {
@@ -30916,7 +30912,7 @@ exports = module.exports = __webpack_require__(27)(undefined);
 
 
 // module
-exports.push([module.i, ".card-header {\r\n  cursor: pointer;\r\n}", ""]);
+exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    /* bottom = footer height */\r\n\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}", ""]);
 
 // exports
 
@@ -45089,6 +45085,60 @@ function propConverter(ComposedComponent) {
 exports.default = propConverter;
 module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Footer = function (_React$Component) {
+    _inherits(Footer, _React$Component);
+
+    function Footer() {
+        _classCallCheck(this, Footer);
+
+        return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
+    }
+
+    _createClass(Footer, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "footer",
+                { id: "footer" },
+                _react2.default.createElement(
+                    "p",
+                    null,
+                    "Made by Ron Hagafny"
+                )
+            );
+        }
+    }]);
+
+    return Footer;
+}(_react2.default.Component);
+
+exports.default = Footer;
 
 /***/ })
 /******/ ]);
