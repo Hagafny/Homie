@@ -1,16 +1,27 @@
 import React from 'react'
+import Toggle from 'react-toggle'
+
 export default class DoneButton extends React.Component {
 
     constructor(props) {
         super(props)
     }
+
     doneChecked(e) {
         e.stopPropagation();
         this.props.onDoneChecked(this.props.id, e.target.checked);
     }
     render() {
         return (
-            <input type="checkbox" data-toggle="toggle" onChange={this.doneChecked.bind(this)} checked={this.props.done} />
+
+
+            <label>
+                <span>Done</span>
+                <Toggle
+                    defaultChecked={this.props.done}
+                    onChange={this.doneChecked.bind(this)} />
+            </label>
+           
         )
     };
 }
