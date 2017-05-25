@@ -25,25 +25,30 @@ export default class Countdown2 extends React.Component {
             tiles: dUntil
         });
 
+        this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
         // If everything is 0, stop the interval
-        // if (dUntil[3] === false && dUntil[2] === false && dUntil[1] === false && dUntil[0] === false) {
-        //     window.clearInterval(this.interval)
-        // }
+        if (dUntil[3].number == 0 &&
+            dUntil[2].number == 0 &&
+            dUntil[1].number == 0 &&
+            dUntil[0].number == 0) {
+            window.clearInterval(this.interval)
+        }
     }
 
-    render() {
-        if (!this.state.tiles) //Just validating against weird behaviour
-            return false
 
-        let tiles = this.state.tiles.map((countdownNode, index) => {
-            return <CountdownTile number={countdownNode.number} title={countdownNode.title} key={index}></CountdownTile>
-        })
+render() {
+    if (!this.state.tiles) //Just validating against weird behaviour
+        return false
+
+    let tiles = this.state.tiles.map((countdownNode, index) => {
+        return <CountdownTile number={countdownNode.number} title={countdownNode.title} key={index}></CountdownTile>
+    })
 
 
-        return (
-            <div className="clockClass">
-                {tiles}
-            </div>
-        )
-    };
+    return (
+        <div className="clockClass">
+            {tiles}
+        </div>
+    )
+};
 }

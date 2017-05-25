@@ -27972,7 +27972,7 @@ var Assignment = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Assignment.__proto__ || Object.getPrototypeOf(Assignment)).call(this, props));
 
-        var status = _this.getAssignmentStatus(_this.props.data.viewState.done, _this.props.data_end_date);
+        var status = _this.getAssignmentStatus();
         _this.state = { status: status };
 
         return _this;
@@ -27981,14 +27981,28 @@ var Assignment = function (_React$Component) {
     _createClass(Assignment, [{
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            var status = this.getAssignmentStatus(nextProps.data.viewState.done, nextProps.data.end_date);
+            this.changeStatus();
+        }
+    }, {
+        key: 'changeStatus',
+        value: function changeStatus(dateUntil) {
+            var status = this.getAssignmentStatus();
             this.setState({ status: status });
         }
     }, {
         key: 'getAssignmentStatus',
-        value: function getAssignmentStatus(doneState, endDate) {
-            if (doneState) return 3;else {
-                return 0;
+        value: function getAssignmentStatus(dateUntil) {
+            if (this.props.data.viewState.done) return 3;else {
+                var hoursRemaining = void 0;
+                if (!dateUntil) {
+                    //This is if we get to this point not from the tick event of the countdown. We have to calculate the total hours remaining from scratch.
+                    var date1 = new Date(); //Might need to reduce 180 from here.
+                    var date2 = this.props.data.end_date;
+                    var diff = date2.getTime() - date1.getTime();
+                    hoursRemaining = Math.floor(diff / 1000 / 60 / 60);
+                } else hoursRemaining = dateUntil[0].number * 24 + dateUntil[1].number; //If we call this straight from the tick method of Countdown, we can calculate total hours remaining
+
+                if (hoursRemaining <= 5) return 2;else if (hoursRemaining <= 23) return 1;else return 0;
             }
         }
     }, {
@@ -28003,26 +28017,13 @@ var Assignment = function (_React$Component) {
                 'div',
                 { className: 'card' },
                 _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, status: this.state.status, endDate: this.props.data.end_date, onShowCallback: this.props.onShowCallback }),
-                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked })
+                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked, tickCB: this.changeStatus.bind(this) })
             );
         }
     }]);
 
     return Assignment;
 }(_react2.default.Component);
-
-/*<div className="row assignment">
-    <div className="col-sm-3">
-        <Title title={this.props.data.title} ex={this.props.data.ex} endDate={this.state.endDate} />
-    </div>
-        <div className="col-sm-3">
-        <Resources data={this.props.data.resources} />
-    </div>
-    <div className="col-sm-3">
-        <Countdown2 endDate={this.state.endDate} />
-    </div>
-</div>*/
-
 
 exports.default = Assignment;
 
@@ -28091,7 +28092,7 @@ var AssignmentBody = function (_React$Component) {
                     ),
                     _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked }),
                     _react2.default.createElement(_Resources2.default, { data: this.props.data.resources }),
-                    _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date })
+                    _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date, tickCB: this.props.tickCB })
                 )
             );
         }
@@ -28467,10 +28468,11 @@ var Countdown2 = function (_React$Component) {
                 tiles: dUntil
             });
 
+            this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
             // If everything is 0, stop the interval
-            // if (dUntil[3] === false && dUntil[2] === false && dUntil[1] === false && dUntil[0] === false) {
-            //     window.clearInterval(this.interval)
-            // }
+            if (dUntil[3].number == 0 && dUntil[2].number == 0 && dUntil[1].number == 0 && dUntil[0].number == 0) {
+                window.clearInterval(this.interval);
+            }
         }
     }, {
         key: 'render',

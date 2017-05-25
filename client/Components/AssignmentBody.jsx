@@ -18,7 +18,7 @@ export default class AssignmentBody extends React.Component {
 
                     <DoneButton id={this.props.data.id} done={this.props.data.viewState.done} onDoneChecked={this.props.onDoneChecked} />
                     <Resources data={this.props.data.resources} />
-                    <Countdown2 endDate={this.props.data.end_date} />
+                    <Countdown2 endDate={this.props.data.end_date} tickCB={this.props.tickCB}/>
                 </div>
             </div>
         )
