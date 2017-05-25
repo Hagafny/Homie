@@ -5,7 +5,6 @@ Made Using Node and React
 ~Ron
 
 TODO: 
-* Make tick appeal to status and write logic for when it's warning and danger.
 * Add Footer
 * Center everything up
 * Add bootstrap modal with class info (Later on if there's a need)

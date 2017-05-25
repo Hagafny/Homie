@@ -28017,7 +28017,7 @@ var Assignment = function (_React$Component) {
                 'div',
                 { className: 'card' },
                 _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, status: this.state.status, endDate: this.props.data.end_date, onShowCallback: this.props.onShowCallback }),
-                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked, tickCB: this.changeStatus.bind(this) })
+                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked, refreshAssignments: this.props.refreshAssignments, tickCB: this.changeStatus.bind(this) })
             );
         }
     }]);
@@ -28092,7 +28092,7 @@ var AssignmentBody = function (_React$Component) {
                     ),
                     _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked }),
                     _react2.default.createElement(_Resources2.default, { data: this.props.data.resources }),
-                    _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date, tickCB: this.props.tickCB })
+                    _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date, refreshAssignments: this.props.refreshAssignments, tickCB: this.props.tickCB })
                 )
             );
         }
@@ -28267,10 +28267,16 @@ var AssignmentList = function (_React$Component) {
             this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
         }
     }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            clearInterval(this.interval);
+        }
+    }, {
         key: 'refreshAssignments',
         value: function refreshAssignments() {
             var _this2 = this;
 
+            console.log('fetching uus');
             _axios2.default.get('/api/assignment').then(function (assignmentsRes) {
                 var assignments = assignmentsRes.data;
                 _localStorageService2.default.setupAssignmentsState(assignments, function () {
@@ -28315,7 +28321,7 @@ var AssignmentList = function (_React$Component) {
             var _this5 = this;
 
             var assignments = this.state.assignments.map(function (assignment) {
-                return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id, onDoneChecked: _this5.onDoneCheckedCallback.bind(_this5), onShowCallback: _this5.onShowCallback.bind(_this5) });
+                return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id, onDoneChecked: _this5.onDoneCheckedCallback.bind(_this5), onShowCallback: _this5.onShowCallback.bind(_this5), refreshAssignments: _this5.refreshAssignments.bind(_this5) });
             });
 
             return _react2.default.createElement(
@@ -28435,13 +28441,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Countdown2 = function (_React$Component) {
-    _inherits(Countdown2, _React$Component);
+var Countdown = function (_React$Component) {
+    _inherits(Countdown, _React$Component);
 
-    function Countdown2(props) {
-        _classCallCheck(this, Countdown2);
+    function Countdown(props) {
+        _classCallCheck(this, Countdown);
 
-        var _this = _possibleConstructorReturn(this, (Countdown2.__proto__ || Object.getPrototypeOf(Countdown2)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
 
         _this.state = {
             tiles: []
@@ -28449,7 +28455,7 @@ var Countdown2 = function (_React$Component) {
         return _this;
     }
 
-    _createClass(Countdown2, [{
+    _createClass(Countdown, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.tick();
@@ -28471,6 +28477,7 @@ var Countdown2 = function (_React$Component) {
             this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
             // If everything is 0, stop the interval
             if (dUntil[3].number == 0 && dUntil[2].number == 0 && dUntil[1].number == 0 && dUntil[0].number == 0) {
+                this.props.refreshAssignments(); //Need to check if works on DB.
                 window.clearInterval(this.interval);
             }
         }
@@ -28492,10 +28499,10 @@ var Countdown2 = function (_React$Component) {
         }
     }]);
 
-    return Countdown2;
+    return Countdown;
 }(_react2.default.Component);
 
-exports.default = Countdown2;
+exports.default = Countdown;
 
 /***/ }),
 /* 127 */

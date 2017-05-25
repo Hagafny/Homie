@@ -26,7 +26,7 @@ let getHardcodedAssingments = (cb) => {
    {
         id: 'a18',
         title: 'Logic & Set Theory',
-        end_date: new Date("2017-05-26 04:53.000"),
+        end_date: new Date("2017-05-26 00:16.000"),
         ex: '5',
         resources:
         {

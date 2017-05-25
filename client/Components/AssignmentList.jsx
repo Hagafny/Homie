@@ -18,7 +18,12 @@ export default class AssignmentList extends React.Component {
         this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
     }
 
+    componentWillUnmount() {
+        clearInterval(this.interval)
+    }
+
     refreshAssignments() {
+        console.log('fetching uus');
         axios.get(`/api/assignment`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
@@ -53,10 +58,10 @@ export default class AssignmentList extends React.Component {
     }
 
 
-        render() {
+    render() {
 
         let assignments = this.state.assignments.map(assignment => {
-            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} />
+            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} refreshAssignments={this.refreshAssignments.bind(this)}/>
         });
 
         return (

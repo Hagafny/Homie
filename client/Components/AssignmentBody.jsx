@@ -1,7 +1,7 @@
 import React from 'react'
 import Resources from './Resources.jsx';
 import DoneButton from './DoneButton.jsx';
-import Countdown2 from './Countdown2.jsx';
+import Countdown from './Countdown.jsx';
 export default class AssignmentBody extends React.Component {
 
     constructor(props) {
@@ -18,7 +18,7 @@ export default class AssignmentBody extends React.Component {
 
                     <DoneButton id={this.props.data.id} done={this.props.data.viewState.done} onDoneChecked={this.props.onDoneChecked} />
                     <Resources data={this.props.data.resources} />
-                    <Countdown2 endDate={this.props.data.end_date} tickCB={this.props.tickCB}/>
+                    <Countdown endDate={this.props.data.end_date} refreshAssignments={this.props.refreshAssignments} tickCB={this.props.tickCB}/>
                 </div>
             </div>
         )
