@@ -29,7 +29,7 @@ export default class Assignment extends React.Component {
 
             //    if (location.hostname != "localhost") {
 
-              /      date1.setMinutes(date1.getMinutes() + date1.getTimezoneOffset());
+              //      date1.setMinutes(date1.getMinutes() + date1.getTimezoneOffset());
               //  }
 
 
