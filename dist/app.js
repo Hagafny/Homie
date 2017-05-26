@@ -28058,7 +28058,6 @@ var Assignment = function (_React$Component) {
     }, {
         key: 'getAssignmentStatus',
         value: function getAssignmentStatus(dateUntil) {
-            console.log(dateUntil);
             if (this.props.data.viewState.done) return 3;else {
                 var hoursRemaining = void 0;
                 if (!dateUntil) {

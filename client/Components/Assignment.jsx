@@ -20,7 +20,6 @@ export default class Assignment extends React.Component {
         this.setState({ status: status });
     }
     getAssignmentStatus(dateUntil) {
-        console.log(dateUntil);
         if (this.props.data.viewState.done)
             return 3;
         else {
