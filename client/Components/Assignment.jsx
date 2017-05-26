@@ -25,7 +25,6 @@ export default class Assignment extends React.Component {
         else {
             let hoursRemaining;
             if (!dateUntil) { //This is if we get to this point not from the tick event of the countdown. We have to calculate the total hours remaining from scratch.
-               console.log('here now');
                 var date1 = new Date(); //Might need to reduce 180 from here.
 
                 if (location.hostname != "localhost") {
