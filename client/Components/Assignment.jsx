@@ -26,6 +26,12 @@ export default class Assignment extends React.Component {
             let hoursRemaining;
             if (!dateUntil) { //This is if we get to this point not from the tick event of the countdown. We have to calculate the total hours remaining from scratch.
                 var date1 = new Date(); //Might need to reduce 180 from here.
+
+                if (location.hostname != "localhost") {
+                    date1.setMinutes(date1.getMinutes() + date1.getTimezoneOffset());
+                }
+
+
                 var date2 = this.props.data.end_date;
                 var diff = date2.getTime() - date1.getTime();
                 hoursRemaining = Math.floor(diff / 1000 / 60 / 60);
@@ -51,7 +57,7 @@ export default class Assignment extends React.Component {
         return (
             <div className="card">
                 <AssignmentHeader data={this.props.data} status={this.state.status} endDate={this.props.data.end_date} onShowCallback={this.props.onShowCallback} />
-                <AssignmentBody data={this.props.data} onDoneChecked={this.props.onDoneChecked} refreshAssignments={this.props.refreshAssignments} tickCB={this.changeStatus.bind(this)}/>
+                <AssignmentBody data={this.props.data} onDoneChecked={this.props.onDoneChecked} refreshAssignments={this.props.refreshAssignments} tickCB={this.changeStatus.bind(this)} />
             </div>
         )
     }
