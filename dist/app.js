@@ -28065,6 +28065,7 @@ var Assignment = function (_React$Component) {
                     var date1 = new Date(); //Might need to reduce 180 from here.
 
                     if (location.hostname != "localhost") {
+                        console.log(date1.getTimezoneOffset());
                         date1.setMinutes(date1.getMinutes() + date1.getTimezoneOffset());
                     }
 
@@ -28072,7 +28073,7 @@ var Assignment = function (_React$Component) {
                     var diff = date2.getTime() - date1.getTime();
                     hoursRemaining = Math.floor(diff / 1000 / 60 / 60);
                 } else hoursRemaining = dateUntil[0].number * 24 + dateUntil[1].number; //If we call this straight from the tick method of Countdown, we can calculate total hours remaining
-                console.log(hoursRemaining);
+                // console.log(hoursRemaining);
                 if (hoursRemaining <= 5) return 2;else if (hoursRemaining <= 23) return 1;else return 0;
             }
         }
