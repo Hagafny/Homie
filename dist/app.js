@@ -28581,7 +28581,6 @@ var Countdown = function (_React$Component) {
             this.setState({
                 tiles: dUntil
             });
-            console.log(dUntil);
             this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
             // If everything is 0, stop the interval
             if (dUntil[3].number == 0 && dUntil[2].number == 0 && dUntil[1].number == 0 && dUntil[0].number == 0) {

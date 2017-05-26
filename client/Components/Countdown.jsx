@@ -28,7 +28,6 @@ export default class Countdown extends React.Component {
         this.setState({
             tiles: dUntil
         });
-        console.log(dUntil);
         this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
         // If everything is 0, stop the interval
         if (dUntil[3].number == 0 &&
