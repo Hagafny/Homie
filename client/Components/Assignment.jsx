@@ -38,7 +38,7 @@ export default class Assignment extends React.Component {
             }
             else
                 hoursRemaining = dateUntil[0].number * 24 + dateUntil[1].number; //If we call this straight from the tick method of Countdown, we can calculate total hours remaining
-
+            console.log(hoursRemaining);
             if (hoursRemaining <= 5)
                 return 2
             else if (hoursRemaining <= 23)
