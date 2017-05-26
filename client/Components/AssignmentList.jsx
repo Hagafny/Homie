@@ -85,7 +85,9 @@ function assignmentSorter(a, b) {
 }
 
 function getTimezonedDate(dateString) {
-    console.log('getting it');
+    if (typeof dateString == "object")
+        return dateString;
+
     let endDate = new Date(dateString);
 
     if (location.hostname != "localhost") {
