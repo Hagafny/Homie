@@ -28052,7 +28052,7 @@ var Assignment = function (_React$Component) {
     }, {
         key: 'changeStatus',
         value: function changeStatus(dateUntil) {
-            var status = this.getAssignmentStatus();
+            var status = this.getAssignmentStatus(dateUntil);
             this.setState({ status: status });
         }
     }, {
@@ -28073,7 +28073,7 @@ var Assignment = function (_React$Component) {
                     var diff = date2.getTime() - date1.getTime();
                     hoursRemaining = Math.floor(diff / 1000 / 60 / 60);
                 } else hoursRemaining = dateUntil[0].number * 24 + dateUntil[1].number; //If we call this straight from the tick method of Countdown, we can calculate total hours remaining
-                //  console.log(hoursRemaining);
+                console.log(hoursRemaining);
                 if (hoursRemaining <= 5) return 2;else if (hoursRemaining <= 23) return 1;else return 0;
             }
         }
@@ -28582,7 +28582,7 @@ var Countdown = function (_React$Component) {
             this.setState({
                 tiles: dUntil
             });
-
+            console.log(dUntil);
             this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
             // If everything is 0, stop the interval
             if (dUntil[3].number == 0 && dUntil[2].number == 0 && dUntil[1].number == 0 && dUntil[0].number == 0) {
