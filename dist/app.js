@@ -28062,6 +28062,7 @@ var Assignment = function (_React$Component) {
                 var hoursRemaining = void 0;
                 if (!dateUntil) {
                     //This is if we get to this point not from the tick event of the countdown. We have to calculate the total hours remaining from scratch.
+                    console.log('here now');
                     var date1 = new Date(); //Might need to reduce 180 from here.
 
                     if (location.hostname != "localhost") {
