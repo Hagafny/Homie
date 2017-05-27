@@ -1,5 +1,4 @@
 import React from 'react'
-
 export default class Resources extends React.Component {
 
   constructor(props) {
@@ -13,7 +12,7 @@ export default class Resources extends React.Component {
     let url = this.props.prefix ? `${this.props.prefix}${this.props.url}` : this.props.url;
     return (
       <div>
-        <img src={`/images/${this.props.img}.png`} alt="" height="20" width="20" />
+        <img src={this.props.img} alt="" height="20" width="20" />
         <a href={url} target="_blank">{this.props.children}</a>
       </div>
 
