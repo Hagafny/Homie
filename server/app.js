@@ -10,7 +10,7 @@ app.set('port', (process.env.PORT || 8000));
 app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/api/assignment/', function (req, res) {
-    logicService.getAssingments((assignments) => {
+    logicService.getHardcodedAssingments((assignments) => {
         res.json(assignments);
     });
 

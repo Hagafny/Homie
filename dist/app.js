@@ -28063,18 +28063,11 @@ var Assignment = function (_React$Component) {
                 if (!dateUntil) {
                     //This is if we get to this point not from the tick event of the countdown. We have to calculate the total hours remaining from scratch.
                     var date1 = new Date(); //Might need to reduce 180 from here.
-
-                    //    if (location.hostname != "localhost") {
-
-                    //      date1.setMinutes(date1.getMinutes() + date1.getTimezoneOffset());
-                    //  }
-
-
                     var date2 = this.props.data.end_date;
                     var diff = date2.getTime() - date1.getTime();
                     hoursRemaining = Math.floor(diff / 1000 / 60 / 60);
                 } else hoursRemaining = dateUntil[0].number * 24 + dateUntil[1].number; //If we call this straight from the tick method of Countdown, we can calculate total hours remaining
-                console.log(hoursRemaining);
+
                 if (hoursRemaining <= 5) return 2;else if (hoursRemaining <= 23) return 1;else return 0;
             }
         }
@@ -28911,9 +28904,9 @@ var Resources = function (_React$Component) {
 
       var url = this.props.prefix ? "" + this.props.prefix + this.props.url : this.props.url;
       return _react2.default.createElement(
-        "li",
+        "div",
         null,
-        " ",
+        _react2.default.createElement("img", { src: "/images/" + this.props.img + ".png", alt: "", height: "20", width: "20" }),
         _react2.default.createElement(
           "a",
           { href: url, target: "_blank" },
@@ -28974,29 +28967,55 @@ var Resources = function (_React$Component) {
                 'ul',
                 { className: 'resourceList' },
                 _react2.default.createElement(
-                    _Resource2.default,
-                    { url: this.props.data.homework },
-                    'HW'
+                    'li',
+                    null,
+                    ' ',
+                    _react2.default.createElement(
+                        _Resource2.default,
+                        { url: this.props.data.homework, img: 'pdf' },
+                        'HW'
+                    ),
+                    ' '
                 ),
                 _react2.default.createElement(
-                    _Resource2.default,
-                    { url: this.props.data.moodle },
-                    'Submit'
+                    'li',
+                    null,
+                    '  ',
+                    _react2.default.createElement(
+                        _Resource2.default,
+                        { url: this.props.data.moodle, img: 'moodle' },
+                        'Submit'
+                    )
                 ),
                 _react2.default.createElement(
-                    _Resource2.default,
-                    { url: this.props.data.lecture },
-                    'Lecture'
+                    'li',
+                    null,
+                    ' ',
+                    _react2.default.createElement(
+                        _Resource2.default,
+                        { url: this.props.data.lecture, img: 'gdrive' },
+                        'Lecture'
+                    )
                 ),
                 _react2.default.createElement(
-                    _Resource2.default,
-                    { url: this.props.data.recitation },
-                    'Recitation'
+                    'li',
+                    null,
+                    '  ',
+                    _react2.default.createElement(
+                        _Resource2.default,
+                        { url: this.props.data.recitation, img: 'gdrive' },
+                        'Recitation'
+                    )
                 ),
                 _react2.default.createElement(
-                    _Resource2.default,
-                    { prefix: "https://piazza.com/class/", url: this.props.data.piazza },
-                    'Piazza'
+                    'li',
+                    null,
+                    ' ',
+                    _react2.default.createElement(
+                        _Resource2.default,
+                        { prefix: "https://piazza.com/class/", url: this.props.data.piazza, img: 'piazza' },
+                        'Piazza'
+                    )
                 )
             );
         }
