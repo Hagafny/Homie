@@ -31086,7 +31086,7 @@ exports = module.exports = __webpack_require__(28)(undefined);
 
 
 // module
-exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    background-color:whitesmoke\r\n    /* bottom = footer height */\r\n\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}\r\n\r\n.assignmentList {\r\n  text-align: center;\r\n}\r\n\r\n.resourceList {\r\n\r\n}\r\n.resourceList li{\r\n  list-style-type: none;\r\n}\r\n\r\n.resourceList li img{  \r\n  float: left;\r\n}\r\n\r\n.resourceList li img{  \r\n}\r\n.resourceWrapper {\r\n    align-items: right;\r\n}", ""]);
+exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    background-color:whitesmoke\r\n    /* bottom = footer height */\r\n\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}\r\n\r\n.assignmentList {\r\n  text-align: center;\r\n}\r\n\r\n.resourceList {\r\n\r\n}\r\n.resourceList li{\r\n  list-style-type: none;\r\n} \r\n\r\n.resourceList li img{  \r\n  float: left;\r\n}\r\n\r\n.resourceList li img{  \r\n}\r\n.resourceWrapper {\r\n    align-items: right;\r\n}", ""]);
 
 // exports
 
