@@ -21,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hagafny/CountdownReact.git"
+    "url": "git+https://github.com/Hagafny/Homey.git"
   },
   "bugs": {
-    "url": "https://github.com/Hagafny/CountdownReact/issues"
+    "url": "https://github.com/Hagafny/Homey/issues"
   },
   "scripts": {
     "start": "node server/app.js",
