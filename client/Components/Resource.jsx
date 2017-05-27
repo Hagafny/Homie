@@ -12,8 +12,9 @@ export default class Resources extends React.Component {
     let url = this.props.prefix ? `${this.props.prefix}${this.props.url}` : this.props.url;
     return (
       <div>
-        <img src={this.props.img} alt="" height="20" width="20" />
-        <a href={url} target="_blank">{this.props.children}</a>
+
+       <span className="resource">  <a href={url} target="_blank">{this.props.children}</a></span> 
+             <img src={this.props.img} alt="" height="20" width="20" />
       </div>
 
     )

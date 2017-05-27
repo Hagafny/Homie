@@ -35,3 +35,6 @@ body {
   list-style-type: none;
 }
 
+.resource {
+  max-width: 100px;
+}

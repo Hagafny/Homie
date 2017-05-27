@@ -28156,18 +28156,18 @@ var AssignmentBody = function (_React$Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-sm-4' },
+                            { className: 'col' },
                             ' ',
                             _react2.default.createElement(_Countdown2.default, { countdown: this.props.data.countdown })
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-sm-4' },
+                            { className: 'col' },
                             _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked })
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-sm-4' },
+                            { className: 'col' },
                             _react2.default.createElement(_Resources2.default, { data: this.props.data.resources })
                         )
                     )
@@ -28898,12 +28898,17 @@ var Resources = function (_React$Component) {
       return _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement("img", { src: this.props.img, alt: "", height: "20", width: "20" }),
         _react2.default.createElement(
-          "a",
-          { href: url, target: "_blank" },
-          this.props.children
-        )
+          "span",
+          { className: "resource" },
+          "  ",
+          _react2.default.createElement(
+            "a",
+            { href: url, target: "_blank" },
+            this.props.children
+          )
+        ),
+        _react2.default.createElement("img", { src: this.props.img, alt: "", height: "20", width: "20" })
       );
     }
   }]);
@@ -31081,7 +31086,7 @@ exports = module.exports = __webpack_require__(28)(undefined);
 
 
 // module
-exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    background-color:whitesmoke\r\n    /* bottom = footer height */\r\n\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}\r\n\r\n.assignmentList {\r\n  text-align: center;\r\n}\r\n\r\n.resourceList li{\r\n  list-style-type: none;\r\n}\r\n\r\n", ""]);
+exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    background-color:whitesmoke\r\n    /* bottom = footer height */\r\n\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}\r\n\r\n.assignmentList {\r\n  text-align: center;\r\n}\r\n\r\n.resourceList li{\r\n  list-style-type: none;\r\n}\r\n\r\n.resource {\r\n  max-width: 100px;\r\n}", ""]);
 
 // exports
 
