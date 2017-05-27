@@ -1,10 +1,22 @@
 {
-  "name": "Homey",
+  "name": "Homie",
   "version": "1.0.0",
   "description": "IDC Assignments Page",
   "author": "Ron Hagafny",
   "main": "server/app.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node server/app.js",
+    "watch": "webpack --watch",
+    "prod": "webpack --config webpack.production.config.js -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hagafny/Homie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Hagafny/Homie/issues"
+  },
   "dependencies": {
     "axios": "^0.16.1",
     "bootstrap": "^4.0.0-alpha.6",
@@ -18,18 +30,6 @@
     "react-flip-move": "^2.9.12",
     "react-toggle": "^4.0.1",
     "tether": "^1.4.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Hagafny/Homey.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Hagafny/Homey/issues"
-  },
-  "scripts": {
-    "start": "node server/app.js",
-    "watch": "webpack --watch",
-    "prod": "webpack --config webpack.production.config.js -p"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
