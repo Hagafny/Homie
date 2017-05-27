@@ -28171,17 +28171,17 @@ var AssignmentBody = function (_React$Component) {
                         { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-sm-4' },
+                            { className: 'col-xs-3 col-sm-4' },
                             _react2.default.createElement(_Resources2.default, { data: this.props.data.resources })
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-sm-4' },
+                            { className: 'col-xs-3 col-sm-4' },
                             _react2.default.createElement(_DoneButton2.default, { id: this.props.data.id, done: this.props.data.viewState.done, onDoneChecked: this.props.onDoneChecked })
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'col-sm-4' },
+                            { className: 'col-xs-6 col-sm-4' },
                             ' ',
                             _react2.default.createElement(_Countdown2.default, { countdown: this.props.data.countdown })
                         )
