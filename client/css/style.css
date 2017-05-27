@@ -31,19 +31,14 @@ body {
   text-align: center;
 }
 
-.resourceList {
-
-}
 .resourceList li{
   list-style-type: none;
 } 
 
-.resourceList li img{  
-  float: left;
+.resourceList {
+  text-align: left; 
 }
 
-.resourceList li img{  
-}
-.resourceWrapper {
-    align-items: right;
+.resourceList li div span {
+  padding-left:1em;
 }

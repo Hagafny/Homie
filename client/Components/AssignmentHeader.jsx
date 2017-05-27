@@ -49,7 +49,7 @@ export default class AssignmentTitle extends React.Component {
     render() {
         return (
             <div data-toggle="collapse" href={`#${this.props.data.id}`} aria-expanded={this.props.data.viewState.show} aria-controls={this.props.data.id} className={`card-header ${this.state.color}`} role="tab" onClick={this.onCollapse.bind(this)}>
-                <h5 className="mb-0">
+                <h5>
                     {this.props.data.title} - <DueDate endDate={this.props.endDate} />
                 </h5>
             </div>
