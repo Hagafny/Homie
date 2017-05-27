@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
@@ -27,6 +28,11 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      { // Work with images. This loader checks and if the file is less than 5k it will convert to Base64. If he's bigger, it will move the file
+        // to a dist folder under the name= address.
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader?limit=5000&name=images/[hash:6].[ext]'
+      } // inline base64 URLs for <=5k images, direct URLs for the rest  
     ]
   },
   plugins: [HtmlWebpackPluginConfig, ProvidePlugin]

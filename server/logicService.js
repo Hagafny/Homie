@@ -26,7 +26,7 @@ let getHardcodedAssingments = (cb) => {
    {
         id: 'a18',
         title: 'Logic & Set Theory',
-        end_date: new Date("2017-05-27 00:16.000"),
+        end_date: new Date("2017-06-02 00:16.000"),
         ex: '5',
         resources:
         {
@@ -40,7 +40,7 @@ let getHardcodedAssingments = (cb) => {
     {
         id: 'a1',
         title: 'Linear 2',
-        end_date: new Date("2017-05-26 18:00.000"),
+        end_date: new Date("2017-06-03 18:00.000"),
         ex: '5',
         resources:
         {
@@ -54,7 +54,7 @@ let getHardcodedAssingments = (cb) => {
     {
         id: 'a20',
         title: 'Calculus 2',
-        end_date: new Date("2017-05-28 22:55.000"),
+        end_date: new Date("2017-05-28 16:00.000"),
         ex: '6',
         resources:
         {

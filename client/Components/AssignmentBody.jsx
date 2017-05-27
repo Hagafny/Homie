@@ -16,13 +16,10 @@ export default class AssignmentBody extends React.Component {
                 <div className="card-block">
                     <h6 className="card-title">EX {this.props.data.ex}</h6>
                     <div className="row">
-                        <div className="col-sm-4"> <Countdown endDate={this.props.data.end_date} refreshAssignments={this.props.refreshAssignments} tickCB={this.props.tickCB} /></div>
-                        <div className="col-sm-4"><DoneButton id={this.props.data.id} done={this.props.data.viewState.done} onDoneChecked={this.props.onDoneChecked} /></div>
-                        <div className="col-sm-4"><Resources data={this.props.data.resources} /></div>
-
-
+                        <div className="col"> <Countdown countdown={this.props.data.countdown}  /></div>
+                        <div className="col"><DoneButton id={this.props.data.id} done={this.props.data.viewState.done} onDoneChecked={this.props.onDoneChecked} /></div>
+                        <div className="col"><Resources data={this.props.data.resources} /></div>
                     </div>
-
                 </div>
             </div>
         )

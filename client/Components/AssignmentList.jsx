@@ -3,6 +3,7 @@ import axios from 'axios';
 import FlipMove from 'react-flip-move';
 import localStorageService from './../Helpers/localStorageService.js';
 import Assignment from './Assignment.jsx';
+import { dateUntil } from './../Helpers/helpers.js'
 
 export default class AssignmentList extends React.Component {
 
@@ -14,21 +15,51 @@ export default class AssignmentList extends React.Component {
     }
 
     componentDidMount() {
-        this.refreshAssignments();
+        this.refreshAssignments(() => {
+            this.tick();
+            this.tickInterval = setInterval(this.tick.bind(this), 1000);
+        });
         let timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
-        this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
+        this.refreshAssignmentsInterval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
+
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval)
+        clearInterval(this.refreshAssignmentsInterval);
+        clearInterval(this.tickInterval);
     }
 
-    refreshAssignments() {
+    tick() {
+        let assignments = this.state.assignments;
+
+        let assignmentsLength = assignments.length;
+        for (let i = 0; i < assignmentsLength; i++) {
+
+            if (!assignments[i]) //Validators
+                continue; 
+            
+            let dateUntilEnd = dateUntil(assignments[i].end_date);
+
+            if (!dateUntilEnd) { //Removing assignment when it's done.
+                assignments.splice(i, 1);
+            }
+
+            assignments[i].countdown = dateUntilEnd;
+
+        }
+
+        this.setState(assignments);
+    }
+
+    refreshAssignments(cb) {
         axios.get(`/api/assignment`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
                 localStorageService.setupAssignmentsState(assignments, () => {
                     this.performClientSideModifications(assignments);
+
+                    if (typeof cb === typeof Function)
+                        cb();
                 });
             });
     }
@@ -57,11 +88,9 @@ export default class AssignmentList extends React.Component {
         });
     }
 
-
     render() {
-
         let assignments = this.state.assignments.map(assignment => {
-            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} refreshAssignments={this.refreshAssignments.bind(this)} />
+            return <Assignment data={assignment} key={assignment.id} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} />
         });
 
         return (
@@ -72,7 +101,6 @@ export default class AssignmentList extends React.Component {
 
             </div>);
     }
-
 }
 
 function assignmentSorter(a, b) {
