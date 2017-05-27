@@ -1,9 +1,9 @@
-let dateUntil = (endDate) => {
+export default function countdownTick(endDate) {
   let second = 1000;
   let minute = second * 60;
   let hour = minute * 60;
   let day = hour * 24;
-  let distance = endDate - new Date(); //distance = endDate - current date
+  let distance = endDate - new Date();
 
   if (distance < 0)
     return false;
@@ -28,8 +28,4 @@ let formatDate = function formatDate(dateNumber, timeFix) {
     number: dateNumber,
     title: title
   }
-}
-
-module.exports = {
-  dateUntil: dateUntil
 }

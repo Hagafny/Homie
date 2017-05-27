@@ -1,7 +1,7 @@
 import 'jquery';
 import 'tether';
 import 'bootstrap';
-import './Helpers/googleAnalytics.js';
+import './Scripts/googleAnalytics.js';
 import './css/bootstrap.min.css';
 import './css/countdown.css';
 import './css/toggleButton.css';

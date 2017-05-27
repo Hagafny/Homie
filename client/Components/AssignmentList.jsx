@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import FlipMove from 'react-flip-move';
-import localStorageService from './../Helpers/localStorageService.js';
+import localStorageService from './../Scripts/localStorageService.js';
+import countdownTick  from './../Scripts/countdownTick.js';
 import Assignment from './Assignment.jsx';
-import { dateUntil } from './../Helpers/helpers.js'
 
 export default class AssignmentList extends React.Component {
 
@@ -12,6 +12,7 @@ export default class AssignmentList extends React.Component {
         this.state = {
             assignments: []
         };
+
     }
 
     componentDidMount() {
@@ -36,9 +37,9 @@ export default class AssignmentList extends React.Component {
         for (let i = 0; i < assignmentsLength; i++) {
 
             if (!assignments[i]) //Validators
-                continue; 
-            
-            let dateUntilEnd = dateUntil(assignments[i].end_date);
+                continue;
+
+            let dateUntilEnd = countdownTick(assignments[i].end_date);
 
             if (!dateUntilEnd) { //Removing assignment when it's done.
                 assignments.splice(i, 1);

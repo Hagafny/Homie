@@ -2,24 +2,9 @@ const queryService = require('./queryService');
 const pg = require('pg');
 pg.defaults.ssl = true;
 
-
-// const query = client.query(
-//     'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
-// query.on('end', () => { client.end(); });
-
-
-
-
 const connectionString = process.env.DATABASE_URL || "postgres://jvtbnwwrwltemx:3b58a1ca37657704321d9b83da14f7c44ff41e33d8bdbc1fd27416c8caf9c97b@ec2-54-247-166-129.eu-west-1.compute.amazonaws.com:5432/d8cg3vb6m5pl2l";
 const client = new pg.Client(connectionString);
 client.connect();
-
-
-// query.on('end', () => { client.end(); });
-
-
-
-
 
 let getAssingments = (cb) => {
     let rows = [];
@@ -37,29 +22,26 @@ let getAssingments = (cb) => {
 
 //Legacy - need to fix.
 let saveAssignment = (assignment, cb) => {
-    // pg.connect(dbConnection, (err, client) => {
+    // let sql = queryService.saveAssignment();
+
+    // let values = [
+    //     assignment.title,
+    //     assignment.endDate,
+    //     assignment.moodleUrl,
+    //     assignment.piazzaUrl,
+    //     assignment.homeworkUrl
+    // ]
+
+    // client.query(sql, values, (err, values) => {
     //     if (err) throw err;
-    //     let sql = queryService.saveAssignment();
-
-    //     let values = [
-    //         assignment.title,
-    //         assignment.endDate,
-    //         assignment.moodleUrl,
-    //         assignment.piazzaUrl,
-    //         assignment.homeworkUrl
-    //     ]
-
-    //     client.query(sql, values, (err, values) => {
-    //         if (err) throw err;
-    //         if (typeof cb === typeof Function)
-    //             cb();
-    //     });
-    // })
+    //     if (typeof cb === typeof Function)
+    //         cb();
+    // });
 }
 
 let service = {
     getAssingments: getAssingments,
-    saveAssignment: saveAssignment
+  //  saveAssignment: saveAssignment
 };
 
 module.exports = service;
