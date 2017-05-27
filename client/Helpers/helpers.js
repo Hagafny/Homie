@@ -5,9 +5,8 @@ let dateUntil = (endDate) => {
   let day = hour * 24;
   let distance = endDate - new Date(); //distance = endDate - current date
 
-  if (distance < 0) {
+  if (distance < 0)
     return false;
-  }
 
   let days = formatDate(Math.floor(distance / day), "Day", true);
   let hours = formatDate(Math.floor((distance % day) / hour), "Hour");

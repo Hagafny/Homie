@@ -27863,9 +27863,7 @@ var dateUntil = function dateUntil(endDate) {
   var day = hour * 24;
   var distance = endDate - new Date(); //distance = endDate - current date
 
-  if (distance < 0) {
-    return false;
-  }
+  if (distance < 0) return false;
 
   var days = formatDate(Math.floor(distance / day), "Day", true);
   var hours = formatDate(Math.floor(distance % day / hour), "Hour");
@@ -28051,22 +28049,18 @@ var Assignment = function (_React$Component) {
         }
     }, {
         key: 'changeStatus',
-        value: function changeStatus(dateUntil) {
-            var status = this.getAssignmentStatus(dateUntil);
+        value: function changeStatus() {
+            var status = this.getAssignmentStatus();
             this.setState({ status: status });
         }
     }, {
         key: 'getAssignmentStatus',
-        value: function getAssignmentStatus(dateUntil) {
+        value: function getAssignmentStatus() {
             if (this.props.data.viewState.done) return 3;else {
-                var hoursRemaining = void 0;
-                if (!dateUntil) {
-                    //This is if we get to this point not from the tick event of the countdown. We have to calculate the total hours remaining from scratch.
-                    var date1 = new Date(); //Might need to reduce 180 from here.
-                    var date2 = this.props.data.end_date;
-                    var diff = date2.getTime() - date1.getTime();
-                    hoursRemaining = Math.floor(diff / 1000 / 60 / 60);
-                } else hoursRemaining = dateUntil[0].number * 24 + dateUntil[1].number; //If we call this straight from the tick method of Countdown, we can calculate total hours remaining
+                var countdown = this.props.data.countdown;
+                if (!countdown) return 0;
+
+                var hoursRemaining = countdown[0].number * 24 + countdown[1].number;
 
                 if (hoursRemaining <= 5) return 2;else if (hoursRemaining <= 23) return 1;else return 0;
             }
@@ -28083,7 +28077,7 @@ var Assignment = function (_React$Component) {
                 'div',
                 { className: 'card' },
                 _react2.default.createElement(_AssignmentHeader2.default, { data: this.props.data, status: this.state.status, endDate: this.props.data.end_date, onShowCallback: this.props.onShowCallback }),
-                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked, refreshAssignments: this.props.refreshAssignments, tickCB: this.changeStatus.bind(this) })
+                _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked })
             );
         }
     }]);
@@ -28163,7 +28157,7 @@ var AssignmentBody = function (_React$Component) {
                             'div',
                             { className: 'col-sm-4' },
                             ' ',
-                            _react2.default.createElement(_Countdown2.default, { endDate: this.props.data.end_date, refreshAssignments: this.props.refreshAssignments, tickCB: this.props.tickCB })
+                            _react2.default.createElement(_Countdown2.default, { countdown: this.props.data.countdown })
                         ),
                         _react2.default.createElement(
                             'div',
@@ -28326,6 +28320,8 @@ var _Assignment = __webpack_require__(122);
 
 var _Assignment2 = _interopRequireDefault(_Assignment);
 
+var _helpers = __webpack_require__(120);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28351,24 +28347,55 @@ var AssignmentList = function (_React$Component) {
     _createClass(AssignmentList, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            this.refreshAssignments();
+            var _this2 = this;
+
+            this.refreshAssignments(function () {
+                _this2.tick();
+                _this2.tickInterval = setInterval(_this2.tick.bind(_this2), 1000);
+            });
             var timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
-            this.interval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
+            this.refreshAssignmentsInterval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
-            clearInterval(this.interval);
+            clearInterval(this.refreshAssignmentsInterval);
+            clearInterval(this.tickInterval);
+        }
+    }, {
+        key: 'tick',
+        value: function tick() {
+            var assignments = this.state.assignments;
+
+            var assignmentsLength = assignments.length;
+            for (var i = 0; i < assignmentsLength; i++) {
+
+                if (!assignments[i]) //Validators
+                    continue;
+
+                var dateUntilEnd = (0, _helpers.dateUntil)(assignments[i].end_date);
+
+                if (!dateUntilEnd) {
+                    //Removing assignment when it's done.
+                    assignments.splice(i, 1);
+                }
+
+                assignments[i].countdown = dateUntilEnd;
+            }
+
+            this.setState(assignments);
         }
     }, {
         key: 'refreshAssignments',
-        value: function refreshAssignments() {
-            var _this2 = this;
+        value: function refreshAssignments(cb) {
+            var _this3 = this;
 
             _axios2.default.get('/api/assignment').then(function (assignmentsRes) {
                 var assignments = assignmentsRes.data;
                 _localStorageService2.default.setupAssignmentsState(assignments, function () {
-                    _this2.performClientSideModifications(assignments);
+                    _this3.performClientSideModifications(assignments);
+
+                    if ((typeof cb === 'undefined' ? 'undefined' : _typeof(cb)) === (typeof Function === 'undefined' ? 'undefined' : _typeof(Function))) cb();
                 });
             });
         }
@@ -28388,28 +28415,28 @@ var AssignmentList = function (_React$Component) {
     }, {
         key: 'onDoneCheckedCallback',
         value: function onDoneCheckedCallback(id, doneState) {
-            var _this3 = this;
+            var _this4 = this;
 
             _localStorageService2.default.changeDoneState(id, doneState, function () {
-                _this3.performClientSideModifications();
+                _this4.performClientSideModifications();
             });
         }
     }, {
         key: 'onShowCallback',
         value: function onShowCallback(id, showState) {
-            var _this4 = this;
+            var _this5 = this;
 
             _localStorageService2.default.changeShowState(id, showState, function () {
-                _this4.performClientSideModifications();
+                _this5.performClientSideModifications();
             });
         }
     }, {
         key: 'render',
         value: function render() {
-            var _this5 = this;
+            var _this6 = this;
 
             var assignments = this.state.assignments.map(function (assignment) {
-                return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id, onDoneChecked: _this5.onDoneCheckedCallback.bind(_this5), onShowCallback: _this5.onShowCallback.bind(_this5), refreshAssignments: _this5.refreshAssignments.bind(_this5) });
+                return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id, onDoneChecked: _this6.onDoneCheckedCallback.bind(_this6), onShowCallback: _this6.onShowCallback.bind(_this6) });
             });
 
             return _react2.default.createElement(
@@ -28522,8 +28549,6 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _helpers = __webpack_require__(120);
-
 var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
@@ -28546,50 +28571,16 @@ var Countdown = function (_React$Component) {
     function Countdown(props) {
         _classCallCheck(this, Countdown);
 
-        var _this = _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
-
-        _this.state = {
-            tiles: []
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Countdown.__proto__ || Object.getPrototypeOf(Countdown)).call(this, props));
     }
 
     _createClass(Countdown, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.tick();
-            this.interval = setInterval(this.tick.bind(this), 1000);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            clearInterval(this.interval);
-        }
-    }, {
-        key: 'tick',
-        value: function tick() {
-            var dUntil = (0, _helpers.dateUntil)(this.props.endDate);
-
-            if (dUntil == false) //Just validation
-                return;
-
-            this.setState({
-                tiles: dUntil
-            });
-            this.props.tickCB(dUntil); //We want to maybe change the stats (header color) based on how much time we have left
-            // If everything is 0, stop the interval
-            if (dUntil[3].number == 0 && dUntil[2].number == 0 && dUntil[1].number == 0 && dUntil[0].number == 0) {
-                this.props.refreshAssignments(); //Need to check if works on DB.
-                window.clearInterval(this.interval);
-            }
-        }
-    }, {
         key: 'render',
         value: function render() {
-            if (!this.state.tiles) //Just validating against weird behaviour
+            if (!this.props.countdown) //Just validating against weird behaviour
                 return false;
 
-            var tiles = this.state.tiles.map(function (countdownNode, index) {
+            var tiles = this.props.countdown.map(function (countdownNode, index) {
                 return _react2.default.createElement(_CountdownTile2.default, { number: countdownNode.number, title: countdownNode.title, key: index });
             });
 
