@@ -16,7 +16,7 @@ export default class Resources extends React.Component {
 
         return (
             <ul className="resourceList">
-                <li> <Resource url={this.props.data.homework} img={pdf} >HW</Resource> </li>
+                <li style={{listStyleImage: pdf}} > <Resource url={this.props.data.homework} img={pdf} >HW</Resource> </li>
                 <li>  <Resource url={this.props.data.moodle} img={moodle}>Submit</Resource></li>
                 <li> <Resource url={this.props.data.lecture} img={gdrive}>Lecture</Resource></li>
                 <li>  <Resource url={this.props.data.recitation} img={gdrive} >Recitation</Resource></li>
