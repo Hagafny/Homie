@@ -96,7 +96,7 @@ export default class AssignmentList extends React.Component {
 
         return (
             <div className="container assignmentList" role="tablist">
-                <FlipMove duration={750} easing="ease" enterAnimation="accordionVertical" leaveAnimation="accordionVertical" >
+                <FlipMove duration={750} easing="ease">
                     {assignments}
                 </FlipMove>
 
