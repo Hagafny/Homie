@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../dist'))); 
-//app.use(favicon(path.join(__dirname + './../client/images/favicon.ico')));
+//app.use(favicon(path.join(__dirname + './../client/images/favicon.ico'))); 
 
 app.get('/api/assignment/', function (req, res) {
     logicService.getAssingments((assignments) => {
