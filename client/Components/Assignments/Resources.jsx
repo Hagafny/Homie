@@ -26,7 +26,7 @@ export default class Resources extends React.Component {
     render() {
 
         return (
-            <ul className="resourceList">
+            <ul className="resourceList"> 
                 <li><Resource url={this.props.data.homework} img={this.checkHWSourceUrl(this.props.data.homework)} >HW</Resource> </li>
                 <li><Resource url={this.props.data.moodle} img={moodle}>Submit</Resource></li>
                 <li><Resource url={this.props.data.lecture} img={this.checkDataSourceUrl(this.props.data.lecture)}>Lecture</Resource></li>
