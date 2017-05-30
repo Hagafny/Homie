@@ -8,8 +8,8 @@ import './css/toggleButton.css';
 import './css/style.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './Components/App.jsx';
 import { BrowserRouter } from 'react-router-dom';
+import App from './Components/App.jsx';
 
 ReactDOM.render(<BrowserRouter>
     <App />
