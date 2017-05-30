@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "body-parser": "^1.17.2",
     "bootstrap": "^4.0.0-alpha.6",
     "express": "^4.15.3",
     "jquery": "^3.2.1",
@@ -28,6 +29,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-flip-move": "^2.9.12",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "react-toggle": "^4.0.1",
     "tether": "^1.4.0"
   },

@@ -20,28 +20,28 @@ let getAssingments = (cb) => {
 
 }
 
-//Legacy - need to fix.
+
 let saveAssignment = (assignment, cb) => {
-    // let sql = queryService.saveAssignment();
+    let sql = queryService.saveAssignment();
 
-    // let values = [
-    //     assignment.title,
-    //     assignment.endDate,
-    //     assignment.moodleUrl,
-    //     assignment.piazzaUrl,
-    //     assignment.homeworkUrl
-    // ]
+    let values = [
+        assignment.homeworkUrl,
+        assignment.courseId,
+        assignment.ex,
+        assignment.endDate,
+        assignment.moodleId
+    ]
 
-    // client.query(sql, values, (err, values) => {
-    //     if (err) throw err;
-    //     if (typeof cb === typeof Function)
-    //         cb();
-    // });
+    client.query(sql, values, (err, values) => {
+        if (err) throw err;
+        if (typeof cb === typeof Function)
+            cb();
+    });
 }
 
 let service = {
     getAssingments: getAssingments,
-  //  saveAssignment: saveAssignment
+    saveAssignment: saveAssignment
 };
 
 module.exports = service;

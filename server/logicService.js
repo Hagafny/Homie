@@ -7,6 +7,10 @@ let getAssingments = (cb) => {
     })
 }
 
+let saveAssignment = (assignment, cb) => {
+    dataService.saveAssignment(assignment, cb);
+}
+
 let getHardcodedAssingments = (cb) => {
      let assignments = [
 //          {
@@ -84,7 +88,8 @@ let getHardcodedAssingments = (cb) => {
 
 let service = {
     getAssingments: getAssingments,
-    getHardcodedAssingments: getHardcodedAssingments
+    getHardcodedAssingments: getHardcodedAssingments,
+    saveAssignment: saveAssignment
 };
 
 module.exports = service;

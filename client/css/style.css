@@ -42,3 +42,7 @@ body {
 .resourceList li div span {
   padding-left:1em;
 }
+
+.addAssignmentFormLabel {
+  margin-right:10px;
+}

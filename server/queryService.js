@@ -16,7 +16,7 @@ ORDER BY end_date ASC;`;
 }
 
 let saveAssignment = () => {
-    return `INSERT INTO assignments (title, end_date, moodle_url, piazza_url, homework_url) 
+    return `INSERT INTO assignments (homework_url, course_id, ex, end_date, moodle_id) 
         VALUES ($1, $2, $3, $4, $5)`;
 }
 
