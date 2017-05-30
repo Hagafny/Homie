@@ -6,7 +6,8 @@ let getAssingments = () => {
        cr.piazza_id,
        cr.year,
        cr.drive_lectures_url,
-       cr.drive_recitations_url
+       cr.drive_recitations_url,
+       cr.classboost_id
 FROM
   (SELECT *
    FROM assignments AS ass
