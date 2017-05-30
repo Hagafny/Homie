@@ -5,6 +5,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const logicService = require('./logicService.js');
+const favicon = require('serve-favicon');
+
 
 app.set('port', (process.env.PORT || 8000));
 
@@ -14,6 +16,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../dist')));
+app.use(favicon(path.join(__dirname + './../client/images/favicon.ico')));
 
 app.get('/api/assignment/', function (req, res) {
     logicService.getAssingments((assignments) => {

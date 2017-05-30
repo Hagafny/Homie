@@ -46,3 +46,8 @@ body {
 .addAssignmentFormLabel {
   margin-right:10px;
 }
+
+.homieTitle {
+  color: #1e5f85;
+  text-align: center;
+}
