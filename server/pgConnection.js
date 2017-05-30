@@ -5,6 +5,7 @@ const connectionString = process.env.DATABASE_URL || "postgres://jvtbnwwrwltemx:
 
 let config = parse(connectionString);
 config.ssl = true;
+config.poolSize = 20;
 
 let db = pgp(config);
 
