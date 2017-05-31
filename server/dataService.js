@@ -1,8 +1,8 @@
 const queryService = require('./queryService');
 const db = require('./pgConnection');
 
-let getAssingments = (cb) => {
-    let sql = queryService.getAssingments();
+let getAssingments = (classId, cb) => {
+    let sql = queryService.getAssingments(classId);
     db.any(sql)
         .then(cb)
         .catch(error => {

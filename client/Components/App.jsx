@@ -7,7 +7,7 @@ export default class App extends React.Component {
     render() {
         return (
     <Switch>
-                <Route exact path='/' component={AssignmentPage} />
+                <Route exact path='/:courseId' component={AssignmentPage} />
                 <Route path='/admin' component={AdminPage}/>
             </Switch>             
         )
