@@ -38,13 +38,13 @@ export default class AddAssignmentForm extends React.Component {
         var url = "/api/assignment/";
         var data = JSON.stringify(this.state);
 
-        axios({
-            method: 'post',
-            url: url,
-            data: data,
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            }
+        var config = {
+            headers: { 'Content-Type': 'application/json; charset=utf-8' }
+        };
+
+        axios.post(url, data, config).then(function (response) {
+            if (response.data.status == 200)
+                alert('Assignment Saved');
         });
     }
 

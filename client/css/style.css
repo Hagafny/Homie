@@ -6,8 +6,6 @@ html {
 body {
     margin: 0 0 10px;
     background-color:whitesmoke
-    /* bottom = footer height */
-
 }
 
 .card-header {
@@ -22,7 +20,7 @@ body {
   width:100%;
   border-top: 1px solid;
   font-size: smaller;
-  height: 30px;
+  height: 20px;
   overflow:hidden;
 
 }

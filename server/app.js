@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../dist'))); 
-//app.use(favicon(path.join(__dirname + './../client/images/favicon.ico'))); 
+app.use(express.static(path.join(__dirname, '../dist')));
+app.use(favicon(path.join(__dirname + './../client/images/favicon.ico'))); 
 
 app.get('/api/assignment/:id', function (req, res) {
     let classId = req.params.id;
@@ -27,12 +27,12 @@ app.get('/api/assignment/:id', function (req, res) {
 
 app.post('/api/assignment/', function (req, res) {
     logicService.saveAssignment(req.body, () => {
-        res.status(200).json({status: 200});
+        res.status(200).json({ status: 200 });
     });
 })
 
 // BrowserHistory code - We need this so react router could work.
-app.get('*',  (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../dist', 'index.html'));
 });
 
