@@ -19,7 +19,6 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 app.get('/api/assignment/:id', function (req, res) {
     let classId = req.params.id;
-    console.log(classId);
     logicService.getAssingments(classId, (assignments) => {
         res.json(assignments);
     });

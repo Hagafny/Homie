@@ -10,7 +10,7 @@ export default class AssignmentsPage extends React.Component {
         return (
             <div>
                 <Title />
-                <AssignmentList classId={this.props.match.params.courseId} />
+                <AssignmentList classId={this.props.match.params.classId} />
                 <Footer />
             </div>
         );
