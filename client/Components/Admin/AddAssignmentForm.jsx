@@ -5,7 +5,6 @@ import SelectBox from './../Misc/SelectBox.jsx';
 export default class AddAssignmentForm extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             courses: []
         };
@@ -21,7 +20,7 @@ export default class AddAssignmentForm extends React.Component {
     componentDidMount() {
         let classId = this.props.match.params.classId;
 
-        axios.get(`/api/course/${classId}`)
+        axios.get(`/api/courses/${classId}`)
             .then(courses => {
                 this.setState({ courses: courses.data })
             });
@@ -48,7 +47,7 @@ export default class AddAssignmentForm extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        var url = "/api/assignment/";
+        var url = "/api/assignments/";
         var data = JSON.stringify(this.state);
 
         var config = {

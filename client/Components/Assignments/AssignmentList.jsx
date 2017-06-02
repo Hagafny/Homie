@@ -55,7 +55,7 @@ export default class AssignmentList extends React.Component {
     refreshAssignments(cb) {
         let classId = this.props.classId || 1;
 
-        axios.get(`/api/assignment/${classId}`)
+        axios.get(`/api/assignments/${classId}`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
                 localStorageService.setupAssignmentsState(assignments, () => {

@@ -1,11 +1,11 @@
 'use strict';
 
-const path = require('path');
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
-const logicService = require('./logicService.js');
+const path = require('path');
+const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
+const apiRoutes = require('./routes');
 
 app.set('port', (process.env.PORT || 8000));
 
@@ -17,26 +17,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(favicon(path.join(__dirname + './../client/images/favicon.ico'))); 
 
-app.get('/api/course/:id', function (req, res) {
-    let classId = req.params.id;
-    logicService.getCourses(classId, (courses) => {
-        res.json(courses);
-    });
-})
-
-app.get('/api/assignment/:id', function (req, res) {
-    let classId = req.params.id;
-    logicService.getAssingments(classId, (assignments) => {
-        res.json(assignments);
-    });
-
-})
-
-app.post('/api/assignment/', function (req, res) {
-    logicService.saveAssignment(req.body, () => {
-        res.status(200).json({ status: 200 });
-    });
-})
+// Attach API routes to our app
+app.use('/api', apiRoutes);
 
 // BrowserHistory code - We need this so react router could work.
 app.get('*', (req, res) => {
@@ -46,3 +28,5 @@ app.get('*', (req, res) => {
 app.listen(app.get('port'), function () {
     console.log('running on port', app.get('port'))
 })
+
+module.exports = app;

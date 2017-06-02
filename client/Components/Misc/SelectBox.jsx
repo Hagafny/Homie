@@ -4,6 +4,7 @@ import Option from './Option.jsx';
 export default class SelectBox extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
     }
 
     render() {

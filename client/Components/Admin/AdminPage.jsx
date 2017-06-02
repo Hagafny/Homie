@@ -11,7 +11,7 @@ export default class AdminPage extends React.Component {
             <div>
                 <Route path={`${this.props.match.url}/:classId`} component={AddAssignmentForm} />
                 <Route exact path={this.props.match.url} render={() => (
-                    <h3>Admin page.</h3>
+                    <h3>Admin page</h3>
                 )} />
                 <Footer />
             </div>
