@@ -11,9 +11,14 @@ let saveAssignment = (assignment, cb) => {
     dataService.saveAssignment(assignment, cb);
 }
 
+let getCourses = (classId, cb) => {
+    dataService.getCourses(classId, cb);
+}
+
 let service = {
     getAssingments: getAssingments,
-    saveAssignment: saveAssignment
+    saveAssignment: saveAssignment,
+    getCourses: getCourses
 };
 
 module.exports = service;

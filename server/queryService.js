@@ -21,9 +21,15 @@ let saveAssignment = () => {
         VALUES ($1, $2, $3, $4, $5)`;
 }
 
+let getCourses = (classId) => {
+    return `SELECT id, title from courses where class_id = ${classId}`;
+}
+
+
 let service = {
     getAssingments: getAssingments,
-    saveAssignment: saveAssignment
+    saveAssignment: saveAssignment,
+    getCourses: getCourses
 };
 
 module.exports = service;

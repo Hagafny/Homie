@@ -28,9 +28,19 @@ let saveAssignment = (assignment, cb) => {
         });
 }
 
+let getCourses = (classId, cb) => {
+    let sql = queryService.getCourses(classId);
+    db.any(sql)
+        .then(cb)
+        .catch(error => {
+            console.log("ERROR:", error);
+        });
+}
+
 let service = {
     getAssingments: getAssingments,
-    saveAssignment: saveAssignment
+    saveAssignment: saveAssignment,
+    getCourses: getCourses
 };
 
 module.exports = service;

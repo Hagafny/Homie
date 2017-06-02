@@ -17,6 +17,13 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../dist')));
 app.use(favicon(path.join(__dirname + './../client/images/favicon.ico'))); 
 
+app.get('/api/course/:id', function (req, res) {
+    let classId = req.params.id;
+    logicService.getCourses(classId, (courses) => {
+        res.json(courses);
+    });
+})
+
 app.get('/api/assignment/:id', function (req, res) {
     let classId = req.params.id;
     logicService.getAssingments(classId, (assignments) => {
