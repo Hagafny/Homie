@@ -11,8 +11,8 @@ let getAssingments = (classId, cb) => {
 }
 
 let saveAssignment = (assignment, cb) => {
+    
     let sql = queryService.saveAssignment();
-
     let values = [
         assignment.homeworkUrl,
         assignment.courseId,

@@ -19,7 +19,6 @@ export default class AddAssignmentForm extends React.Component {
 
     componentDidMount() {
         let classId = this.props.match.params.classId;
-
         axios.get(`/api/courses/${classId}`)
             .then(courses => {
                 this.setState({ courses: courses.data })
