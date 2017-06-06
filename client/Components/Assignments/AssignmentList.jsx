@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import FlipMove from 'react-flip-move';
 import localStorageService from './../../Scripts/localStorageService.js';
-import countdownTick  from './../../Scripts/countdownTick.js';
+import countdownTick from './../../Scripts/countdownTick.js';
 import Assignment from './Assignment.jsx';
+// var Promise = require('es6-promise').Promise;
 
 export default class AssignmentList extends React.Component {
 

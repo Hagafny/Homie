@@ -1,3 +1,4 @@
+require('es6-promise').polyfill();
 import 'jquery';
 import 'tether';
 import 'bootstrap';
