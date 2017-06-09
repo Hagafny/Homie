@@ -1,5 +1,5 @@
 import React from 'react';
-import AssignmentList from './AssignmentList.jsx';
+import AssignmentListContainer from './AssignmentListContainer.jsx';
 import Footer from './../Footer.jsx';
 import Title from './../Title.jsx';
 export default class AssignmentsPage extends React.Component {
@@ -10,7 +10,7 @@ export default class AssignmentsPage extends React.Component {
         return (
             <div>
                 <Title />
-                <AssignmentList classId={this.props.match.params.classId} />
+                <AssignmentListContainer classId={this.props.match.params.classId} />
                 <Footer />
             </div>
         );
