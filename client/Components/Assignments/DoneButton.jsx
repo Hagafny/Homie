@@ -5,6 +5,7 @@ export default class DoneButton extends React.Component {
 
     constructor(props) {
         super(props)
+
     }
 
     doneChecked(e) {
@@ -13,8 +14,6 @@ export default class DoneButton extends React.Component {
     }
     render() {
         return (
-
-
             <label>
                 <span>Done</span><br/>
                 <Toggle

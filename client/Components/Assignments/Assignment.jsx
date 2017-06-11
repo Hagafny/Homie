@@ -5,7 +5,6 @@ import AssignmentBody from './AssignmentBody.jsx';
 export default class Assignment extends React.Component {
     constructor(props) {
         super(props);
-
         let status = this.getAssignmentStatus();
         this.state = { status: status }
 

@@ -33,9 +33,11 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-flip-move": "^2.9.12",
+    "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-toggle": "^4.0.1",
+    "redux": "^3.6.0",
     "serve-favicon": "^2.4.3",
     "tether": "^1.4.0"
   },

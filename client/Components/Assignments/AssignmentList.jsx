@@ -3,8 +3,9 @@ import FlipMove from 'react-flip-move';
 import Assignment from './Assignment.jsx';
 
 const AssignmentList = (props) => {
+    console.log(props);
     let assignments = props.assignments.map(assignment => {
-        return <Assignment data={assignment} key={assignment.id} onDoneChecked={props.onDoneCheckedCallback} onShowCallback={props.onShowCallback} />
+        return <Assignment data={assignment} key={assignment.id} onDoneChecked={props.onDoneChecked} onShowCallback={props.onShowCallback} />
     });
 
     return (
