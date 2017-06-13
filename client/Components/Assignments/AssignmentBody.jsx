@@ -2,26 +2,22 @@ import React from 'react'
 import Resources from './Resources.jsx';
 import DoneButton from './DoneButton.jsx';
 import Countdown from './Countdown.jsx';
-export default class AssignmentBody extends React.Component {
 
-    constructor(props) {
-        super(props)
-    }
+const AssignmentBody = (props) =>  {
 
-    render() {
-        let collapseStatus = this.props.data.viewState.show ? "show" : "";
+            let collapseStatus = props.data.viewState.show ? "show" : "";
 
-        return (
-            <div id={this.props.data.id} className={`collapse ${collapseStatus}`} role="tabpanel" aria-labelledby="headingOne">
+            return (
+            <div id={props.data.id} className={`collapse ${collapseStatus}`} role="tabpanel" aria-labelledby="headingOne">
                 <div className="card-block">
-                    <h6 className="card-title">EX {this.props.data.ex}</h6>
+                    <h6 className="card-title">EX {props.data.ex}</h6>
                     <div className="row">
-                        <div className="col-xs-3 col-sm-4"><Resources data={this.props.data.resources} /></div>
-                        <div className="col-xs-3 col-sm-4"><DoneButton id={this.props.data.id} done={this.props.data.viewState.done} onDoneChecked={this.props.onDoneChecked} /></div>
-                        <div className="col-xs-6 col-sm-4"> <Countdown countdown={this.props.data.countdown} /></div>
+                        <div className="col-xs-3 col-sm-4"><Resources data={props.data.resources} /></div>
+                        <div className="col-xs-3 col-sm-4"><DoneButton id={props.data.id} done={props.data.viewState.done} onDoneChecked={props.onDoneChecked} /></div>
+                        <div className="col-xs-6 col-sm-4"> <Countdown countdown={props.data.countdown} /></div>
                     </div>
                 </div>
             </div>
-        )
-    };
+            );
 }
+export default AssignmentBody;

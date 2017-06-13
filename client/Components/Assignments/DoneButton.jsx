@@ -1,10 +1,11 @@
-import React from 'react'
-import Toggle from 'react-toggle'
+import React from 'react';
+import Toggle from 'react-toggle';
 
 export default class DoneButton extends React.Component {
 
     constructor(props) {
         super(props)
+
     }
 
     doneChecked(e) {
@@ -13,8 +14,6 @@ export default class DoneButton extends React.Component {
     }
     render() {
         return (
-
-
             <label>
                 <span>Done</span><br/>
                 <Toggle

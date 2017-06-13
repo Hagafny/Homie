@@ -1,20 +1,15 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import AddAssignmentForm from './AddAssignmentForm.jsx';
+import AddAssignmentFormContainer from './AddAssignmentFormContainer.jsx';
 import Footer from './../Footer.jsx';
-export default class AdminPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
+
+const AdminPage = ({match}) => 
             <div>
-                <Route path={`${this.props.match.url}/:classId`} component={AddAssignmentForm} />
-                <Route exact path={this.props.match.url} render={() => (
+                <Route path={`${match.url}/:classId`} component={AddAssignmentFormContainer} />
+                <Route exact path={match.url} render={() => (
                     <h3>Admin page</h3>
                 )} />
                 <Footer />
             </div>
-        );
-    }
-}
+
+export default AdminPage;

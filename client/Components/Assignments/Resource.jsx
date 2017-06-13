@@ -1,21 +1,17 @@
 import React from 'react'
-export default class Resources extends React.Component {
 
-  constructor(props) {
-    super(props)
-  }
+const Resource = (props) => {
+  if (!props.url)
+    return false;
 
-  render() {
-    if (!this.props.url)
-      return false;
+  let url = props.prefix ? `${props.prefix}${props.url}` : props.url;
+  return (
+    <div>
+      <img src={props.img} alt="" height="20" width="20" />
+      <span>  <a href={url} target="_blank">{props.children}</a></span>
+    </div>
 
-    let url = this.props.prefix ? `${this.props.prefix}${this.props.url}` : this.props.url;
-    return (
-      <div>
-        <img src={this.props.img} alt="" height="20" width="20" />
-        <span>  <a href={url} target="_blank">{this.props.children}</a></span>
-      </div>
-
-    )
-  };
+  )
 }
+
+export default Resource;

@@ -1,17 +1,9 @@
 import React from 'react'
 
-export default class CountdownTile extends React.Component {
-
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return (
+const CountdownTile = (props) =>  
             <div>
-                <span>{this.props.number}</span>
-                <div className="smalltext">{this.props.title}</div>
+                <span>{props.number}</span>
+                <div className="smalltext">{props.title}</div>
             </div>
-        )
-    };
-}
+        
+export default CountdownTile;
