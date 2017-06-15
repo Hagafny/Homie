@@ -2,12 +2,15 @@
 
 const express = require('express');
 const app = express();
+const compression = require('compression');
 const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const apiRoutes = require('./routes');
 
 app.set('port', (process.env.PORT || 8000));
+
+app.use(compression());
 
 app.use(bodyParser.urlencoded({
     extended: false
