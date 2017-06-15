@@ -7,6 +7,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const apiRoutes = require('./routes');
+const cacheTime = 86400000 * 7;  // 7 days
 
 app.set('port', (process.env.PORT || 8000));
 
@@ -17,8 +18,8 @@ app.use(bodyParser.urlencoded({
 }))
 
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../dist')));
-app.use(favicon(path.join(__dirname + './../client/images/favicon.ico'))); 
+app.use(express.static(path.join(__dirname, '../dist'), { maxAge: cacheTime }));
+app.use(favicon(path.join(__dirname + './../client/images/favicon.ico')));
 
 // Attach API routes to our app
 app.use('/api', apiRoutes);

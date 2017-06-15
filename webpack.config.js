@@ -8,6 +8,15 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
+const CriticalPlugin = require('webpack-plugin-critical').CriticalPlugin;
+const CriticalPluginonfig = new CriticalPlugin({
+  src: 'index.html',
+  inline: true,
+  minify: true,
+  dest: 'index.html'
+})
+
+
 const ProvidePlugin = new webpack.ProvidePlugin({
   $: "jquery",
   jQuery: "jquery",
@@ -35,5 +44,5 @@ module.exports = {
       } // inline base64 URLs for <=5k images, direct URLs for the rest  
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, ProvidePlugin]
+  plugins: [HtmlWebpackPluginConfig, ProvidePlugin, CriticalPluginonfig]
 }
