@@ -7,6 +7,7 @@ const moodle = require(`./../../images/moodle.png`);
 const gdrive = require(`./../../images/gdrive.png`);
 const piazza = require(`./../../images/piazza.png`);
 const classboost = require(`./../../images/classboost.png`);
+const word = require('./../../images/word.png');
 
 export default class Resources extends React.Component {
 
@@ -24,8 +25,13 @@ export default class Resources extends React.Component {
     checkHWSourceUrl(imageUrl) {
         if (!imageUrl)
             return;
-
-        return imageUrl.includes("zip") ? winzip : pdf;
+        
+        if (imageUrl.includes("zip"))
+            return winzip;
+        else if (imageUrl.includes("docx"))
+            return word;
+        else
+            return pdf;
     }
 
     render() {
