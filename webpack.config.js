@@ -8,14 +8,10 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   inject: 'body'
 })
 
-const CriticalPlugin = require('webpack-plugin-critical').CriticalPlugin;
-const CriticalPluginonfig = new CriticalPlugin({
-  src: 'index.html',
-  inline: true,
-  minify: true,
-  dest: 'index.html'
+const HtmlWebpackExtentionPlugin = require('script-ext-html-webpack-plugin');
+const HtmlWebpackExtentionPluginConfig = new HtmlWebpackExtentionPlugin({
+    defaultAttribute: 'defer'
 })
-
 
 const ProvidePlugin = new webpack.ProvidePlugin({
   $: "jquery",
@@ -44,5 +40,5 @@ module.exports = {
       } // inline base64 URLs for <=5k images, direct URLs for the rest  
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, ProvidePlugin, CriticalPluginonfig]
+  plugins: [HtmlWebpackPluginConfig, ProvidePlugin, HtmlWebpackExtentionPluginConfig]
 }
