@@ -10,7 +10,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const HtmlWebpackExtentionPlugin = require('script-ext-html-webpack-plugin');
 const HtmlWebpackExtentionPluginConfig = new HtmlWebpackExtentionPlugin({
-    defaultAttribute: 'defer'
+  defaultAttribute: 'defer'
 })
 
 const ProvidePlugin = new webpack.ProvidePlugin({
@@ -27,8 +27,10 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.jsx?$/, loader: 'babel-loader',
+        exclude: /node_modules/
+      },
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],

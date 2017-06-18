@@ -53,7 +53,7 @@ export default class AddAssignmentFormContainer extends React.Component {
             headers: { 'Content-Type': 'application/json; charset=utf-8' }
         };
 
-        axios.post(url, data, config).then(function (response) {
+        axios.post(url, data, config).then((response) => {
             if (response.data.status == 200)
                 alert('Assignment Saved');
         });

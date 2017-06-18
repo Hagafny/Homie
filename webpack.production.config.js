@@ -3,18 +3,11 @@ const devConfig = require('./webpack.config.js'); //get the develpoment webpack 
 
 let stripLoader = WebpackStripLoader.loader('console.log');
 //create loader configuration.
-let stripRuleJS = {
-    test: /\.js$/,
+let stripRule = {
+    test: /\.jsx?$/,
     exclude: /node_modules/,
     loader: stripLoader //remove console.log across all files.
 };
 
-let stripRuleJSX = {
-    test: /\.jsx$/,
-    exclude: /node_modules/,
-    loader: stripLoader
-};
-
-devConfig.module.rules.push(stripRuleJS);
-devConfig.module.rules.push(stripRuleJSX);
+devConfig.module.rules.push(stripRule);
 module.exports = devConfig; 
