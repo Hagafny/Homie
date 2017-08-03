@@ -16,20 +16,8 @@ LEFT JOIN courses AS cr ON ass.course_id = cr.id WHERE cr.class_id = ${classId}
 ORDER BY end_date ASC;`;
 }
 
-let saveAssignment = () => {
-    return `INSERT INTO assignments (homework_url, course_id, ex, end_date, moodle_id) 
-        VALUES ($1, $2, $3, $4, $5)`;
-}
-
-let getCourses = (classId) => {
-    return `SELECT id, title from courses where class_id = ${classId}`;
-}
-
-
 let service = {
-    getAssingments: getAssingments,
-    saveAssignment: saveAssignment,
-    getCourses: getCourses
+    getAssingments: getAssingments
 };
 
 module.exports = service;

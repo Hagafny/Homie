@@ -7,18 +7,8 @@ let getAssingments = (classId, cb) => {
     })
 }
 
-let saveAssignment = (assignment, cb) => {
-    dataService.saveAssignment(assignment, cb);
-}
-
-let getCourses = (classId, cb) => {
-    dataService.getCourses(classId, cb);
-}
-
 let service = {
-    getAssingments: getAssingments,
-    saveAssignment: saveAssignment,
-    getCourses: getCourses
+    getAssingments: getAssingments
 };
 
 module.exports = service;

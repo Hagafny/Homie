@@ -1,4 +1,4 @@
-const logicService = require('../../logicService');
+const logicService = require('../../manager/logicService');
 
 let getCoursesById = (req, res) => {
     let classId = req.params.id;
