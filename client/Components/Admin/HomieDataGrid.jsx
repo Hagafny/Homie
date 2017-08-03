@@ -2,15 +2,31 @@ import React from 'react';
 import update from 'react-addons-update';
 import axios from 'axios';
 import ReactDataGrid from 'react-data-grid';
-import { Editors } from 'react-data-grid-addons';
-const { DropDownEditor } = Editors;
+import { Toolbar } from 'react-data-grid-addons';
+import HomieDropDownEditor from './HomieDropDownEditor.jsx';
+import HomieDropDownFormatter from './HomieDropDownFormatter.jsx';
 
-//const titles = ['24', '25', '26', '27', '28'];
-const titles = [{
-  id: '25',
-  title: 'Defense Against the Dark Arts',
-  value: "25"
-}, '24', '26', '27', '28'];
+const titles = [
+  {
+    value: '24',
+    text: 'Defense Against the Dark Arts'
+  },
+  {
+    value: "25",
+    text: 'Potions'
+  },
+  {
+    value: "26",
+    text: 'History of Magic'
+  },
+  {
+    value: "27",
+    text: 'Astronomy'
+  },
+  {
+    value: "28",
+    text: 'Charms'
+  }]
 export default class HomieDataGrid extends React.Component {
   constructor(props) {
     super(props)
@@ -18,7 +34,7 @@ export default class HomieDataGrid extends React.Component {
       rows: []
     }
 
-    this.rowGetter = this.rowGetter.bind(this);
+    this.getRowAt = this.getRowAt.bind(this);
     this.handleGridRowsUpdated = this.handleGridRowsUpdated.bind(this);
   }
 
@@ -39,8 +55,21 @@ export default class HomieDataGrid extends React.Component {
         width: 80
       },
       {
+        key: 'courseId',
+        name: 'Course',
+        //editable: true
+        editor: <HomieDropDownEditor options={titles} />,
+        formatter: <HomieDropDownFormatter options={titles} value={"theFuck"}/>
+      },
+      {
+        key: 'ex',
+        name: 'Exercise #',
+        editable: true
+      },
+      {
         key: 'endDate',
         name: 'End Date',
+        // width: 200,
         editable: true
       },
       {
@@ -49,20 +78,9 @@ export default class HomieDataGrid extends React.Component {
         editable: true
       },
       {
-        key: 'ex',
-        name: 'Exercise #',
-        editable: true
-      },
-      {
         key: 'moodleId',
         name: 'Moodle ID',
         editable: true
-      },
-      {
-        key: 'courseId',
-        name: 'Course',
-        //editable: true
-        editor: <DropDownEditor options={titles} />,
       },
       {
         name: 'Delete',
@@ -76,7 +94,7 @@ export default class HomieDataGrid extends React.Component {
       }
     ];
   }
-  rowGetter(i) {
+  getRowAt(i) {
     return this.state.rows[i];
   }
 
@@ -86,7 +104,7 @@ export default class HomieDataGrid extends React.Component {
     for (let i = fromRow; i <= toRow; i++) {
       let rowToUpdate = rows[i];
       let updatedRow = update(rowToUpdate, { $merge: updated });
-
+      console.log(updatedRow);
       this.editAssignments(updatedRow, () => {
       });
 
@@ -110,7 +128,7 @@ export default class HomieDataGrid extends React.Component {
     });
   }
 
-  rowCount() {
+  getSize() {
     return this.state.rows.length;
   }
 
@@ -139,7 +157,7 @@ export default class HomieDataGrid extends React.Component {
 
   getRowIndexById(id, cb) {
     let rows = this.state.rows;
-    let rowCount = this.rowCount();
+    let rowCount = this.getSize();
     let found = false;
     for (let i = 0; i < rowCount; i++) {
       if (!found && rows[i].id == id) {
@@ -149,14 +167,30 @@ export default class HomieDataGrid extends React.Component {
 
     }
   }
+
+  handleAddRow({ newRowIndex }) {
+    alert(newRowIndex);
+    // const newRow = {
+    //   value: newRowIndex,
+    //   userStory: '',
+    //   developer: '',
+    //   epic: ''
+    // };
+
+    // let rows = this.state.rows.slice();
+    // rows = React.addons.update(rows, {$push: [newRow]});
+    // this.setState({ rows });
+  }
+
   render() {
     return (
       <ReactDataGrid
         enableCellSelect={true}
         columns={this.getColumns()}
-        rowGetter={this.rowGetter}
-        rowsCount={this.rowCount()}
+        rowGetter={this.getRowAt}
+        rowsCount={this.getSize()}
         minHeight={500}
+        toolbar={<Toolbar onAddRow={this.handleAddRow} />}
         onGridRowsUpdated={this.handleGridRowsUpdated} />);
   }
 };
