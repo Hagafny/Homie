@@ -2,11 +2,12 @@ import React from 'react';
 import update from 'react-addons-update';
 import axios from 'axios';
 import ReactDataGrid from 'react-data-grid';
-import { Toolbar } from 'react-data-grid-addons';
+import HomieDataGridToolbar from './HomieDataGridToolbar.jsx';
 import HomieDropDownEditor from './HomieDropDownEditor.jsx';
 import HomieDropDownFormatter from './HomieDropDownFormatter.jsx';
+import AddFormContainer from './AddFormContainer.jsx';
 
-const titles = [
+const courses = [
   {
     value: '24',
     text: 'Defense Against the Dark Arts'
@@ -31,14 +32,38 @@ export default class HomieDataGrid extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      rows: []
+      rows: [],
+      courses: courses
     }
 
     this.getRowAt = this.getRowAt.bind(this);
     this.handleGridRowsUpdated = this.handleGridRowsUpdated.bind(this);
+    this.fetchItems = this.fetchItems.bind(this);
+    this.save = this.save.bind(this);
+    this.showNewItemOnGrid = this.showNewItemOnGrid.bind(this);
+
   }
 
   componentDidMount() {
+    //Move to different function!
+    this.fetchItems();
+    // let rows = [
+    //   {
+    //     "id": "124", "endDate": "Monday, 28 May 2018, 11:55 PM",
+    //     "homeworkUrl": "http://moodle.idc.ac.il/2017/pluginfile.php/123451/mod_assign/introattachment/0/Ex7.pdf?forcedownload=1",
+    //     "ex": "1", "moodleId": "", "courseId": "25"
+    //   },
+
+    //   {
+    //     "id": "122", "endDate": "Friday, 24 August 2018, 11:45 PM",
+    //     "homeworkUrl": "http://moodle.idc.ac.il/2017/pluginfile.php/123451/mod_assign/introattachment/0/Ex7.pdf?forcedownload=1",
+    //     "ex": "1", "moodleId": "", "courseId": "26"
+    //   }]
+
+    // this.setState({ rows: rows });
+  }
+
+  fetchItems() {
     let classId = this.props.classId;
     let getAssignmentsUrl = `/api/assignments/manager/${classId}`;
     axios.get(getAssignmentsUrl)
@@ -52,18 +77,18 @@ export default class HomieDataGrid extends React.Component {
       {
         key: 'id',
         name: 'ID',
-        width: 80
+        width: 60
       },
       {
         key: 'courseId',
         name: 'Course',
-        //editable: true
-        editor: <HomieDropDownEditor options={titles} />,
-        formatter: <HomieDropDownFormatter options={titles} value={"theFuck"}/>
+        editor: <HomieDropDownEditor options={courses} />,
+        formatter: <HomieDropDownFormatter options={courses} value={"theFuck"} />
       },
       {
         key: 'ex',
         name: 'Exercise #',
+        width: 100,
         editable: true
       },
       {
@@ -104,7 +129,6 @@ export default class HomieDataGrid extends React.Component {
     for (let i = fromRow; i <= toRow; i++) {
       let rowToUpdate = rows[i];
       let updatedRow = update(rowToUpdate, { $merge: updated });
-      console.log(updatedRow);
       this.editAssignments(updatedRow, () => {
       });
 
@@ -169,28 +193,50 @@ export default class HomieDataGrid extends React.Component {
   }
 
   handleAddRow({ newRowIndex }) {
-    alert(newRowIndex);
-    // const newRow = {
-    //   value: newRowIndex,
-    //   userStory: '',
-    //   developer: '',
-    //   epic: ''
-    // };
+    $('#addModal').modal('show');
+  }
 
-    // let rows = this.state.rows.slice();
-    // rows = React.addons.update(rows, {$push: [newRow]});
-    // this.setState({ rows });
+  save(assignment) {
+    $('#addModal').modal('hide');
+    $('#addForm')[0].reset();
+
+    this.saveOnServer(assignment, this.showNewItemOnGrid);
+  }
+
+  saveOnServer(assignment, cb) {
+    var url = "/api/assignments/";
+    var data = JSON.stringify(assignment);
+
+    var config = {
+      headers: { 'Content-Type': 'application/json; charset=utf-8' }
+    };
+
+    axios.post(url, data, config).then((response) => {
+      if (response.data.status == 200) {
+        assignment.id = response.data.id;
+        cb(assignment);
+      }
+    });
+  }
+
+  showNewItemOnGrid(item) {
+    let rows = this.state.rows.slice();
+    rows = update(rows, { $push: [item] });
+    this.setState({ rows });
   }
 
   render() {
     return (
-      <ReactDataGrid
-        enableCellSelect={true}
-        columns={this.getColumns()}
-        rowGetter={this.getRowAt}
-        rowsCount={this.getSize()}
-        minHeight={500}
-        toolbar={<Toolbar onAddRow={this.handleAddRow} />}
-        onGridRowsUpdated={this.handleGridRowsUpdated} />);
+      <div>
+        <ReactDataGrid
+          enableCellSelect={true}
+          columns={this.getColumns()}
+          rowGetter={this.getRowAt}
+          rowsCount={this.getSize()}
+          minHeight={500}
+          toolbar={<HomieDataGridToolbar addRowButtonText={"Add Assignment"} onAddRow={this.handleAddRow} />}
+          onGridRowsUpdated={this.handleGridRowsUpdated} />
+        <AddFormContainer save={this.save} courses={this.state.courses} />
+      </div>);
   }
 };

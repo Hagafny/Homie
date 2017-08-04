@@ -16,8 +16,12 @@ let getAssignmentsForManagerById = (req, res) => {
 }
 
 let save = (req, res) => {
-    managerlogicService.saveAssignment(req.body, () => {
-        res.status(200).json({ status: 200 });
+    managerlogicService.saveAssignment(req.body, (newAssignmentId) => {
+        res.status(200).json(
+            {
+                status: 200,
+                id: newAssignmentId
+            });
     });
 }
 
@@ -27,7 +31,7 @@ let edit = (req, res) => {
     })
 }
 
-let remove = (req, res) => {  
+let remove = (req, res) => {
     let assignmentId = req.params.id;
     managerlogicService.deleteAssignment(assignmentId, () => {
         res.status(200).json({ status: 200 });

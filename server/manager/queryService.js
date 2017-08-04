@@ -15,7 +15,7 @@ let editAssignment = (classId) => {
 }
 let saveAssignment = () => {
     return `INSERT INTO assignments (homework_url, course_id, ex, end_date, moodle_id) 
-        VALUES ($1, $2, $3, $4, $5)`;
+        VALUES ($1, $2, $3, $4, $5) RETURNING id`;
 }
 
 let deleteAssignment = (assignmentId) => {

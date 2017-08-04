@@ -3,11 +3,11 @@ import Option from './Option.jsx';
 
 const SelectBox = (props) => {
     let options = props.options.map((option, index) => {
-        return <Option value={option.id} key={index}>{option.title}</Option>
+        return <Option value={option.value} key={index}>{option.text}</Option>
     })
 
     return (
-        <select onChange={props.handleCourseChange}>
+        <select className="form-control" name={props.name} onChange={props.handleInputChange}>
             <Option value="0">Please choose course</Option>
             {options}
         </select>

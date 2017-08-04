@@ -35,9 +35,10 @@ let saveAssignment = (assignment, cb) => {
         assignment.endDate,
         assignment.moodleId
     ]
-
-    db.none(sql, values)
-        .then(cb)
+    db.one(sql, values)
+        .then((data) => {
+            cb(data.id);
+        })
         .catch(error => {
             // error;
         });
