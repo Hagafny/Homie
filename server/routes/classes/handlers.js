@@ -1,5 +1,12 @@
 const logicService = require('../../admin/classes/logicService');
 
+let getClassesBasic = (req, res) => {
+    logicService.getClassesBasic((classes) => {
+        res.json(classes);
+    });
+}
+
+
 let get = (req, res) => {
     logicService.getClasses((classes) => {
         res.json(classes);
@@ -30,6 +37,7 @@ let remove = (req, res) => {
 }
 
 module.exports = {
+        getClassesBasic: getClassesBasic,
     get: get,
     save: save,
     edit: edit,

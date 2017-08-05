@@ -2,6 +2,7 @@ const router = require('express').Router;
 const classes = router();
 const handlers = require('./handlers');
 
+classes.get('/basic/', handlers.getClassesBasic);
 classes.get('/', handlers.get);
 classes.post('/', handlers.save);
 classes.put('/', handlers.edit);

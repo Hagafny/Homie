@@ -30459,6 +30459,10 @@ var _ClassesDataGrid = __webpack_require__(140);
 
 var _ClassesDataGrid2 = _interopRequireDefault(_ClassesDataGrid);
 
+var _ManagersDataGrid = __webpack_require__(328);
+
+var _ManagersDataGrid2 = _interopRequireDefault(_ManagersDataGrid);
+
 var _Footer = __webpack_require__(46);
 
 var _Footer2 = _interopRequireDefault(_Footer);
@@ -30487,6 +30491,7 @@ var AdminPage = function (_React$Component) {
                 'div',
                 null,
                 _react2.default.createElement(_ClassesDataGrid2.default, null),
+                _react2.default.createElement(_ManagersDataGrid2.default, null),
                 _react2.default.createElement(_Footer2.default, null)
             );
         }
@@ -30513,10 +30518,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
-
-var _axios = __webpack_require__(22);
-
-var _axios2 = _interopRequireDefault(_axios);
 
 var _HomieDataGrid = __webpack_require__(47);
 
@@ -30748,7 +30749,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SelectBox = __webpack_require__(164);
+var _SelectBox = __webpack_require__(330);
 
 var _SelectBox2 = _interopRequireDefault(_SelectBox);
 
@@ -30764,7 +30765,7 @@ var AddFormInput = function AddFormInput(props) {
             props.data.name,
             ':'
         ),
-        props.data.hasOwnProperty("dropdownOptions") ? _react2.default.createElement(AddFormSelectInput, { name: props.data.key, handleInputChange: props.handleInputChange, options: props.data.dropdownOptions }) : _react2.default.createElement(AddFormTextInput, { name: props.data.key, handleInputChange: props.handleInputChange })
+        props.data.hasOwnProperty("dropdownOptions") ? _react2.default.createElement(AddFormSelectInput, { name: props.data.key, handleInputChange: props.handleInputChange, options: props.data.dropdownOptions, dropDownName: props.data.name }) : _react2.default.createElement(AddFormTextInput, { name: props.data.key, handleInputChange: props.handleInputChange })
     );
 };
 
@@ -30773,7 +30774,7 @@ var AddFormTextInput = function AddFormTextInput(props) {
 };
 
 var AddFormSelectInput = function AddFormSelectInput(props) {
-    return _react2.default.createElement(_SelectBox2.default, { options: props.options, name: props.name, handleInputChange: props.handleInputChange });
+    return _react2.default.createElement(_SelectBox2.default, { options: props.options, name: props.name, handleInputChange: props.handleInputChange, dropDownName: props.dropDownName });
 };
 
 exports.default = AddFormInput;
@@ -32262,76 +32263,8 @@ var ManagerPageContainer = function ManagerPageContainer(_ref) {
 exports.default = ManagerPageContainer;
 
 /***/ }),
-/* 163 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Option = function Option(props) {
-  return _react2.default.createElement(
-    'option',
-    { value: props.value },
-    props.children
-  );
-};
-exports.default = Option;
-
-/***/ }),
-/* 164 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Option = __webpack_require__(163);
-
-var _Option2 = _interopRequireDefault(_Option);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SelectBox = function SelectBox(props) {
-    var options = props.options.map(function (option, index) {
-        return _react2.default.createElement(
-            _Option2.default,
-            { value: option.value, key: index },
-            option.text
-        );
-    });
-
-    return _react2.default.createElement(
-        'select',
-        { className: 'form-control', name: props.name, onChange: props.handleInputChange },
-        _react2.default.createElement(
-            _Option2.default,
-            { value: '0' },
-            'Please choose course'
-        ),
-        options
-    );
-};
-
-exports.default = SelectBox;
-
-/***/ }),
+/* 163 */,
+/* 164 */,
 /* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -64335,6 +64268,186 @@ exports.default = valueEqual;
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 328 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(22);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _HomieDataGrid = __webpack_require__(47);
+
+var _HomieDataGrid2 = _interopRequireDefault(_HomieDataGrid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ManagersDataGrid = function (_React$Component) {
+    _inherits(ManagersDataGrid, _React$Component);
+
+    function ManagersDataGrid(props) {
+        _classCallCheck(this, ManagersDataGrid);
+
+        var _this = _possibleConstructorReturn(this, (ManagersDataGrid.__proto__ || Object.getPrototypeOf(ManagersDataGrid)).call(this, props));
+
+        _this.state = {
+            managerGridData: _this.getManagersConfig(),
+            showDataGrid: false
+        };
+        return _this;
+    }
+
+    _createClass(ManagersDataGrid, [{
+        key: 'getManagersConfig',
+        value: function getManagersConfig() {
+            var baseEndpointUrl = "/api/managers/";
+            return {
+                gridName: "Manager",
+                endpoints: {
+                    fetchItems: baseEndpointUrl,
+                    saveItem: baseEndpointUrl,
+                    editItem: baseEndpointUrl,
+                    deleteItem: baseEndpointUrl
+                },
+                columns: [{
+                    key: 'email',
+                    name: 'Email',
+                    editable: true
+                }, {
+                    key: 'class_id',
+                    name: 'Class',
+                    editable: true
+                }, {
+                    key: 'password',
+                    name: 'Password',
+                    editable: true
+                }]
+            };
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            this.getClasses(function (classes) {
+                var data = _this2.state;
+                data.managerGridData.columns[1].dropdownOptions = classes;
+                data.showDataGrid = true;
+                _this2.setState({ data: data });
+            });
+        }
+    }, {
+        key: 'getClasses',
+        value: function getClasses(cb) {
+            _axios2.default.get('/api/classes/basic/').then(function (res) {
+                cb(res.data);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            if (!this.state.showDataGrid) return false;
+
+            return _react2.default.createElement(_HomieDataGrid2.default, this.state.managerGridData);
+        }
+    }]);
+
+    return ManagersDataGrid;
+}(_react2.default.Component);
+
+exports.default = ManagersDataGrid;
+;
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Option = function Option(props) {
+  return _react2.default.createElement(
+    'option',
+    { value: props.value },
+    props.children
+  );
+};
+exports.default = Option;
+
+/***/ }),
+/* 330 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Option = __webpack_require__(329);
+
+var _Option2 = _interopRequireDefault(_Option);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SelectBox = function SelectBox(props) {
+    var options = props.options.map(function (option, index) {
+        return _react2.default.createElement(
+            _Option2.default,
+            { value: option.value, key: index },
+            option.text
+        );
+    });
+
+    return _react2.default.createElement(
+        'select',
+        { className: 'form-control', name: props.name, onChange: props.handleInputChange },
+        _react2.default.createElement(
+            _Option2.default,
+            { value: '0' },
+            'Please choose ',
+            props.dropDownName.toLowerCase()
+        ),
+        options
+    );
+};
+
+exports.default = SelectBox;
 
 /***/ })
 /******/ ]);

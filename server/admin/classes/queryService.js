@@ -1,3 +1,7 @@
+let getClassesBasic = () => {
+    return `SELECT id, name FROM classes`;
+}
+
 let getClasses = () => {
     return `SELECT * FROM classes`;
 }
@@ -17,6 +21,7 @@ let deleteClass = (classId) => {
 }
 
 let service = {
+    getClassesBasic: getClassesBasic,
     getClasses: getClasses,
     saveClass: saveClass,
     editClass: editClass,

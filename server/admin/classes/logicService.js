@@ -1,10 +1,14 @@
 const dataService = require('./dataService');
 
-let getClasses = (cb) => {
-    dataService.getClasses((rows) => {
-        let modifiedRows = rows.map(classMapper);
+let getClassesBasic = (cb) => {
+    dataService.getClassesBasic((rows) => {
+        let modifiedRows = rows.map(classBasicMapper); 
         cb(modifiedRows);
-    })
+    });
+}
+
+let getClasses = (cb) => {
+    dataService.getClasses(cb);
 }
 
 let saveClass = (cls, cb) => {
@@ -20,6 +24,7 @@ let deleteClass = (classId, cb) => {
 }
 
 let service = {
+    getClassesBasic: getClassesBasic,
     getClasses: getClasses,
     saveClass: saveClass,
     editClass: editClass,
@@ -28,4 +33,9 @@ let service = {
 
 module.exports = service;
 
-let classMapper = (cls) => cls;
+let classBasicMapper = (cls) => {
+    return {
+        value: cls.id,
+        text: cls.name
+    }
+}

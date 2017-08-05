@@ -1,6 +1,15 @@
 const queryService = require('./queryService');
 const db = require('./../../pgConnection');
 
+let getClassesBasic = (cb) => {
+    let sql = queryService.getClassesBasic();
+    db.any(sql)
+        .then(cb)
+        .catch(error => {
+            console.log("ERROR:", error);
+        });
+}
+
 let getClasses = (cb) => {
     let sql = queryService.getClasses();
     db.any(sql)
@@ -50,6 +59,7 @@ let deleteClass = (classId, cb) => {
 }
 
 let service = {
+    getClassesBasic: getClassesBasic,
     getClasses: getClasses,
     saveClass: saveClass,
     editClass: editClass,

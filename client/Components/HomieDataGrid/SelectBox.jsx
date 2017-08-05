@@ -8,7 +8,7 @@ const SelectBox = (props) => {
 
     return (
         <select className="form-control" name={props.name} onChange={props.handleInputChange}>
-            <Option value="0">Please choose course</Option>
+            <Option value="0">Please choose {props.dropDownName.toLowerCase()}</Option>
             {options}
         </select>
     )

@@ -1,14 +1,14 @@
 const assignmentslogicService = require('../../main/logicService');
 const managerlogicService = require('../../manager/assignments/logicService');
 
-let getAssignmentsById = (req, res) => {
+let getAssignments = (req, res) => {
     let classId = req.params.id;
     assignmentslogicService.getAssingments(classId, (assignments) => {
         res.json(assignments);
     });
 }
 
-let getAssignmentsForManagerById = (req, res) => {
+let getAssignmentsForManager = (req, res) => {
     let classId = req.params.id;
     managerlogicService.getAssingments(classId, (assignments) => {
         res.json(assignments);
@@ -39,8 +39,8 @@ let remove = (req, res) => {
 }
 
 module.exports = {
-    getAssignmentsById: getAssignmentsById,
-    getAssignmentsForManagerById: getAssignmentsForManagerById,
+    getAssignments: getAssignments,
+    getAssignmentsForManager: getAssignmentsForManager,
     save: save,
     edit: edit,
     remove: remove

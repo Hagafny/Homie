@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import ClassesDataGrid from './ClassesDataGrid.jsx'
+import ClassesDataGrid from './ClassesDataGrid.jsx';
+import ManagersDataGrid from './ManagersDataGrid.jsx'
 import Footer from './../Footer.jsx';
 
 export default class AdminPage extends React.Component {
@@ -12,6 +13,7 @@ export default class AdminPage extends React.Component {
         return (
             <div>
                 <ClassesDataGrid />
+                <ManagersDataGrid />
                 <Footer />
             </div>
         );

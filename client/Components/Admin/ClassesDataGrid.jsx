@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import HomieDataGrid from '../HomieDataGrid/HomieDataGrid.jsx';
 
 export default class ClassesDataGrid extends React.Component {
