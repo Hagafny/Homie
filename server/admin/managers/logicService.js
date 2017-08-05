@@ -1,10 +1,12 @@
 const dataService = require('./dataService');
+const encryptor = require('./../../MD5encryptor');
 
 let getManagers = (cb) => {
     dataService.getManagers(cb);
 }
 
 let saveManager = (manager, cb) => {
+    manager.password = encryptor(manager.password);
     dataService.saveManager(manager, cb);
 }
 

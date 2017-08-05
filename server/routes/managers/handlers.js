@@ -1,9 +1,7 @@
 const logicService = require('../../admin/managers/logicService');
 
 let get = (req, res) => {
-    console.log('yea I am here');
     logicService.getManagers((managers) => {
-        console.log(managers);
         res.json(managers);
     });
 }

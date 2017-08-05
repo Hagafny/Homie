@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import ClassesDataGrid from './ClassesDataGrid.jsx';
 import ManagersDataGrid from './ManagersDataGrid.jsx'
 import Footer from './../Footer.jsx';
