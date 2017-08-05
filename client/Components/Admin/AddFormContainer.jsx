@@ -23,7 +23,9 @@ export default class AddFormContainer extends Component {
     }
     render() {
         return (
-            <AddForm courses={this.props.courses}
+            <AddForm
+                gridName={this.props.gridName}
+                fields={this.props.fields}
                 handleInputChange={this.handleInputChange}
                 handleSubmit={this.handleSubmit} />)
     }

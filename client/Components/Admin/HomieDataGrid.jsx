@@ -1,42 +1,21 @@
 import React from 'react';
-import update from 'react-addons-update';
 import axios from 'axios';
+import update from 'react-addons-update';
 import ReactDataGrid from 'react-data-grid';
 import HomieDataGridToolbar from './HomieDataGridToolbar.jsx';
 import HomieDropDownEditor from './HomieDropDownEditor.jsx';
 import HomieDropDownFormatter from './HomieDropDownFormatter.jsx';
 import AddFormContainer from './AddFormContainer.jsx';
 
-const courses = [
-  {
-    value: '24',
-    text: 'Defense Against the Dark Arts'
-  },
-  {
-    value: "25",
-    text: 'Potions'
-  },
-  {
-    value: "26",
-    text: 'History of Magic'
-  },
-  {
-    value: "27",
-    text: 'Astronomy'
-  },
-  {
-    value: "28",
-    text: 'Charms'
-  }]
 export default class HomieDataGrid extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      rows: [],
-      courses: courses
+      rows: []
     }
 
     this.getRowAt = this.getRowAt.bind(this);
+    this.handleAddRow = this.handleAddRow.bind(this);
     this.handleGridRowsUpdated = this.handleGridRowsUpdated.bind(this);
     this.fetchItems = this.fetchItems.bind(this);
     this.save = this.save.bind(this);
@@ -45,91 +24,107 @@ export default class HomieDataGrid extends React.Component {
   }
 
   componentDidMount() {
-    //Move to different function!
     this.fetchItems();
-    // let rows = [
-    //   {
-    //     "id": "124", "endDate": "Monday, 28 May 2018, 11:55 PM",
-    //     "homeworkUrl": "http://moodle.idc.ac.il/2017/pluginfile.php/123451/mod_assign/introattachment/0/Ex7.pdf?forcedownload=1",
-    //     "ex": "1", "moodleId": "", "courseId": "25"
-    //   },
-
-    //   {
-    //     "id": "122", "endDate": "Friday, 24 August 2018, 11:45 PM",
-    //     "homeworkUrl": "http://moodle.idc.ac.il/2017/pluginfile.php/123451/mod_assign/introattachment/0/Ex7.pdf?forcedownload=1",
-    //     "ex": "1", "moodleId": "", "courseId": "26"
-    //   }]
-
-    // this.setState({ rows: rows });
   }
 
-  fetchItems() {
-    let classId = this.props.classId;
-    let getAssignmentsUrl = `/api/assignments/manager/${classId}`;
-    axios.get(getAssignmentsUrl)
-      .then(assignmentsRes => {
-        let assignments = assignmentsRes.data;
-        this.setState({ rows: assignments });
-      })
+
+  columnMapper(column) {
+    if (column.hasOwnProperty("dropdownOptions")) {
+      column.editor = <HomieDropDownEditor options={column.dropdownOptions} />;
+      column.formatter = <HomieDropDownFormatter options={column.dropdownOptions} />
+    }
+
+    return column;
   }
   getColumns() {
-    return [
-      {
-        key: 'id',
-        name: 'ID',
-        width: 60
-      },
-      {
-        key: 'courseId',
-        name: 'Course',
-        editor: <HomieDropDownEditor options={courses} />,
-        formatter: <HomieDropDownFormatter options={courses} value={"theFuck"} />
-      },
-      {
-        key: 'ex',
-        name: 'Exercise #',
-        width: 100,
-        editable: true
-      },
-      {
-        key: 'endDate',
-        name: 'End Date',
-        // width: 200,
-        editable: true
-      },
-      {
-        key: 'homeworkUrl',
-        name: 'HW URL',
-        editable: true
-      },
-      {
-        key: 'moodleId',
-        name: 'Moodle ID',
-        editable: true
-      },
-      {
-        name: 'Delete',
-        key: '$delete',
-        getRowMetaData: (row) => row,
-        formatter: ({ dependentValues }) => (
-          <span>
-            <a href="javascript:;" onClick={() => this.deleteRow(dependentValues.id)}>Delete</a>
-          </span>
-        ),
-      }
-    ];
+    //Map them from client props
+    let dataGridColumns = this.props.columns.map(this.columnMapper);
+
+    //Add the ID column ad the beginning
+    dataGridColumns.unshift({
+      key: 'id',
+      name: 'ID',
+      width: 60
+    });
+
+    //Add the delete column at the end
+    dataGridColumns.push({
+      name: 'Delete',
+      key: '$delete',
+      getRowMetaData: (row) => row,
+      formatter: ({ dependentValues }) => (
+        <span>
+          <a href="javascript:;" onClick={() => this.deleteRow(dependentValues.id)}>Delete</a>
+        </span>
+      ),
+    });
+
+    return dataGridColumns;
+
   }
   getRowAt(i) {
     return this.state.rows[i];
   }
 
+  getSize() {
+    return this.state.rows.length;
+  }
+
+  //Get Items ------------------------------------
+
+  fetchItems() {
+    let fetchItemsURl = this.props.endpoints.fetchItems;
+    axios.get(fetchItemsURl)
+      .then(itemsRes => {
+        let items = itemsRes.data;
+        this.setState({ rows: items });
+      })
+  }
+
+  //Add Item -------------------------------------
+
+  handleAddRow({ newRowIndex }) {
+    $(`#add${this.props.gridName}Modal`).modal('show');
+  }
+
+  save(item) {
+    $(`#add${this.props.gridName}Modal`).modal('hide');
+    $(`#add${this.props.gridName}Form`)[0].reset();
+
+    this.saveOnServer(item, this.showNewItemOnGrid);
+  }
+
+  saveOnServer(item, cb) {
+    var saveItemURL = this.props.endpoints.saveItem;
+    var data = JSON.stringify(item);
+
+    var config = {
+      headers: { 'Content-Type': 'application/json; charset=utf-8' }
+    };
+
+    axios.post(saveItemURL, data, config).then((response) => {
+      if (response.data.status == 200) {
+        item.id = response.data.id;
+        cb(item);
+      }
+    });
+  }
+
+  showNewItemOnGrid(item) {
+    let rows = this.state.rows.slice();
+    rows = update(rows, { $push: [item] });
+    this.setState({ rows });
+  }
+
+
+  //Edit Item ------------------------------------
   handleGridRowsUpdated({ fromRow, toRow, updated }) {
     let rows = this.state.rows.slice();
 
     for (let i = fromRow; i <= toRow; i++) {
       let rowToUpdate = rows[i];
       let updatedRow = update(rowToUpdate, { $merge: updated });
-      this.editAssignments(updatedRow, () => {
+      this.editItem(updatedRow, () => {
       });
 
       rows[i] = updatedRow;
@@ -138,46 +133,45 @@ export default class HomieDataGrid extends React.Component {
     this.setState({ rows });
   }
 
-  editAssignments(assignment, cb) {
-    var url = "/api/assignments/";
-    var data = JSON.stringify(assignment);
+  editItem(item, cb) {
+    var editItemURL = this.props.endpoints.editItem;
+    var data = JSON.stringify(item);
 
     var config = {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
     };
 
-    axios.put(url, data, config).then((response) => {
+    axios.put(editItemURL, data, config).then((response) => {
       if (response.data.status == 200)
         cb();
     });
   }
 
-  getSize() {
-    return this.state.rows.length;
-  }
+
+  //Delete Item ------------------------------------
 
   deleteRow(id) {
     this.removeRowFromServer(id, () => {
-      this.removeRowFromClientGrid(id);
+      this.removeRowFromGrid(id);
     })
   }
+
   removeRowFromServer(id, cb) {
-    var url = `/api/assignments/${id}`;
-    axios.delete(url)
+    var deleteItemURL = `${this.props.endpoints.deleteItem}${id}`;
+    axios.delete(deleteItemURL)
       .then((response) => {
         if (response.data.status == 200)
           cb();
       });
   }
 
-  removeRowFromClientGrid(id) {
+  removeRowFromGrid(id) {
     this.getRowIndexById(id, (rowIndex) => {
       let rows = this.state.rows;
       rows.splice(rowIndex, 1);
       this.setState({ rows });
     })
   }
-
 
   getRowIndexById(id, cb) {
     let rows = this.state.rows;
@@ -192,39 +186,6 @@ export default class HomieDataGrid extends React.Component {
     }
   }
 
-  handleAddRow({ newRowIndex }) {
-    $('#addModal').modal('show');
-  }
-
-  save(assignment) {
-    $('#addModal').modal('hide');
-    $('#addForm')[0].reset();
-
-    this.saveOnServer(assignment, this.showNewItemOnGrid);
-  }
-
-  saveOnServer(assignment, cb) {
-    var url = "/api/assignments/";
-    var data = JSON.stringify(assignment);
-
-    var config = {
-      headers: { 'Content-Type': 'application/json; charset=utf-8' }
-    };
-
-    axios.post(url, data, config).then((response) => {
-      if (response.data.status == 200) {
-        assignment.id = response.data.id;
-        cb(assignment);
-      }
-    });
-  }
-
-  showNewItemOnGrid(item) {
-    let rows = this.state.rows.slice();
-    rows = update(rows, { $push: [item] });
-    this.setState({ rows });
-  }
-
   render() {
     return (
       <div>
@@ -234,9 +195,10 @@ export default class HomieDataGrid extends React.Component {
           rowGetter={this.getRowAt}
           rowsCount={this.getSize()}
           minHeight={500}
-          toolbar={<HomieDataGridToolbar addRowButtonText={"Add Assignment"} onAddRow={this.handleAddRow} />}
+          toolbar={<HomieDataGridToolbar addRowButtonText={`Add ${this.props.gridName}`} onAddRow={this.handleAddRow} />}
           onGridRowsUpdated={this.handleGridRowsUpdated} />
-        <AddFormContainer save={this.save} courses={this.state.courses} />
+
+        <AddFormContainer gridName={this.props.gridName} save={this.save} fields={this.props.columns} />
       </div>);
   }
 };

@@ -7,11 +7,6 @@ export default class ManagerPage extends React.Component {
         super(props);
     }
 
-    componentDidMount() {
-        //  let classId = this.props.match.params.classId;
-    }
-
-
     render() {
         return (<AssignmentsDataGrid classId={this.props.match.params.classId} />);
 

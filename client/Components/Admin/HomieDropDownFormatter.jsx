@@ -1,8 +1,6 @@
 import React from 'react';
 
 export default class HomieDropDownFormatter extends React.Component {
-
-
   shouldComponentUpdate(nextProps) {
     return nextProps.value !== this.props.value;
   }

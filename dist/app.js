@@ -30136,16 +30136,19 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SelectBox = __webpack_require__(159);
+var _AddFormField = __webpack_require__(324);
 
-var _SelectBox2 = _interopRequireDefault(_SelectBox);
+var _AddFormField2 = _interopRequireDefault(_AddFormField);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AddForm = function AddForm(props) {
+    var fields = props.fields.map(function (field) {
+        return _react2.default.createElement(_AddFormField2.default, { data: field, key: 'field_' + field.key, handleInputChange: props.handleInputChange });
+    });
     return _react2.default.createElement(
         'div',
-        { className: 'modal fade', id: 'addModal', tabIndex: '-1', role: 'dialog',
+        { className: 'modal fade', id: 'add' + props.gridName + 'Modal', tabIndex: '-1', role: 'dialog',
             'aria-labelledby': 'myModalLabel', 'aria-hidden': 'true' },
         _react2.default.createElement(
             'div',
@@ -30173,66 +30176,18 @@ var AddForm = function AddForm(props) {
                     ),
                     _react2.default.createElement(
                         'h4',
-                        { className: 'modal-title', id: 'myModalLabel' },
-                        'Add Assignment'
+                        { className: 'modal-title' },
+                        'Add ',
+                        props.gridName
                     )
                 ),
                 _react2.default.createElement(
                     'form',
-                    { id: 'addForm', onSubmit: props.handleSubmit },
+                    { id: 'add' + props.gridName + 'Form', onSubmit: props.handleSubmit },
                     _react2.default.createElement(
                         'div',
                         { className: 'modal-body' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'control-label', htmlFor: 'course' },
-                                'Course'
-                            ),
-                            _react2.default.createElement(_SelectBox2.default, { options: props.courses, name: "courseId", handleInputChange: props.handleInputChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'control-label', htmlFor: 'hw_url' },
-                                'HW URL'
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'homeworkUrl', onChange: props.handleInputChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'control-label', htmlFor: 'end_date' },
-                                'End Date:'
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'endDate', onChange: props.handleInputChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'control-label', htmlFor: 'ex' },
-                                'Exercise #:'
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'ex', onChange: props.handleInputChange })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            _react2.default.createElement(
-                                'label',
-                                { className: 'control-label', htmlFor: 'moodle_id' },
-                                'Moodle ID:'
-                            ),
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', name: 'moodleId', onChange: props.handleInputChange })
-                        )
+                        fields
                     ),
                     _react2.default.createElement(
                         'div',
@@ -30308,7 +30263,9 @@ var AddFormContainer = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_AddForm2.default, { courses: this.props.courses,
+            return _react2.default.createElement(_AddForm2.default, {
+                gridName: this.props.gridName,
+                fields: this.props.fields,
                 handleInputChange: this.handleInputChange,
                 handleSubmit: this.handleSubmit });
         }
@@ -30382,13 +30339,13 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactAddonsUpdate = __webpack_require__(196);
-
-var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
-
 var _axios = __webpack_require__(44);
 
 var _axios2 = _interopRequireDefault(_axios);
+
+var _reactAddonsUpdate = __webpack_require__(196);
+
+var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
 var _reactDataGrid = __webpack_require__(83);
 
@@ -30418,23 +30375,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var courses = [{
-  value: '24',
-  text: 'Defense Against the Dark Arts'
-}, {
-  value: "25",
-  text: 'Potions'
-}, {
-  value: "26",
-  text: 'History of Magic'
-}, {
-  value: "27",
-  text: 'Astronomy'
-}, {
-  value: "28",
-  text: 'Charms'
-}];
-
 var HomieDataGrid = function (_React$Component) {
   _inherits(HomieDataGrid, _React$Component);
 
@@ -30444,11 +30384,11 @@ var HomieDataGrid = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (HomieDataGrid.__proto__ || Object.getPrototypeOf(HomieDataGrid)).call(this, props));
 
     _this.state = {
-      rows: [],
-      courses: courses
+      rows: []
     };
 
     _this.getRowAt = _this.getRowAt.bind(_this);
+    _this.handleAddRow = _this.handleAddRow.bind(_this);
     _this.handleGridRowsUpdated = _this.handleGridRowsUpdated.bind(_this);
     _this.fetchItems = _this.fetchItems.bind(_this);
     _this.save = _this.save.bind(_this);
@@ -30460,68 +30400,35 @@ var HomieDataGrid = function (_React$Component) {
   _createClass(HomieDataGrid, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      //Move to different function!
       this.fetchItems();
-      // let rows = [
-      //   {
-      //     "id": "124", "endDate": "Monday, 28 May 2018, 11:55 PM",
-      //     "homeworkUrl": "http://moodle.idc.ac.il/2017/pluginfile.php/123451/mod_assign/introattachment/0/Ex7.pdf?forcedownload=1",
-      //     "ex": "1", "moodleId": "", "courseId": "25"
-      //   },
-
-      //   {
-      //     "id": "122", "endDate": "Friday, 24 August 2018, 11:45 PM",
-      //     "homeworkUrl": "http://moodle.idc.ac.il/2017/pluginfile.php/123451/mod_assign/introattachment/0/Ex7.pdf?forcedownload=1",
-      //     "ex": "1", "moodleId": "", "courseId": "26"
-      //   }]
-
-      // this.setState({ rows: rows });
     }
   }, {
-    key: 'fetchItems',
-    value: function fetchItems() {
-      var _this2 = this;
+    key: 'columnMapper',
+    value: function columnMapper(column) {
+      if (column.hasOwnProperty("dropdownOptions")) {
+        column.editor = _react2.default.createElement(_HomieDropDownEditor2.default, { options: column.dropdownOptions });
+        column.formatter = _react2.default.createElement(_HomieDropDownFormatter2.default, { options: column.dropdownOptions });
+      }
 
-      var classId = this.props.classId;
-      var getAssignmentsUrl = '/api/assignments/manager/' + classId;
-      _axios2.default.get(getAssignmentsUrl).then(function (assignmentsRes) {
-        var assignments = assignmentsRes.data;
-        _this2.setState({ rows: assignments });
-      });
+      return column;
     }
   }, {
     key: 'getColumns',
     value: function getColumns() {
-      var _this3 = this;
+      var _this2 = this;
 
-      return [{
+      //Map them from client props
+      var dataGridColumns = this.props.columns.map(this.columnMapper);
+
+      //Add the ID column ad the beginning
+      dataGridColumns.unshift({
         key: 'id',
         name: 'ID',
         width: 60
-      }, {
-        key: 'courseId',
-        name: 'Course',
-        editor: _react2.default.createElement(_HomieDropDownEditor2.default, { options: courses }),
-        formatter: _react2.default.createElement(_HomieDropDownFormatter2.default, { options: courses, value: "theFuck" })
-      }, {
-        key: 'ex',
-        name: 'Exercise #',
-        width: 100,
-        editable: true
-      }, {
-        key: 'endDate',
-        name: 'End Date',
-        // width: 200,
-        editable: true
-      }, {
-        key: 'homeworkUrl',
-        name: 'HW URL',
-        editable: true
-      }, {
-        key: 'moodleId',
-        name: 'Moodle ID',
-        editable: true
-      }, {
+      });
+
+      //Add the delete column at the end
+      dataGridColumns.push({
         name: 'Delete',
         key: '$delete',
         getRowMetaData: function getRowMetaData(row) {
@@ -30535,13 +30442,15 @@ var HomieDataGrid = function (_React$Component) {
             _react2.default.createElement(
               'a',
               { href: 'javascript:;', onClick: function onClick() {
-                  return _this3.deleteRow(dependentValues.id);
+                  return _this2.deleteRow(dependentValues.id);
                 } },
               'Delete'
             )
           );
         }
-      }];
+      });
+
+      return dataGridColumns;
     }
   }, {
     key: 'getRowAt',
@@ -30549,18 +30458,82 @@ var HomieDataGrid = function (_React$Component) {
       return this.state.rows[i];
     }
   }, {
+    key: 'getSize',
+    value: function getSize() {
+      return this.state.rows.length;
+    }
+
+    //Get Items ------------------------------------
+
+  }, {
+    key: 'fetchItems',
+    value: function fetchItems() {
+      var _this3 = this;
+
+      var fetchItemsURl = this.props.endpoints.fetchItems;
+      _axios2.default.get(fetchItemsURl).then(function (itemsRes) {
+        var items = itemsRes.data;
+        _this3.setState({ rows: items });
+      });
+    }
+
+    //Add Item -------------------------------------
+
+  }, {
+    key: 'handleAddRow',
+    value: function handleAddRow(_ref2) {
+      var newRowIndex = _ref2.newRowIndex;
+
+      $('#add' + this.props.gridName + 'Modal').modal('show');
+    }
+  }, {
+    key: 'save',
+    value: function save(item) {
+      $('#add' + this.props.gridName + 'Modal').modal('hide');
+      $('#add' + this.props.gridName + 'Form')[0].reset();
+
+      this.saveOnServer(item, this.showNewItemOnGrid);
+    }
+  }, {
+    key: 'saveOnServer',
+    value: function saveOnServer(item, cb) {
+      var saveItemURL = this.props.endpoints.saveItem;
+      var data = JSON.stringify(item);
+
+      var config = {
+        headers: { 'Content-Type': 'application/json; charset=utf-8' }
+      };
+
+      _axios2.default.post(saveItemURL, data, config).then(function (response) {
+        if (response.data.status == 200) {
+          item.id = response.data.id;
+          cb(item);
+        }
+      });
+    }
+  }, {
+    key: 'showNewItemOnGrid',
+    value: function showNewItemOnGrid(item) {
+      var rows = this.state.rows.slice();
+      rows = (0, _reactAddonsUpdate2.default)(rows, { $push: [item] });
+      this.setState({ rows: rows });
+    }
+
+    //Edit Item ------------------------------------
+
+  }, {
     key: 'handleGridRowsUpdated',
-    value: function handleGridRowsUpdated(_ref2) {
-      var fromRow = _ref2.fromRow,
-          toRow = _ref2.toRow,
-          updated = _ref2.updated;
+    value: function handleGridRowsUpdated(_ref3) {
+      var fromRow = _ref3.fromRow,
+          toRow = _ref3.toRow,
+          updated = _ref3.updated;
 
       var rows = this.state.rows.slice();
 
       for (var i = fromRow; i <= toRow; i++) {
         var rowToUpdate = rows[i];
         var updatedRow = (0, _reactAddonsUpdate2.default)(rowToUpdate, { $merge: updated });
-        this.editAssignments(updatedRow, function () {});
+        this.editItem(updatedRow, function () {});
 
         rows[i] = updatedRow;
       }
@@ -30568,44 +30541,42 @@ var HomieDataGrid = function (_React$Component) {
       this.setState({ rows: rows });
     }
   }, {
-    key: 'editAssignments',
-    value: function editAssignments(assignment, cb) {
-      var url = "/api/assignments/";
-      var data = JSON.stringify(assignment);
+    key: 'editItem',
+    value: function editItem(item, cb) {
+      var editItemURL = this.props.endpoints.editItem;
+      var data = JSON.stringify(item);
 
       var config = {
         headers: { 'Content-Type': 'application/json; charset=utf-8' }
       };
 
-      _axios2.default.put(url, data, config).then(function (response) {
+      _axios2.default.put(editItemURL, data, config).then(function (response) {
         if (response.data.status == 200) cb();
       });
     }
-  }, {
-    key: 'getSize',
-    value: function getSize() {
-      return this.state.rows.length;
-    }
+
+    //Delete Item ------------------------------------
+
   }, {
     key: 'deleteRow',
     value: function deleteRow(id) {
       var _this4 = this;
 
       this.removeRowFromServer(id, function () {
-        _this4.removeRowFromClientGrid(id);
+        _this4.removeRowFromGrid(id);
       });
     }
   }, {
     key: 'removeRowFromServer',
     value: function removeRowFromServer(id, cb) {
-      var url = '/api/assignments/' + id;
-      _axios2.default.delete(url).then(function (response) {
+      var deleteItemURL = '' + this.props.endpoints.deleteItem + id;
+      _axios2.default.delete(deleteItemURL).then(function (response) {
         if (response.data.status == 200) cb();
       });
     }
   }, {
-    key: 'removeRowFromClientGrid',
-    value: function removeRowFromClientGrid(id) {
+    key: 'removeRowFromGrid',
+    value: function removeRowFromGrid(id) {
       var _this5 = this;
 
       this.getRowIndexById(id, function (rowIndex) {
@@ -30628,45 +30599,6 @@ var HomieDataGrid = function (_React$Component) {
       }
     }
   }, {
-    key: 'handleAddRow',
-    value: function handleAddRow(_ref3) {
-      var newRowIndex = _ref3.newRowIndex;
-
-      $('#addModal').modal('show');
-    }
-  }, {
-    key: 'save',
-    value: function save(assignment) {
-      $('#addModal').modal('hide');
-      $('#addForm')[0].reset();
-
-      this.saveOnServer(assignment, this.showNewItemOnGrid);
-    }
-  }, {
-    key: 'saveOnServer',
-    value: function saveOnServer(assignment, cb) {
-      var url = "/api/assignments/";
-      var data = JSON.stringify(assignment);
-
-      var config = {
-        headers: { 'Content-Type': 'application/json; charset=utf-8' }
-      };
-
-      _axios2.default.post(url, data, config).then(function (response) {
-        if (response.data.status == 200) {
-          assignment.id = response.data.id;
-          cb(assignment);
-        }
-      });
-    }
-  }, {
-    key: 'showNewItemOnGrid',
-    value: function showNewItemOnGrid(item) {
-      var rows = this.state.rows.slice();
-      rows = (0, _reactAddonsUpdate2.default)(rows, { $push: [item] });
-      this.setState({ rows: rows });
-    }
-  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -30678,9 +30610,9 @@ var HomieDataGrid = function (_React$Component) {
           rowGetter: this.getRowAt,
           rowsCount: this.getSize(),
           minHeight: 500,
-          toolbar: _react2.default.createElement(_HomieDataGridToolbar2.default, { addRowButtonText: "Add Assignment", onAddRow: this.handleAddRow }),
+          toolbar: _react2.default.createElement(_HomieDataGridToolbar2.default, { addRowButtonText: 'Add ' + this.props.gridName, onAddRow: this.handleAddRow }),
           onGridRowsUpdated: this.handleGridRowsUpdated }),
-        _react2.default.createElement(_AddFormContainer2.default, { save: this.save, courses: this.state.courses })
+        _react2.default.createElement(_AddFormContainer2.default, { gridName: this.props.gridName, save: this.save, fields: this.props.columns })
       );
     }
   }]);
@@ -30977,11 +30909,6 @@ var ManagerPage = function (_React$Component) {
     }
 
     _createClass(ManagerPage, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            //  let classId = this.props.match.params.classId;
-        }
-    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(_AssignmentsDataGrid2.default, { classId: this.props.match.params.classId });
@@ -64007,6 +63934,10 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _axios = __webpack_require__(44);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _HomieDataGrid = __webpack_require__(141);
 
 var _HomieDataGrid2 = _interopRequireDefault(_HomieDataGrid);
@@ -64025,13 +63956,76 @@ var AssignmentsDataGrid = function (_React$Component) {
     function AssignmentsDataGrid(props) {
         _classCallCheck(this, AssignmentsDataGrid);
 
-        return _possibleConstructorReturn(this, (AssignmentsDataGrid.__proto__ || Object.getPrototypeOf(AssignmentsDataGrid)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (AssignmentsDataGrid.__proto__ || Object.getPrototypeOf(AssignmentsDataGrid)).call(this, props));
+
+        _this.state = {
+            assignmentGridData: _this.getAssignmentsConfig(),
+            showDataGrid: false
+        };
+        return _this;
     }
 
     _createClass(AssignmentsDataGrid, [{
+        key: 'getAssignmentsConfig',
+        value: function getAssignmentsConfig() {
+            var baseEndpointUrl = "/api/assignments/";
+            return {
+                gridName: "Assignment",
+                endpoints: {
+                    fetchItems: baseEndpointUrl + 'manager/' + this.props.classId,
+                    saveItem: baseEndpointUrl,
+                    editItem: baseEndpointUrl,
+                    deleteItem: baseEndpointUrl
+                },
+                columns: [{
+                    key: 'courseId',
+                    name: 'Course'
+                }, {
+                    key: 'ex',
+                    name: 'Exercise #',
+                    width: 100,
+                    editable: true
+                }, {
+                    key: 'endDate',
+                    name: 'End Date',
+                    editable: true
+                }, {
+                    key: 'homeworkUrl',
+                    name: 'HW URL',
+                    editable: true
+                }, {
+                    key: 'moodleId',
+                    name: 'Moodle ID',
+                    editable: true
+                }]
+            };
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var classId = this.props.classId;
+            this.getCourses(classId, function (courses) {
+                var data = _this2.state;
+                data.assignmentGridData.columns[0].dropdownOptions = courses;
+                data.showDataGrid = true;
+                _this2.setState({ data: data });
+            });
+        }
+    }, {
+        key: 'getCourses',
+        value: function getCourses(classId, cb) {
+            _axios2.default.get('/api/courses/' + classId).then(function (res) {
+                cb(res.data);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_HomieDataGrid2.default, { classId: this.props.classId });
+            if (!this.state.showDataGrid) return false;
+
+            return _react2.default.createElement(_HomieDataGrid2.default, this.state.assignmentGridData);
         }
     }]);
 
@@ -64040,6 +64034,51 @@ var AssignmentsDataGrid = function (_React$Component) {
 
 exports.default = AssignmentsDataGrid;
 ;
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _SelectBox = __webpack_require__(159);
+
+var _SelectBox2 = _interopRequireDefault(_SelectBox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AddFormInput = function AddFormInput(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'form-group' },
+        _react2.default.createElement(
+            'label',
+            { className: 'control-label', htmlFor: props.data.key },
+            props.data.name,
+            ':'
+        ),
+        props.data.hasOwnProperty("dropdownOptions") ? _react2.default.createElement(AddFormSelectInput, { name: props.data.key, handleInputChange: props.handleInputChange, options: props.data.dropdownOptions }) : _react2.default.createElement(AddFormTextInput, { name: props.data.key, handleInputChange: props.handleInputChange })
+    );
+};
+
+var AddFormTextInput = function AddFormTextInput(props) {
+    return _react2.default.createElement('input', { type: 'text', className: 'form-control', name: props.name, onChange: props.handleInputChange });
+};
+
+var AddFormSelectInput = function AddFormSelectInput(props) {
+    return _react2.default.createElement(_SelectBox2.default, { options: props.options, name: props.name, handleInputChange: props.handleInputChange });
+};
+
+exports.default = AddFormInput;
 
 /***/ })
 /******/ ]);

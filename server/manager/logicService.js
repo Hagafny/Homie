@@ -17,7 +17,10 @@ let editAssignment = (assignment, cb) => {
 }
 
 let getCourses = (classId, cb) => {
-    dataService.getCourses(classId, cb);
+    dataService.getCourses(classId, (rows) => {
+        let modifiedRows = rows.map(courseMapper);
+        cb(modifiedRows);
+    });
 }
 
 let deleteAssignment = (assignmentId, cb) => {
@@ -37,12 +40,17 @@ module.exports = service;
 let assignmentMapper = (assignment) => {
     return {
         id: assignment.id,
-        endDate: dateformat(assignment.end_date, 'dddd, d mmmm yyyy, h:MM TT'),
+        endDate: dateformat(assignment.end_date, 'd mmmm yyyy, h:MM TT'),
         homeworkUrl: assignment.homework_url ? assignment.homework_url : "",
         ex: assignment.ex,
         moodleId: assignment.moodle_id ? assignment.moodle_id : "",
         courseId: assignment.course_id
     }
 }
-" Monday, August 14th, 2017, 4:00:00 PM"
-"	Sunday, 28 May 2018, 11:55 PM"
+
+let courseMapper = (course) => {
+    return {
+        value: course.id,
+        text: course.title
+    }
+}
