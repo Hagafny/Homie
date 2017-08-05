@@ -31,21 +31,6 @@ let service = {
 
 module.exports = service;
 
-let handleEndDates = (endDate) => {
-    let dateFormats = endDate.trim().split(/\s+/);
-    let wordsCount = dateFormats.length
-    if (wordsCount != 2)
-        return endDate
-
-    //Hebrew date copied from Moodle -- switch between month and date
-    let dateString = dateFormats[0];
-    dateFormats[0] = dateString.substr(3, 2) + "/" + dateString.substr(0, 2) + "/" + dateString.substr(6, 4);
-    let newHebrewDate = dateFormats.join(' ');
-
-    return newHebrewDate;
-
-}
-
 let assignmentMapper = (assignment) => {
     return {
         id: assignment.id,
@@ -62,4 +47,23 @@ let courseMapper = (course) => {
         value: course.id,
         text: course.title
     }
+}
+
+let handleEndDates = (endDate) => {
+    let dateFormats = endDate.trim().split(/\s+/);
+    let wordsCount = dateFormats.length
+    if (wordsCount != 2)
+        return endDate
+
+    //Hebrew date copied from Moodle -- switch between month and date
+    let dateString = dateFormats[0];
+    let dateParts = dateString.split('/');
+
+    let temp = dateParts[0];
+    dateParts[0] = dateParts[1];
+    dateParts[1] = temp;
+    dateFormats[0] = dateParts.join('/');
+
+    let newHebrewDate = dateFormats.join(' ');
+    return newHebrewDate;
 }
