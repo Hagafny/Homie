@@ -153,7 +153,6 @@ export default class HomieDataGrid extends React.Component {
     });
   }
 
-
   //Delete Item ------------------------------------
 
   deleteRow(id) {
@@ -200,7 +199,7 @@ export default class HomieDataGrid extends React.Component {
           columns={this.getColumns()}
           rowGetter={this.getRowAt}
           rowsCount={this.getSize()}
-          minHeight={500}
+          minHeight={300}
           toolbar={<HomieDataGridToolbar addRowButtonText={`Add ${this.props.gridName}`} onAddRow={this.handleAddRow} />}
           onGridRowsUpdated={this.handleGridRowsUpdated} />
 

@@ -1,13 +1,13 @@
 const logicService = require('../../manager/courses/logicService');
 
-let getCoursesByIdBasic = (req, res) => {
+let getCoursesBasic = (req, res) => {
     let classId = req.params.id;
     logicService.getCoursesBasic(classId, (courses) => {
         res.json(courses);
     });
 }
 
-let getCoursesById = (req, res) => {
+let getCourses = (req, res) => {
     let classId = req.params.id;
     logicService.getCourses(classId, (courses) => {
         res.json(courses);
@@ -38,8 +38,8 @@ let remove = (req, res) => {
 }
 
 module.exports = {
-    getCoursesByIdBasic, getCoursesByIdBasic,
-    getCoursesById: getCoursesById,
+    getCoursesBasic, getCoursesBasic,
+    getCourses: getCourses,
     save: save,
     edit: edit,
     remove: remove

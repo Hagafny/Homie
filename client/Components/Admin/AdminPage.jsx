@@ -1,15 +1,32 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import ManagerPage from './ManagerPage.jsx';
+import axios from 'axios';
+import ClassesDataGrid from './ClassesDataGrid.jsx'
 import Footer from './../Footer.jsx';
 
-const AdminPage = ({match}) => 
+export default class AdminPage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
             <div>
-                <Route path={`${match.url}/:classId`} component={ManagerPage} />
-                <Route exact path={match.url} render={() => (
-                    <h3>Admin Page</h3>
-                )} />
+                <ClassesDataGrid />
                 <Footer />
             </div>
+        );
+    }
+}
 
-export default AdminPage;
+
+
+
+
+
+
+
+
+
+
+
+

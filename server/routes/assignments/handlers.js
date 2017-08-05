@@ -1,4 +1,4 @@
-const assignmentslogicService = require('../../assignments/logicService');
+const assignmentslogicService = require('../../main/logicService');
 const managerlogicService = require('../../manager/assignments/logicService');
 
 let getAssignmentsById = (req, res) => {
