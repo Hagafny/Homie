@@ -1,5 +1,5 @@
 const assignmentslogicService = require('../../assignments/logicService');
-const managerlogicService = require('../../manager/logicService');
+const managerlogicService = require('../../manager/assignments/logicService');
 
 let getAssignmentsById = (req, res) => {
     let classId = req.params.id;

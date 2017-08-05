@@ -96,6 +96,12 @@ export default class HomieDataGrid extends React.Component {
 
   saveOnServer(item, cb) {
     var saveItemURL = this.props.endpoints.saveItem;
+
+    if (this.props.hasOwnProperty("extraData")) {
+      let extraData = this.props.extraData.saveItem;
+      item = update(item, { $merge: extraData });
+    }
+
     var data = JSON.stringify(item);
 
     var config = {

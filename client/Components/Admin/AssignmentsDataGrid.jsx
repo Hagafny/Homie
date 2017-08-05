@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import HomieDataGrid from './HomieDataGrid.jsx';
+import HomieDataGrid from '../HomieDataGrid/HomieDataGrid.jsx';
 
 export default class AssignmentsDataGrid extends React.Component {
     constructor(props) {
@@ -62,7 +62,7 @@ export default class AssignmentsDataGrid extends React.Component {
     }
 
     getCourses(classId, cb) {
-        axios.get(`/api/courses/${classId}`)
+        axios.get(`/api/courses/basic/${classId}`)
             .then(res => {
                 cb(res.data);
             });

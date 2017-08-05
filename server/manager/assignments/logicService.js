@@ -16,13 +16,6 @@ let editAssignment = (assignment, cb) => {
     dataService.editAssignment(assignment, cb);
 }
 
-let getCourses = (classId, cb) => {
-    dataService.getCourses(classId, (rows) => {
-        let modifiedRows = rows.map(courseMapper);
-        cb(modifiedRows);
-    });
-}
-
 let deleteAssignment = (assignmentId, cb) => {
     dataService.deleteAssignment(assignmentId, cb);
 }
@@ -31,8 +24,7 @@ let service = {
     getAssingments: getAssingments,
     saveAssignment: saveAssignment,
     editAssignment: editAssignment,
-    deleteAssignment: deleteAssignment,
-    getCourses: getCourses
+    deleteAssignment: deleteAssignment
 };
 
 module.exports = service;

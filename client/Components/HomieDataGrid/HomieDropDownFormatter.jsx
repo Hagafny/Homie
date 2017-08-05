@@ -19,5 +19,3 @@ export default class HomieDropDownFormatter extends React.Component {
     return <div title={myValue}>{text}</div>;
   }
 };
-
-module.exports = HomieDropDownFormatter;
