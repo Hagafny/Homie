@@ -13,6 +13,8 @@ let saveAssignment = (assignment, cb) => {
 }
 
 let editAssignment = (assignment, cb) => {
+    //Support hebrew dates that are copied from Moodle in a DD/MM/YYY format
+    assignment.endDate = handleEndDates(assignment.endDate);
     dataService.editAssignment(assignment, cb);
 }
 
@@ -28,6 +30,21 @@ let service = {
 };
 
 module.exports = service;
+
+let handleEndDates = (endDate) => {
+    let dateFormats = endDate.trim().split(/\s+/);
+    let wordsCount = dateFormats.length
+    if (wordsCount != 2)
+        return endDate
+
+    //Hebrew date copied from Moodle -- switch between month and date
+    let dateString = dateFormats[0];
+    dateFormats[0] = dateString.substr(3, 2) + "/" + dateString.substr(0, 2) + "/" + dateString.substr(6, 4);
+    let newHebrewDate = dateFormats.join(' ');
+
+    return newHebrewDate;
+
+}
 
 let assignmentMapper = (assignment) => {
     return {
