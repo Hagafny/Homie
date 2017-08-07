@@ -55,9 +55,7 @@ module.exports = {
     changeDoneState: changeDoneState,
     changeShowState: changeShowState,
     refreshViewState: refreshViewState
-
 }
-
 
 function createDefaultStateForNewAssignments(assignments) {
     let assignmentsState = getAssignmentsState();

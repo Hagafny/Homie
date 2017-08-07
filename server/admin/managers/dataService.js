@@ -51,8 +51,21 @@ let deleteManager = (managerId, cb) => {
         });
 }
 
+let getManagerByEmailAndPassword = (email, password, cb) => {
+    let sql = queryService.getManagerByEmailAndPassword(email, password);
+
+    db.one(sql)
+        .then((data) => {
+            cb(null, data);
+        })
+        .catch(error => {
+            cb(error)
+        });
+}
+
 let service = {
     getManagers: getManagers,
+    getManagerByEmailAndPassword, getManagerByEmailAndPassword,
     saveManager: saveManager,
     editManager: editManager,
     deleteManager: deleteManager

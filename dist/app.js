@@ -24689,6 +24689,10 @@ var _AdminPage = __webpack_require__(139);
 
 var _AdminPage2 = _interopRequireDefault(_AdminPage);
 
+var _LoginPage = __webpack_require__(398);
+
+var _LoginPage2 = _interopRequireDefault(_LoginPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24707,6 +24711,9 @@ var App = function (_React$Component) {
     }
 
     _createClass(App, [{
+        key: 'requireAuth',
+        value: function requireAuth(nextState, replace) {}
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -24714,7 +24721,8 @@ var App = function (_React$Component) {
                 null,
                 _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _AssignmentPage2.default }),
                 _react2.default.createElement(_reactRouterDom.Route, { path: '/manager', component: _ManagerPageContainer2.default }),
-                _react2.default.createElement(_reactRouterDom.Route, { path: '/admin', component: _AdminPage2.default }),
+                _react2.default.createElement(_reactRouterDom.Route, { path: '/admin', component: _AdminPage2.default, onEnter: this.requireAuth }),
+                _react2.default.createElement(_reactRouterDom.Route, { path: '/login/:classId', component: _LoginPage2.default }),
                 _react2.default.createElement(_reactRouterDom.Route, { path: '/:classId', component: _AssignmentPage2.default })
             );
         }
@@ -32611,7 +32619,6 @@ module.exports = {
     changeDoneState: changeDoneState,
     changeShowState: changeShowState,
     refreshViewState: refreshViewState
-
 };
 
 function createDefaultStateForNewAssignments(assignments) {
@@ -64438,6 +64445,238 @@ exports.default = valueEqual;
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */,
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */,
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LoginForm = function LoginForm(_ref) {
+  var onSubmit = _ref.onSubmit,
+      handleEmailChange = _ref.handleEmailChange,
+      handlePasswordChange = _ref.handlePasswordChange,
+      email = _ref.email,
+      password = _ref.password;
+  return _react2.default.createElement(
+    "div",
+    { className: "card container" },
+    _react2.default.createElement(
+      "form",
+      { action: "/", onSubmit: onSubmit },
+      _react2.default.createElement(
+        "h2",
+        { className: "card-heading" },
+        "Login"
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "field-line" },
+        _react2.default.createElement("input", { type: "text", onChange: handleEmailChange })
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "field-line" },
+        _react2.default.createElement("input", { type: "password", onChange: handlePasswordChange })
+      ),
+      _react2.default.createElement(
+        "div",
+        { className: "button-line" },
+        _react2.default.createElement("input", { type: "submit", label: "Log in" })
+      )
+    )
+  );
+};
+
+exports.default = LoginForm;
+
+/***/ }),
+/* 398 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(35);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _LoginForm = __webpack_require__(397);
+
+var _LoginForm2 = _interopRequireDefault(_LoginForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var LoginPage = function (_React$Component) {
+    _inherits(LoginPage, _React$Component);
+
+    function LoginPage(props) {
+        _classCallCheck(this, LoginPage);
+
+        // set the initial component state
+        var _this = _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this, props));
+
+        _this.state = {
+            email: '',
+            password: ''
+        };
+
+        _this.processForm = _this.processForm.bind(_this);
+        _this.handleEmailChange = _this.handleEmailChange.bind(_this);
+        _this.handlePasswordChange = _this.handlePasswordChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(LoginPage, [{
+        key: 'handleEmailChange',
+        value: function handleEmailChange(e) {
+            this.setState({ email: e.target.value });
+        }
+    }, {
+        key: 'handlePasswordChange',
+        value: function handlePasswordChange(e) {
+            this.setState({ password: e.target.value });
+        }
+
+        /**
+         * Process the form.
+         *
+         * @param {object} event - the JavaScript event object
+         */
+
+    }, {
+        key: 'processForm',
+        value: function processForm(event) {
+            event.preventDefault();
+            var url = "/api/auth/login/";
+            var data = this.state;
+            data.class_id = this.props.match.params.classId;
+
+            var config = {
+                headers: { 'Content-Type': 'application/json; charset=utf-8' }
+            };
+
+            _axios2.default.post(url, data, config).then(function (response) {
+                if (response.status == 200) {
+                    console.log('success');
+                    //  window.location.replace("/");
+                }
+            }).catch(function (err) {
+                alert('Login faild. Wrong credentials');
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(_LoginForm2.default, _extends({
+                onSubmit: this.processForm,
+                handleEmailChange: this.handleEmailChange,
+                handlePasswordChange: this.handlePasswordChange
+            }, this.state));
+        }
+    }]);
+
+    return LoginPage;
+}(_react2.default.Component);
+
+exports.default = LoginPage;
 
 /***/ })
 /******/ ]);

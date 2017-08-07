@@ -16,8 +16,13 @@ let deleteManager = (managerId) => {
     return `DELETE FROM managers WHERE id = ${managerId}`;
 }
 
+let getManagerByEmailAndPassword = (email, password) => {
+    return `SELECT * from managers WHERE email = '${email}' AND password = '${password}'`;
+}
+
 let service = {
     getManagers: getManagers,
+    getManagerByEmailAndPassword: getManagerByEmailAndPassword,
     saveManager: saveManager,
     editManager: editManager,
     deleteManager: deleteManager

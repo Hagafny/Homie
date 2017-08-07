@@ -11,6 +11,7 @@ let saveManager = (manager, cb) => {
 }
 
 let editManager = (manager, cb) => {
+    manager.password = encryptor(manager.password);
     dataService.editManager(manager, cb);
 }
 
