@@ -1,21 +1,34 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import AssignmentPage from './Main/AssignmentPage.jsx';
-import ManagerPageContainer from './Manager/ManagerPageContainer.jsx';
+import ManagerPage from './Manager/ManagerPage.jsx';
 import AdminPage from './Admin/AdminPage.jsx';
 import LoginPage from './LoginPage.jsx';
+import {isAuthenticated}  from '../Scripts/auth.js';
+
+const PrivateRoute = (data) => {
+  let classId = data.computedMatch.params.classId ? data.computedMatch.params.classId : 0;
+  let Component = data.component;
+  return (
+  <Route render={props => (
+    isAuthenticated(classId) ? (
+      <Component {...props} classId={classId}/>
+    ) : (
+      <Redirect to={{
+        pathname: `/login/${classId}`,
+        state: { from: props.location }
+      }}/>
+    )
+  )}/>
+)}
 
 export default class App extends React.Component {
-
-    requireAuth(nextState, replace) {
-    }
-
     render() {
         return (
             <Switch>
                 <Route exact path='/' component={AssignmentPage} />
-                <Route path='/manager' component={ManagerPageContainer} />
-                <Route path='/admin' component={AdminPage} onEnter={this.requireAuth}/>
+                <PrivateRoute path='/manager/:classId' component={ManagerPage} />
+                <PrivateRoute path='/admin' component={AdminPage}/>
                 <Route path='/login/:classId' component={LoginPage} />
                 <Route path='/:classId' component={AssignmentPage} />
             </Switch>

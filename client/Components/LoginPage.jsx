@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import LoginForm from './LoginForm.jsx';
+import { Redirect } from 'react-router-dom';
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -43,8 +44,8 @@ class LoginPage extends React.Component {
         axios.post(url, data, config)
             .then((response) => {
                 if (response.status == 200) {
-                    console.log('success');
-                  //  window.location.replace("/");
+                    let redirectionURL = data.class_id == 0? '/admin' : `/manager/${data.class_id}`;
+                    window.location.replace(redirectionURL);
                 }
             })
             .catch(err => {

@@ -1,6 +1,9 @@
 const router = require('express').Router;
 const managers = router();
 const handlers = require('./handlers');
+const authMiddleware = require('../../authMiddleware.js');
+
+managers.use(authMiddleware);
 
 managers.get('/', handlers.get);
 managers.post('/', handlers.save);

@@ -10,8 +10,8 @@ export default class ManagerPage extends React.Component {
     render() {
         return (
             <div>
-                <AssignmentsDataGrid classId={this.props.match.params.classId} />
-                <CoursesDataGrid classId={this.props.match.params.classId} />
+                <AssignmentsDataGrid classId={this.props.classId} />
+                <CoursesDataGrid classId={this.props.classId} />
             </div>
         );
 

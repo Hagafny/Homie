@@ -1,6 +1,9 @@
 const router = require('express').Router;
 const courses = router();
 const handlers = require('./handlers');
+const authMiddleware = require('../../authMiddleware.js');
+
+courses.use(authMiddleware);
 
 courses.get('/basic/:id', handlers.getCoursesBasic);
 courses.get('/:id', handlers.getCourses);
