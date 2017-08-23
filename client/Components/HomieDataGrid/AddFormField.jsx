@@ -8,7 +8,7 @@ const AddFormInput = (props) => {
             {props.data.hasOwnProperty("dropdownOptions") ?
                 (<AddFormSelectInput name={props.data.key} handleInputChange={props.handleInputChange} options={props.data.dropdownOptions} dropDownName={props.data.name} />)
                 :
-                (<AddFormTextInput name={props.data.key} handleInputChange={props.handleInputChange} />)
+                (<AddFormTextInput name={props.data.key} handleInputChange={props.handleInputChange} type={props.data.type? props.data.type : "text"} />)
             }
         </div>
     )
@@ -16,7 +16,7 @@ const AddFormInput = (props) => {
 
 const AddFormTextInput = (props) => {
     return (
-        <input type="text" className="form-control" name={props.name} onChange={props.handleInputChange} />
+        <input type={props.type} className="form-control" name={props.name} onChange={props.handleInputChange} />
     )
 }
 

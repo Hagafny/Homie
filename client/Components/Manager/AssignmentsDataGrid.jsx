@@ -30,7 +30,8 @@ export default class AssignmentsDataGrid extends React.Component {
                     key: 'ex',
                     name: 'Exercise #',
                     width: 100,
-                    editable: true
+                    editable: true,
+                    type: "number"
                 },
                 {
                     key: 'endDate',
