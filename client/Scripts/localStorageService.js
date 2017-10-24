@@ -1,26 +1,33 @@
 import AssignmentState from './../Classes/AssignmentState.js';
 const assignmentsStateKey = 'assignmentsState';
+const filteredClassesKey = 'filteredClasses';
 
 initializeAssignmentsState();
 
 function initializeAssignmentsState() {
+
     let assignmentsState = getAssignmentsState();
     if (!assignmentsState)
         saveAssignmentsState({});
+
+    let filteredList = getFilteredList();
+    if (!filteredList) {
+        saveFilteredList([]);
+    }
+
 }
 
 let changeDoneState = (assignmentId, doneState, cb) => {
-    let assignmentsState = getAssignmentsState();
-    assignmentsState[assignmentId].done = doneState;
-    saveAssignmentsState(assignmentsState);
-
-    if (typeof cb === typeof Function)
-        cb();
+    this.changeState(assignmentId, "done", doneState, cb);
 }
 
 let changeShowState = (assignmentId, showState, cb) => {
+    this.changeState(assignmentId, "show", showState, cb);
+}
+
+let changeState = (assignmentId, state, stateValue, cb) => {
     let assignmentsState = getAssignmentsState();
-    assignmentsState[assignmentId].show = showState;
+    assignmentsState[assignmentId][state] = stateValue;
     saveAssignmentsState(assignmentsState);
 
     if (typeof cb === typeof Function)
@@ -50,11 +57,30 @@ function saveAssignmentsState(assignmentsState) {
     localStorage.setItem(assignmentsStateKey, JSON.stringify(assignmentsState));
 }
 
+function addToFilteredList(filteredClassId) {
+    let filteredList = getFilteredList();
+    if (filteredList.includes(filteredClassId)) return;
+
+    filteredList.push(filteredClassId);
+    saveFilteredList(filteredList);
+}
+
+function saveFilteredList(filteredList) {
+    localStorage.setItem(filteredClassesKey, JSON.stringify(filteredList));
+}
+
+function getFilteredList() {
+    return JSON.parse(localStorage.getItem(filteredClassesKey));
+}
+
+
 module.exports = {
     setupAssignmentsState: setupAssignmentsState,
     changeDoneState: changeDoneState,
     changeShowState: changeShowState,
-    refreshViewState: refreshViewState
+    refreshViewState: refreshViewState,
+    getFilteredList: getFilteredList,
+    addToFilteredList: addToFilteredList
 }
 
 function createDefaultStateForNewAssignments(assignments) {
@@ -73,9 +99,12 @@ function createDefaultStateForNewAssignments(assignments) {
 }
 
 function removeOldAssignments(assignments) {
+    // let filteredClasses = getFilteredList();
+    // !assignmentIsFiltered(filteredClasses, id) && 
     let assignmentsState = getAssignmentsState();
     let newAssignments = {};
     for (let id in assignmentsState) {
+        let filteredClasses = getFilteredList();
         if (assignmetsContains(assignments, id)) {
             newAssignments[id] = assignmentsState[id];
         }
@@ -95,3 +124,18 @@ function assignmetsContains(assignmets, id) {
     }
     return found;
 }
+
+function assignmentIsFiltered(filteredClasses, id) {
+
+    let found = false;
+    let filteredClassesLength = filteredClasses.length;
+
+    for (let i = 0; i < filteredClassesLength; i++) {
+        if (`a${filteredClasses[i]}` == id) {
+            found = true;
+            break;
+        }
+    }
+    return found;
+}
+

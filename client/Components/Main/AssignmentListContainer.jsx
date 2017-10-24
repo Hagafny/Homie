@@ -52,12 +52,12 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     refreshAssignments(cb) {
-        let classId = this.props.classId || 1;
-
-        axios.get(`/api/assignments/${classId}`)
+        let classIds = this.props.classIds || 0;
+        axios.get(`/api/assignments/${classIds}`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
                 localStorageService.setupAssignmentsState(assignments, () => {
+
                     this.performClientSideModifications(assignments);
 
                     if (typeof cb === typeof Function)
@@ -67,7 +67,13 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     performClientSideModifications(assignments) {
+        localStorageService.addToFilteredList(154);
+        let filteredClasses = localStorageService.getFilteredList();
+        // !assignmentIsFiltered(filteredClasses, id) && 
+
         assignments = assignments || this.state.assignments;
+        assignments = assignments.filter(assignment => !assignmentIsFiltered(filteredClasses, assignment.id));
+
         assignments = localStorageService.refreshViewState(assignments);
         assignments = assignments.map((assignment) => {
             assignment.end_date = getTimezonedDate(assignment.end_date);
@@ -115,6 +121,20 @@ function getTimezonedDate(dateString) {
     }
 
     return endDate;
+}
+
+function assignmentIsFiltered(filteredClasses, id) {
+
+    let found = false;
+    let filteredClassesLength = filteredClasses.length;
+
+    for (let i = 0; i < filteredClassesLength; i++) {
+        if (`a${filteredClasses[i]}` == id) {
+            found = true;
+            break;
+        }
+    }
+    return found;
 }
 
 

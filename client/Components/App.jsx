@@ -29,8 +29,8 @@ export default class App extends React.Component {
                 <Route exact path='/' component={AssignmentPage} />
                 <PrivateRoute path='/manager/:classId' component={ManagerPage} />
                 <PrivateRoute path='/admin' component={AdminPage}/>
+                <Route path='/class/:classIds' component={AssignmentPage} />
                 <Route path='/login/:classId' component={LoginPage} />
-                <Route path='/:classId' component={AssignmentPage} />
             </Switch>
         )
     }

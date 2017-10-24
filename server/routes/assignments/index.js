@@ -4,7 +4,7 @@ const handlers = require('./handlers');
 const authMiddleware = require('../../authMiddleware.js');
 
 //This call is public for everyone
-assignments.get('/:id', handlers.getAssignments);
+assignments.get('/:ids', handlers.getAssignments);
 
 //These are all protected
 assignments.use(authMiddleware);

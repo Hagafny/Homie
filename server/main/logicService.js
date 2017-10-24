@@ -1,7 +1,7 @@
 const dataService = require('./dataService');
 
-let getAssingments = (classId, cb) => {
-    dataService.getAssingments(classId, (rows) => {
+let getAssingments = (classIds, cb) => {
+    dataService.getAssingments(classIds, (rows) => {
         let modifiedRows = rows.map(assignmentMapper);
         cb(modifiedRows);
     })

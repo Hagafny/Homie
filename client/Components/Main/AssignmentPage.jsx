@@ -6,7 +6,7 @@ import Title from './../Title.jsx';
 const AssignmentsPage = ({match}) => 
             <div>
                 <Title />
-                <AssignmentListContainer classId={match.params.classId} />
+                <AssignmentListContainer classIds={match.params.classIds} />
                 <Footer />
             </div>
  
