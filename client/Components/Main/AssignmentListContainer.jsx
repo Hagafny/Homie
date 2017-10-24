@@ -12,6 +12,9 @@ export default class AssignmentListContainer extends React.Component {
             assignments: []
         };
 
+        this.onDoneCheckedCallback = this.onDoneCheckedCallback.bind(this);
+        this.onShowCallback = this.onShowCallback.bind(this);
+        this.filterAssignment = this.filterAssignment.bind(this);
     }
 
     componentDidMount() {
@@ -96,8 +99,17 @@ export default class AssignmentListContainer extends React.Component {
         });
     }
 
+    filterAssignment(id) {
+        localStorageService.addToFilteredList(id, () => {
+            this.performClientSideModifications();
+        });
+    }
+
     render() {
-        return (<AssignmentList assignments={this.state.assignments} onDoneChecked={this.onDoneCheckedCallback.bind(this)} onShowCallback={this.onShowCallback.bind(this)} />);
+        return (<AssignmentList assignments={this.state.assignments}
+            onDoneChecked={this.onDoneCheckedCallback}
+            onShowCallback={this.onShowCallback}
+            filterAssignment={this.filterAssignment} />);
     }
 }
 

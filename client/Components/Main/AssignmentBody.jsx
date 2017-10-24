@@ -11,9 +11,8 @@ const AssignmentBody = (props) => {
     return (
         <div id={props.data.id} className={`collapse ${collapseStatus}`} role="tabpanel" aria-labelledby="headingOne">
             <div className="card-block">
-
                 <h6 className="card-title">EX {props.data.ex}
-                    <RemoveClassModalButton />
+                    <RemoveClassModalButton id={props.data.id} title={props.data.title}/>
                 </h6>
 
                 <div className="row">

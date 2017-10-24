@@ -57,12 +57,15 @@ function saveAssignmentsState(assignmentsState) {
     localStorage.setItem(assignmentsStateKey, JSON.stringify(assignmentsState));
 }
 
-function addToFilteredList(filteredClassId) {
+function addToFilteredList(filteredClassId, cb) {
     let filteredList = getFilteredList();
     if (filteredList.includes(filteredClassId)) return;
 
     filteredList.push(filteredClassId);
     saveFilteredList(filteredList);
+
+    if (typeof cb === typeof Function)
+        cb();
 }
 
 function saveFilteredList(filteredList) {

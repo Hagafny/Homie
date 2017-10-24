@@ -5,7 +5,9 @@ import RemoveClassModal from './RemoveClassModal.jsx';
 
 const AssignmentList = (props) => {
     let assignments = props.assignments.map(assignment => {
-        return <Assignment data={assignment} key={assignment.id} onDoneChecked={props.onDoneChecked} onShowCallback={props.onShowCallback} />
+        return <Assignment data={assignment} key={assignment.id}
+             onDoneChecked={props.onDoneChecked} 
+             onShowCallback={props.onShowCallback} />
     });
 
     return (
@@ -13,7 +15,7 @@ const AssignmentList = (props) => {
             <FlipMove duration={750} easing="ease">
                 {assignments}
             </FlipMove>
-            <RemoveClassModal />
+            <RemoveClassModal filterAssignment={props.filterAssignment} />
         </div>);
 }
 

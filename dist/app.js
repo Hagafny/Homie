@@ -31544,7 +31544,7 @@ var AssignmentBody = function AssignmentBody(props) {
                 { className: 'card-title' },
                 'EX ',
                 props.data.ex,
-                _react2.default.createElement(_RemoveClassModalButton2.default, null)
+                _react2.default.createElement(_RemoveClassModalButton2.default, { id: props.data.id, title: props.data.title })
             ),
             _react2.default.createElement(
                 'div',
@@ -31707,7 +31707,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var AssignmentList = function AssignmentList(props) {
     var assignments = props.assignments.map(function (assignment) {
-        return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id, onDoneChecked: props.onDoneChecked, onShowCallback: props.onShowCallback });
+        return _react2.default.createElement(_Assignment2.default, { data: assignment, key: assignment.id,
+            onDoneChecked: props.onDoneChecked,
+            onShowCallback: props.onShowCallback });
     });
 
     return _react2.default.createElement(
@@ -31718,7 +31720,7 @@ var AssignmentList = function AssignmentList(props) {
             { duration: 750, easing: 'ease' },
             assignments
         ),
-        _react2.default.createElement(_RemoveClassModal2.default, null)
+        _react2.default.createElement(_RemoveClassModal2.default, { filterAssignment: props.filterAssignment })
     );
 };
 
@@ -31779,6 +31781,9 @@ var AssignmentListContainer = function (_React$Component) {
             assignments: []
         };
 
+        _this.onDoneCheckedCallback = _this.onDoneCheckedCallback.bind(_this);
+        _this.onShowCallback = _this.onShowCallback.bind(_this);
+        _this.filterAssignment = _this.filterAssignment.bind(_this);
         return _this;
     }
 
@@ -31879,9 +31884,21 @@ var AssignmentListContainer = function (_React$Component) {
             });
         }
     }, {
+        key: 'filterAssignment',
+        value: function filterAssignment(id) {
+            var _this6 = this;
+
+            _localStorageService2.default.addToFilteredList(id, function () {
+                _this6.performClientSideModifications();
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_AssignmentList2.default, { assignments: this.state.assignments, onDoneChecked: this.onDoneCheckedCallback.bind(this), onShowCallback: this.onShowCallback.bind(this) });
+            return _react2.default.createElement(_AssignmentList2.default, { assignments: this.state.assignments,
+                onDoneChecked: this.onDoneCheckedCallback,
+                onShowCallback: this.onShowCallback,
+                filterAssignment: this.filterAssignment });
         }
     }]);
 
@@ -32875,12 +32892,14 @@ function saveAssignmentsState(assignmentsState) {
     localStorage.setItem(assignmentsStateKey, JSON.stringify(assignmentsState));
 }
 
-function addToFilteredList(filteredClassId) {
+function addToFilteredList(filteredClassId, cb) {
     var filteredList = getFilteredList();
     if (filteredList.includes(filteredClassId)) return;
 
     filteredList.push(filteredClassId);
     saveFilteredList(filteredList);
+
+    if ((typeof cb === 'undefined' ? 'undefined' : _typeof(cb)) === (typeof Function === 'undefined' ? 'undefined' : _typeof(Function))) cb();
 }
 
 function saveFilteredList(filteredList) {
@@ -64748,11 +64767,13 @@ exports.default = valueEqual;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(1);
 
@@ -64760,72 +64781,108 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var RemoveClassModal = function RemoveClassModal(props) {
-    return _react2.default.createElement(
-        "div",
-        { className: "modal fade", id: "removeClassModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "exampleModalLabel", "aria-hidden": "true" },
-        _react2.default.createElement(
-            "div",
-            { className: "modal-dialog", role: "document" },
-            _react2.default.createElement(
-                "div",
-                { className: "modal-content" },
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RemoveClassModalButton = function (_React$Component) {
+    _inherits(RemoveClassModalButton, _React$Component);
+
+    function RemoveClassModalButton(props) {
+        _classCallCheck(this, RemoveClassModalButton);
+
+        var _this = _possibleConstructorReturn(this, (RemoveClassModalButton.__proto__ || Object.getPrototypeOf(RemoveClassModalButton)).call(this, props));
+
+        _this.onClick = _this.onClick.bind(_this);
+        return _this;
+    }
+
+    _createClass(RemoveClassModalButton, [{
+        key: 'onClick',
+        value: function onClick() {
+            var $modal = $("#removeClassModal");
+            var assignmentId = $modal.attr('data-assignmentId');
+
+            $modal.modal('hide');
+            this.props.filterAssignment(assignmentId);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'modal fade', id: 'removeClassModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
                 _react2.default.createElement(
-                    "div",
-                    { className: "modal-header" },
+                    'div',
+                    { className: 'modal-dialog', role: 'document' },
                     _react2.default.createElement(
-                        "h5",
-                        { className: "modal-title" },
-                        "Remove ",
-                        _react2.default.createElement("span", { className: "removeClassNameFiller" })
-                    ),
-                    _react2.default.createElement(
-                        "button",
-                        { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                        'div',
+                        { className: 'modal-content' },
                         _react2.default.createElement(
-                            "span",
-                            { "aria-hidden": "true" },
-                            "\xD7"
+                            'div',
+                            { className: 'modal-header' },
+                            _react2.default.createElement(
+                                'h5',
+                                { className: 'modal-title' },
+                                'Remove ',
+                                _react2.default.createElement('span', { className: 'removeClassNameFiller' })
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { 'aria-hidden': 'true' },
+                                    '\xD7'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-body' },
+                            _react2.default.createElement('span', { className: 'removeClassNameFiller' }),
+                            ' and stuff'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-footer' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
+                                'Close'
+                            ),
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-primary', onClick: this.onClick },
+                                'Remove Class'
+                            )
                         )
                     )
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { className: "modal-body" },
-                    _react2.default.createElement("span", { className: "removeClassNameFiller" }),
-                    " and stuff"
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { className: "modal-footer" },
-                    _react2.default.createElement(
-                        "button",
-                        { type: "button", className: "btn btn-secondary", "data-dismiss": "modal" },
-                        "Close"
-                    ),
-                    _react2.default.createElement(
-                        "button",
-                        { type: "button", className: "btn btn-primary" },
-                        "Remove Class"
-                    )
                 )
-            )
-        )
-    );
-};
+            );
+        }
+    }]);
 
-exports.default = RemoveClassModal;
+    return RemoveClassModalButton;
+}(_react2.default.Component);
+
+exports.default = RemoveClassModalButton;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ }),
 /* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(1);
 
@@ -64833,21 +64890,56 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var RemoveClassModalButton = function RemoveClassModalButton(props) {
-    return _react2.default.createElement(
-        "button",
-        { type: "button", style: { color: "red" },
-            className: "close", "aria-label": "Close",
-            "data-toggle": "modal", "data-target": "#removeClassModal" },
-        _react2.default.createElement(
-            "span",
-            { "aria-hidden": "true" },
-            "\xD7"
-        )
-    );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RemoveClassModalButton = function (_React$Component) {
+    _inherits(RemoveClassModalButton, _React$Component);
+
+    function RemoveClassModalButton(props) {
+        _classCallCheck(this, RemoveClassModalButton);
+
+        var _this = _possibleConstructorReturn(this, (RemoveClassModalButton.__proto__ || Object.getPrototypeOf(RemoveClassModalButton)).call(this, props));
+
+        _this.onClick = _this.onClick.bind(_this);
+        return _this;
+    }
+
+    _createClass(RemoveClassModalButton, [{
+        key: "onClick",
+        value: function onClick() {
+            var _props = this.props,
+                id = _props.id,
+                title = _props.title;
+
+            id = id.substr(1); //remove the precedding 'a'
+            $(".removeClassNameFiller").text(title);
+            $("#removeClassModal").attr('data-assignmentId', id).modal('show');
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "button",
+                { type: "button", style: { color: "red" },
+                    className: "close", "aria-label": "Close", onClick: this.onClick },
+                _react2.default.createElement(
+                    "span",
+                    { "aria-hidden": "true" },
+                    "\xD7"
+                )
+            );
+        }
+    }]);
+
+    return RemoveClassModalButton;
+}(_react2.default.Component);
 
 exports.default = RemoveClassModalButton;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
 
 /***/ })
 /******/ ]);
