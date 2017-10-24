@@ -1,6 +1,7 @@
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import Assignment from './Assignment.jsx';
+import RemoveClassModal from './RemoveClassModal.jsx';
 
 const AssignmentList = (props) => {
     let assignments = props.assignments.map(assignment => {
@@ -12,6 +13,7 @@ const AssignmentList = (props) => {
             <FlipMove duration={750} easing="ease">
                 {assignments}
             </FlipMove>
+            <RemoveClassModal />
         </div>);
 }
 

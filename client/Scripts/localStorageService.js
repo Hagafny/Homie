@@ -18,11 +18,11 @@ function initializeAssignmentsState() {
 }
 
 let changeDoneState = (assignmentId, doneState, cb) => {
-    this.changeState(assignmentId, "done", doneState, cb);
+    changeState(assignmentId, "done", doneState, cb);
 }
 
 let changeShowState = (assignmentId, showState, cb) => {
-    this.changeState(assignmentId, "show", showState, cb);
+    changeState(assignmentId, "show", showState, cb);
 }
 
 let changeState = (assignmentId, state, stateValue, cb) => {

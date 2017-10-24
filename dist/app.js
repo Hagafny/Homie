@@ -31523,6 +31523,10 @@ var _Countdown = __webpack_require__(158);
 
 var _Countdown2 = _interopRequireDefault(_Countdown);
 
+var _RemoveClassModalButton = __webpack_require__(333);
+
+var _RemoveClassModalButton2 = _interopRequireDefault(_RemoveClassModalButton);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AssignmentBody = function AssignmentBody(props) {
@@ -31539,7 +31543,8 @@ var AssignmentBody = function AssignmentBody(props) {
                 'h6',
                 { className: 'card-title' },
                 'EX ',
-                props.data.ex
+                props.data.ex,
+                _react2.default.createElement(_RemoveClassModalButton2.default, null)
             ),
             _react2.default.createElement(
                 'div',
@@ -31694,6 +31699,10 @@ var _Assignment = __webpack_require__(152);
 
 var _Assignment2 = _interopRequireDefault(_Assignment);
 
+var _RemoveClassModal = __webpack_require__(332);
+
+var _RemoveClassModal2 = _interopRequireDefault(_RemoveClassModal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AssignmentList = function AssignmentList(props) {
@@ -31708,7 +31717,8 @@ var AssignmentList = function AssignmentList(props) {
             _reactFlipMove2.default,
             { duration: 750, easing: 'ease' },
             assignments
-        )
+        ),
+        _react2.default.createElement(_RemoveClassModal2.default, null)
     );
 };
 
@@ -32828,11 +32838,11 @@ function initializeAssignmentsState() {
 }
 
 var changeDoneState = function changeDoneState(assignmentId, doneState, cb) {
-    undefined.changeState(assignmentId, "done", doneState, cb);
+    changeState(assignmentId, "done", doneState, cb);
 };
 
 var changeShowState = function changeShowState(assignmentId, showState, cb) {
-    undefined.changeState(assignmentId, "show", showState, cb);
+    changeState(assignmentId, "show", showState, cb);
 };
 
 var changeState = function changeState(assignmentId, state, stateValue, cb) {
@@ -64732,6 +64742,112 @@ exports.default = valueEqual;
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 332 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RemoveClassModal = function RemoveClassModal(props) {
+    return _react2.default.createElement(
+        "div",
+        { className: "modal fade", id: "removeClassModal", tabIndex: "-1", role: "dialog", "aria-labelledby": "exampleModalLabel", "aria-hidden": "true" },
+        _react2.default.createElement(
+            "div",
+            { className: "modal-dialog", role: "document" },
+            _react2.default.createElement(
+                "div",
+                { className: "modal-content" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "modal-header" },
+                    _react2.default.createElement(
+                        "h5",
+                        { className: "modal-title" },
+                        "Remove ",
+                        _react2.default.createElement("span", { className: "removeClassNameFiller" })
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "close", "data-dismiss": "modal", "aria-label": "Close" },
+                        _react2.default.createElement(
+                            "span",
+                            { "aria-hidden": "true" },
+                            "\xD7"
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "modal-body" },
+                    _react2.default.createElement("span", { className: "removeClassNameFiller" }),
+                    " and stuff"
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "modal-footer" },
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "btn btn-secondary", "data-dismiss": "modal" },
+                        "Close"
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        { type: "button", className: "btn btn-primary" },
+                        "Remove Class"
+                    )
+                )
+            )
+        )
+    );
+};
+
+exports.default = RemoveClassModal;
+
+/***/ }),
+/* 333 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var RemoveClassModalButton = function RemoveClassModalButton(props) {
+    return _react2.default.createElement(
+        "button",
+        { type: "button", style: { color: "red" },
+            className: "close", "aria-label": "Close",
+            "data-toggle": "modal", "data-target": "#removeClassModal" },
+        _react2.default.createElement(
+            "span",
+            { "aria-hidden": "true" },
+            "\xD7"
+        )
+    );
+};
+
+exports.default = RemoveClassModalButton;
 
 /***/ })
 /******/ ]);
