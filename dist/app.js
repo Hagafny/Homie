@@ -24755,7 +24755,9 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _AssignmentPage2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render() {
+            return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/class/1' });
+          } }),
         _react2.default.createElement(PrivateRoute, { path: '/manager/:classId', component: _ManagerPage2.default }),
         _react2.default.createElement(PrivateRoute, { path: '/admin', component: _AdminPage2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/class/:classIds', component: _AssignmentPage2.default }),
@@ -31837,7 +31839,7 @@ var AssignmentListContainer = function (_React$Component) {
         value: function refreshAssignments(cb) {
             var _this3 = this;
 
-            var classIds = this.props.classIds || 0;
+            var classIds = this.props.classIds || 1;
             _axios2.default.get('/api/assignments/' + classIds).then(function (assignmentsRes) {
                 var assignments = assignmentsRes.data;
                 _localStorageService2.default.setupAssignmentsState(assignments, function () {

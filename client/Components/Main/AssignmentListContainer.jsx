@@ -55,7 +55,7 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     refreshAssignments(cb) {
-        let classIds = this.props.classIds || 0;
+        let classIds = this.props.classIds || 1;
         axios.get(`/api/assignments/${classIds}`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
