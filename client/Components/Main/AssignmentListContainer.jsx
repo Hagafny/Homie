@@ -70,9 +70,7 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     performClientSideModifications(assignments) {
-        localStorageService.addToFilteredList(154);
         let filteredClasses = localStorageService.getFilteredList();
-        // !assignmentIsFiltered(filteredClasses, id) && 
 
         assignments = assignments || this.state.assignments;
         assignments = assignments.filter(assignment => !assignmentIsFiltered(filteredClasses, assignment.id));

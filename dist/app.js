@@ -31714,11 +31714,15 @@ var AssignmentList = function AssignmentList(props) {
 
     return _react2.default.createElement(
         'div',
-        { className: 'container assignmentList', role: 'tablist' },
+        null,
         _react2.default.createElement(
-            _reactFlipMove2.default,
-            { duration: 750, easing: 'ease' },
-            assignments
+            'div',
+            { className: 'container assignmentList', role: 'tablist' },
+            _react2.default.createElement(
+                _reactFlipMove2.default,
+                { duration: 750, easing: 'ease' },
+                assignments
+            )
         ),
         _react2.default.createElement(_RemoveClassModal2.default, { filterAssignment: props.filterAssignment })
     );
@@ -31847,9 +31851,7 @@ var AssignmentListContainer = function (_React$Component) {
     }, {
         key: 'performClientSideModifications',
         value: function performClientSideModifications(assignments) {
-            _localStorageService2.default.addToFilteredList(154);
             var filteredClasses = _localStorageService2.default.getFilteredList();
-            // !assignmentIsFiltered(filteredClasses, id) && 
 
             assignments = assignments || this.state.assignments;
             assignments = assignments.filter(function (assignment) {
@@ -32893,6 +32895,7 @@ function saveAssignmentsState(assignmentsState) {
 }
 
 function addToFilteredList(filteredClassId, cb) {
+    filteredClassId = parseInt(filteredClassId, 10);
     var filteredList = getFilteredList();
     if (filteredList.includes(filteredClassId)) return;
 
@@ -64842,8 +64845,14 @@ var RemoveClassModalButton = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'modal-body' },
+                            _react2.default.createElement(
+                                'h6',
+                                null,
+                                ' Warning '
+                            ),
+                            ' Clicking "Remove Class" will permamently remove ',
                             _react2.default.createElement('span', { className: 'removeClassNameFiller' }),
-                            ' and stuff'
+                            ' from this page'
                         ),
                         _react2.default.createElement(
                             'div',

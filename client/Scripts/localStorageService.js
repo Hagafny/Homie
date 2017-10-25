@@ -14,7 +14,6 @@ function initializeAssignmentsState() {
     if (!filteredList) {
         saveFilteredList([]);
     }
-
 }
 
 let changeDoneState = (assignmentId, doneState, cb) => {
@@ -58,6 +57,7 @@ function saveAssignmentsState(assignmentsState) {
 }
 
 function addToFilteredList(filteredClassId, cb) {
+    filteredClassId = parseInt(filteredClassId, 10);
     let filteredList = getFilteredList();
     if (filteredList.includes(filteredClassId)) return;
 

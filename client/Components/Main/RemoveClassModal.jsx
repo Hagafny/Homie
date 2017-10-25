@@ -26,7 +26,7 @@ export default class RemoveClassModalButton extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <span className="removeClassNameFiller"></span> and stuff
+                           <h6> Warning </h6> Clicking "Remove Class" will permamently remove <span className="removeClassNameFiller"></span> from this page
       </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
