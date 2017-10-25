@@ -14,7 +14,8 @@ let service = {
 module.exports = service;
 
 let assignmentMapper = (assignment) => {
-    var moodleUrl = assignment.moodle_id ? `http://moodle.idc.ac.il/${assignment.year}/mod/assign/view.php?id=${assignment.moodle_id}` : null;
+    const currentSchoolYear = 2018;
+    const moodleUrl = assignment.moodle_id ? `http://moodle.idc.ac.il/${currentSchoolYear}/mod/assign/view.php?id=${assignment.moodle_id}` : null;
     return {
         id: `a${assignment.id}`,
         title: assignment.title,

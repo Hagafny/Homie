@@ -5,7 +5,6 @@ const getAssingments = (classIds) => {
     return `SELECT ass.*,
        cr.title,
        cr.piazza_id,
-       cr.year,
        cr.drive_lectures_url,
        cr.drive_recitations_url,
        cr.classboost_id
