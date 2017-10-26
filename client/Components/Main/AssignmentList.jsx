@@ -12,7 +12,7 @@ const AssignmentList = (props) => {
 
     return (
         <div>
-            <div className="container assignmentList" role="tablist">
+            <div className="assignmentList" role="tablist">
 
 
                 <FlipMove duration={750} easing="ease">
