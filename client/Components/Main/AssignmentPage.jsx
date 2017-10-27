@@ -1,20 +1,20 @@
 import React from 'react';
 import AssignmentNavBar from './AssignmentNavBar.jsx';
-import AssignmentListContainer from './AssignmentListContainer.jsx';
+import AssignmentList from './AssignmentList.jsx';
 import Footer from './../Footer.jsx';
-import Title from './../Title.jsx';
-import Logo from '../../images/piazza.png'; // Homie Logo
 
-const AssignmentsPage = ({ match }) =>
+const AssignmentPage = (props) => 
+    (
     <div>
         <AssignmentNavBar />
             <div className="container">
-                {/* <Title /> */}
-                <AssignmentListContainer classIds={match.params.classIds} />
+                <AssignmentList assignments={props.assignments}
+                onDoneChecked={props.onDoneCheckedCallback}
+                onShowCallback={props.onShowCallback}
+                filterAssignment={props.filterAssignment} />
             </div>
         <Footer />
     </div>
+    );
 
-
-
-export default AssignmentsPage;
+export default AssignmentPage

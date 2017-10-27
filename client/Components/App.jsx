@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
-import AssignmentPage from './Main/AssignmentPage.jsx';
+import AssignmentPageContainer from './Main/AssignmentPageContainer.jsx';
 import ManagerPage from './Manager/ManagerPage.jsx';
 import AdminPage from './Admin/AdminPage.jsx';
 import LoginPage from './LoginPage.jsx';
@@ -33,7 +33,7 @@ export default class App extends React.Component {
 
         <PrivateRoute path='/manager/:classId' component={ManagerPage} />
         <PrivateRoute path='/admin' component={AdminPage} />
-        <Route path='/class/:classIds' component={AssignmentPage} />
+        <Route path='/class/:classIds' component={AssignmentPageContainer} />
         <Route path='/login/:classId' component={LoginPage} />
       </Switch>
     )

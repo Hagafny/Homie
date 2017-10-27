@@ -1,20 +1,24 @@
 import React from 'react';
 import axios from 'axios';
-import AssignmentList from './AssignmentList.jsx';
+import AssignmentPage from './AssignmentPage.jsx';
+import Title from './../Title.jsx';
+import Logo from '../../images/piazza.png'; // Homie Logo
 import localStorageService from './../../Scripts/localStorageService.js';
 import countdownTick from './../../Scripts/countdownTick.js';
 
-export default class AssignmentListContainer extends React.Component {
+export default class AssignmentsPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            assignments: []
+            assignments: [],
+            courses: []
         };
 
         this.onDoneCheckedCallback = this.onDoneCheckedCallback.bind(this);
         this.onShowCallback = this.onShowCallback.bind(this);
         this.filterAssignment = this.filterAssignment.bind(this);
+        this.refreshAssignments = this.refreshAssignments.bind(this);
     }
 
     componentDidMount() {
@@ -23,7 +27,7 @@ export default class AssignmentListContainer extends React.Component {
             this.tickInterval = setInterval(this.tick.bind(this), 1000);
         });
         let timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
-        this.refreshAssignmentsInterval = setInterval(this.refreshAssignments.bind(this), timeIntervalBetweenFetchingData);
+        this.refreshAssignmentsInterval = setInterval(this.refreshAssignments, timeIntervalBetweenFetchingData);
 
     }
 
@@ -55,7 +59,7 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     refreshAssignments(cb) {
-        let classIds = this.props.classIds || 1;
+        let classIds = this.props.match.params.classIds || 1;
         axios.get(`/api/assignments/${classIds}`)
             .then(assignmentsRes => {
                 let assignments = assignmentsRes.data;
@@ -104,10 +108,13 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     render() {
-        return (<AssignmentList assignments={this.state.assignments}
-            onDoneChecked={this.onDoneCheckedCallback}
-            onShowCallback={this.onShowCallback}
-            filterAssignment={this.filterAssignment} />);
+        return (
+            <AssignmentPage 
+             assignments={this.state.assignments}
+             onDoneChecked={this.onDoneCheckedCallback}
+             onShowCallback={this.onShowCallback}
+             filterAssignment={this.filterAssignment} />
+        )
     }
 }
 
@@ -146,14 +153,3 @@ function assignmentIsFiltered(filteredClasses, id) {
     }
     return found;
 }
-
-
-
-
-
-
-
-
-
-
-
