@@ -1,14 +1,14 @@
 const dataService = require('./dataService');
 
-let getCoursesBasic = (classId, cb) => {
-    dataService.getCoursesBasic(classId, (rows) => {
+let getCoursesBasic = (classIds, cb) => {
+    dataService.getCoursesBasic(classIds, (rows) => {
         let modifiedRows = rows.map(courseBasicMapper);
         cb(modifiedRows);
     });
 }
 
-let getCourses = (classId, cb) => {
-    dataService.getCourses(classId, (rows) => {
+let getCourses = (classIds, cb) => {
+    dataService.getCourses(classIds, (rows) => {
         let modifiedRows = rows.map(courseMapper);
         cb(modifiedRows);
     });

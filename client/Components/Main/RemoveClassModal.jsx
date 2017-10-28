@@ -9,10 +9,9 @@ export default class RemoveClassModalButton extends React.Component {
 
     onClick() {
         const $modal = $("#removeClassModal");
-        const assignmentId = $modal.attr('data-assignmentId');
-       
+        const courseId = $modal.attr('data-courseId');
         $modal.modal('hide');
-        this.props.filterAssignment(assignmentId);
+        this.props.filterCourse(courseId);
     }
     render() {
         return (

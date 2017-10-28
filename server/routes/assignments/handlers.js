@@ -9,8 +9,8 @@ let getAssignments = (req, res) => {
 }
 
 let getAssignmentsForManager = (req, res) => {
-    let classId = req.params.id;
-    managerlogicService.getAssingments(classId, (assignments) => {
+    let classIds = req.params.ids.split('&');
+    managerlogicService.getAssingments(classIds, (assignments) => {
         res.json(assignments);
     });
 }

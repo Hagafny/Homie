@@ -1,9 +1,17 @@
 import React from 'react';
 import Logo from '../../images/piazza.png'; // Homie Logo
+import NavBarCourse from './NavBarCourse.jsx';
+import localStorageService from './../../Scripts/localStorageService.js';
+const AssignmentNavBar = ({ courses }) => {
 
-const AssignmentNavBar = (props) =>
-    <div className="container">
+    let filteredClasses = localStorageService.getFilteredList();
 
+
+    const coursesDropDown = courses
+    .filter(course => !filteredClasses.includes(parseInt(course.value)))
+    .map(course => <NavBarCourse key={`c${course.value}`} {...course} />);
+
+    return <div className="container">
         <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
             <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -19,14 +27,14 @@ const AssignmentNavBar = (props) =>
                     <li className="nav-item active dropdown">
                         <a className="nav-link dropdown-toggle" id="navbarDropdown1" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
                         <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
-                            <li><a className="dropdown-item" href="#">Course 1</a></li>
-                            <li><a className="dropdown-item" href="#">Course 2</a></li>
-                            <li><a className="dropdown-item" href="#">Course 3</a></li>
+                            {coursesDropDown}
                         </ul>
                     </li>
                 </ul>
             </div>
         </nav>
     </div>
+}
+
 
 export default AssignmentNavBar;

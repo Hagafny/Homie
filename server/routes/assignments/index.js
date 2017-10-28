@@ -8,7 +8,7 @@ assignments.get('/:ids', handlers.getAssignments);
 
 //These are all protected
 assignments.use(authMiddleware);
-assignments.get('/manager/:id', handlers.getAssignmentsForManager);
+assignments.get('/manager/:ids', handlers.getAssignmentsForManager);
 assignments.post('/', handlers.save);
 assignments.put('/', handlers.edit);
 assignments.delete('/:id', handlers.remove);

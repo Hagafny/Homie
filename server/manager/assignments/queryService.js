@@ -1,10 +1,10 @@
-let getAssingments = (classId) => {
+let getAssingments = (classIds) => {
     return `SELECT ass.*
 FROM
   (SELECT *
    FROM assignments AS ass
    WHERE end_date > CURRENT_TIMESTAMP + INTERVAL '-3 days' ) AS ass
-LEFT JOIN courses AS cr ON ass.course_id = cr.id WHERE cr.class_id = ${classId}
+LEFT JOIN courses AS cr ON ass.course_id = cr.id WHERE cr.class_id IN (${classIds})
 ORDER BY end_date ASC`;
 }
 

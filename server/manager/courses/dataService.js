@@ -1,8 +1,8 @@
 const queryService = require('./queryService');
 const db = require('./../../pgConnection');
 
-let getCoursesBasic = (classId, cb) => {
-    let sql = queryService.getCoursesBasic(classId);
+let getCoursesBasic = (classIds, cb) => {
+    let sql = queryService.getCoursesBasic(classIds);
     db.any(sql)
         .then(cb)
         .catch(error => {
@@ -10,8 +10,8 @@ let getCoursesBasic = (classId, cb) => {
         });
 }
 
-let getCourses = (classId, cb) => {
-    let sql = queryService.getCourses(classId);
+let getCourses = (classIds, cb) => {
+    let sql = queryService.getCourses(classIds);
     db.any(sql)
         .then(cb)
         .catch(error => {

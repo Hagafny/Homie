@@ -21,6 +21,7 @@ let assignmentMapper = (assignment) => {
         title: assignment.title,
         end_date: assignment.end_date,
         ex: assignment.ex,
+        course_id: parseInt(assignment.course_id),
         resources: {
             homework: assignment.homework_url,
             moodle: moodleUrl,

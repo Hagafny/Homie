@@ -1,15 +1,15 @@
 const logicService = require('../../manager/courses/logicService');
 
 let getCoursesBasic = (req, res) => {
-    let classId = req.params.id;
-    logicService.getCoursesBasic(classId, (courses) => {
+    let classIds = req.params.ids.split('&');
+    logicService.getCoursesBasic(classIds, (courses) => {
         res.json(courses);
     });
 }
 
 let getCourses = (req, res) => {
-    let classId = req.params.id;
-    logicService.getCourses(classId, (courses) => {
+    let classIds = req.params.ids.split('&');
+    logicService.getCourses(classIds, (courses) => {
         res.json(courses);
     });
 }

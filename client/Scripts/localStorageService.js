@@ -102,8 +102,6 @@ function createDefaultStateForNewAssignments(assignments) {
 }
 
 function removeOldAssignments(assignments) {
-    // let filteredClasses = getFilteredList();
-    // !assignmentIsFiltered(filteredClasses, id) && 
     let assignmentsState = getAssignmentsState();
     let newAssignments = {};
     for (let id in assignmentsState) {

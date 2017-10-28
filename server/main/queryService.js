@@ -2,7 +2,7 @@
 //We need to save the date as UTC and remove this later.
 const getAssingments = (classIds) => {
     const inIds = classIds.join(',');
-    return `SELECT ass.*,
+    return `SELECT ass.*, cr.id as course_id,
        cr.title,
        cr.piazza_id,
        cr.drive_lectures_url,

@@ -1,11 +1,27 @@
 import React from 'react'
 import CountdownTile from './CountdownTile.jsx';
 
-const Countdown = (props) =>  {
-        if (!props.countdown) //Just validating against weird behaviour
-            return false
+const Countdown = ({countdown}) =>  {
+        if (!countdown) //Just validating against weird behaviour
+            countdown = [{
+                number: "",
+                title: "Days"
+            },
+            {
+                number: "",
+                title: "Hours"
+            },
+            {
+                number: "",
+                title: "Minutes"
+            },
+            {
+                number: "",
+                title: "Seconds"
+            },
+            ]
 
-        let tiles = props.countdown.map((countdownNode, index) => {
+        let tiles = countdown.map((countdownNode, index) => {
             return <CountdownTile number={countdownNode.number} title={countdownNode.title} key={index}></CountdownTile>
         })
 

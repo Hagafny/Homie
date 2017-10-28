@@ -1,14 +1,14 @@
-let getCoursesBasic = (classId) => {
-    return `SELECT id, title FROM courses WHERE class_id = ${classId}`;
+let getCoursesBasic = (classIds) => {
+    return `SELECT id, title FROM courses WHERE class_id IN (${classIds})`;
 }
 
-let getCourses = (classId) => {
+let getCourses = (classIds) => {
     return `SELECT id, 
     title, piazza_id,
     drive_lectures_url, 
     drive_recitations_url, 
     classboost_id
-    FROM courses WHERE class_id = ${classId}`;
+    FROM courses WHERE class_id IN (${classIds})`;
 }
 
 let saveCourse = () => {

@@ -7,7 +7,6 @@ export default class Assignment extends React.Component {
         super(props);
         let status = this.getAssignmentStatus();
         this.state = { status: status }
-
     }
     componentWillReceiveProps(nextProps) {
         this.changeStatus();

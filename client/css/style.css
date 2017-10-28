@@ -50,29 +50,6 @@ body {
   text-align: center;
 }
 
-@media (max-width: 62em) {
-	.navbar-nav {
-		padding-top: .425rem;
-		padding-left: 0.75rem;
-	}
-	.navbar-nav .nav-item {
-		float: none;
-	}
-	.navbar-brand {
-		float: right;
-	}
-	.navbar-brand,
-	.navbar-nav .nav-item {
-		display: block;
-	}
-	.navbar-nav .nav-item + .nav-item {
-		margin-left: 0;
-	}
-	.dropdown-menu {
-		position: relative;
-		float: none;
-  }
-  .dropdown-item {
-    color:black;
-  }
+.courseActions {
+  padding-right: 3px;
 }
