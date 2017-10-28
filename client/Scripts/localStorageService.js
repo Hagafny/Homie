@@ -11,9 +11,8 @@ function initializeAssignmentsState() {
         saveAssignmentsState({});
 
     let filteredList = getFilteredList();
-    if (!filteredList) {
-        saveFilteredList([]);
-    }
+    if (!filteredList)
+        resetFilteredList();
 }
 
 let changeDoneState = (assignmentId, doneState, cb) => {
@@ -68,6 +67,10 @@ function addToFilteredList(filteredClassId, cb) {
         cb();
 }
 
+function resetFilteredList() {
+    saveFilteredList([]);
+}
+
 function saveFilteredList(filteredList) {
     localStorage.setItem(filteredClassesKey, JSON.stringify(filteredList));
 }
@@ -83,7 +86,8 @@ module.exports = {
     changeShowState: changeShowState,
     refreshViewState: refreshViewState,
     getFilteredList: getFilteredList,
-    addToFilteredList: addToFilteredList
+    addToFilteredList: addToFilteredList,
+    resetFilteredList: resetFilteredList
 }
 
 function createDefaultStateForNewAssignments(assignments) {

@@ -7,7 +7,7 @@ export default class RemoveClassModalButton extends React.Component {
     }
 
     onClick() {
-        let {id, title} = this.props;
+        let { id, title } = this.props;
         id = id.substr(1); //remove the precedding 'c'
         $(".removeClassNameFiller").text(title);
         $("#removeClassModal").attr('data-courseId', id).modal('show');
@@ -15,6 +15,6 @@ export default class RemoveClassModalButton extends React.Component {
 
     render() {
         return (
-        <i onClick={this.onClick} className="fa fa-window-close" aria-hidden="true"></i>);
+            <span className="navBarCourseAction"><i onClick={this.onClick} className="fa fa-window-close courseActions" aria-hidden="true"></i></span>);
     }
 }

@@ -31981,16 +31981,32 @@ var _localStorageService2 = _interopRequireDefault(_localStorageService);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AssignmentNavBar = function AssignmentNavBar(_ref) {
-    var courses = _ref.courses;
+    var courses = _ref.courses,
+        resetCourses = _ref.resetCourses;
 
 
     var filteredClasses = _localStorageService2.default.getFilteredList();
+    var showResetButton = filteredClasses.length != 0;
 
     var coursesDropDown = courses.filter(function (course) {
         return !filteredClasses.includes(parseInt(course.value));
     }).map(function (course) {
         return _react2.default.createElement(_NavBarCourse2.default, _extends({ key: 'c' + course.value }, course));
     });
+
+    if (showResetButton) {
+        coursesDropDown.push(_react2.default.createElement('li', { key: 'divider', className: 'divider' }));
+        coursesDropDown.push(_react2.default.createElement(
+            'li',
+            { key: 'reseter' },
+            _react2.default.createElement(
+                'span',
+                { className: 'dropdown-item' },
+                _react2.default.createElement('i', { onClick: resetCourses, className: 'fa fa-undo courseActions', 'aria-hidden': 'true' }),
+                'Reset Courses'
+            )
+        ));
+    }
 
     return _react2.default.createElement(
         'div',
@@ -32074,7 +32090,7 @@ var AssignmentPage = function AssignmentPage(props) {
     return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_AssignmentNavBar2.default, { courses: props.courses }),
+        _react2.default.createElement(_AssignmentNavBar2.default, { courses: props.courses, resetCourses: props.resetCourses }),
         _react2.default.createElement(_AssignmentListContainer2.default, { assignments: props.assignments,
             loadAssignments: props.loadAssignments }),
         _react2.default.createElement(_Footer2.default, null),
@@ -32129,12 +32145,15 @@ var AssignmentsPage = function (_React$Component) {
 
         _this.state = {
             assignments: [],
-            courses: []
+            allAssignments: [],
+            courses: [],
+            allCourses: []
         };
 
         _this.loadAssignments = _this.loadAssignments.bind(_this);
         _this.loadAssignmentsAndSetState = _this.loadAssignmentsAndSetState.bind(_this);
         _this.filterCourse = _this.filterCourse.bind(_this);
+        _this.resetCourses = _this.resetCourses.bind(_this);
         return _this;
     }
 
@@ -32147,8 +32166,12 @@ var AssignmentsPage = function (_React$Component) {
             Promise.all(gatherDataPromise).then(function (values) {
                 _this2.setState({
                     assignments: values[0],
-                    courses: values[1]
+                    allAssignments: values[0],
+                    courses: values[1],
+                    allCourses: values[1]
                 });
+            }).catch(function (err) {
+                return alert(err);
             });
         }
     }, {
@@ -32211,10 +32234,20 @@ var AssignmentsPage = function (_React$Component) {
             });
         }
     }, {
+        key: 'resetCourses',
+        value: function resetCourses() {
+            (0, _localStorageService.resetFilteredList)();
+            this.setState({
+                assignments: this.state.allAssignments,
+                courses: this.state.allCourses
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(_AssignmentPage2.default, {
                 courses: this.state.courses,
+                resetCourses: this.resetCourses,
                 filterCourse: this.filterCourse,
                 assignments: this.state.assignments,
                 loadAssignments: this.loadAssignmentsAndSetState });
@@ -32661,7 +32694,11 @@ var RemoveClassModalButton = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            return _react2.default.createElement("i", { onClick: this.onClick, className: "fa fa-window-close", "aria-hidden": "true" });
+            return _react2.default.createElement(
+                "span",
+                { className: "navBarCourseAction" },
+                _react2.default.createElement("i", { onClick: this.onClick, className: "fa fa-window-close courseActions", "aria-hidden": "true" })
+            );
         }
     }]);
 
@@ -33268,9 +33305,7 @@ function initializeAssignmentsState() {
     if (!assignmentsState) saveAssignmentsState({});
 
     var filteredList = getFilteredList();
-    if (!filteredList) {
-        saveFilteredList([]);
-    }
+    if (!filteredList) resetFilteredList();
 }
 
 var changeDoneState = function changeDoneState(assignmentId, doneState, cb) {
@@ -33322,6 +33357,10 @@ function addToFilteredList(filteredClassId, cb) {
     if ((typeof cb === 'undefined' ? 'undefined' : _typeof(cb)) === (typeof Function === 'undefined' ? 'undefined' : _typeof(Function))) cb();
 }
 
+function resetFilteredList() {
+    saveFilteredList([]);
+}
+
 function saveFilteredList(filteredList) {
     localStorage.setItem(filteredClassesKey, JSON.stringify(filteredList));
 }
@@ -33336,7 +33375,8 @@ module.exports = {
     changeShowState: changeShowState,
     refreshViewState: refreshViewState,
     getFilteredList: getFilteredList,
-    addToFilteredList: addToFilteredList
+    addToFilteredList: addToFilteredList,
+    resetFilteredList: resetFilteredList
 };
 
 function createDefaultStateForNewAssignments(assignments) {
@@ -35481,7 +35521,7 @@ exports = module.exports = __webpack_require__(24)(undefined);
 
 
 // module
-exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    background-color:whitesmoke\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}\r\n\r\n.assignmentList {\r\n  text-align: center;\r\n}\r\n\r\n.resourceList li{\r\n  list-style-type: none;\r\n} \r\n\r\n.resourceList {\r\n  text-align: left; \r\n}\r\n\r\n.resourceList li div span {\r\n  padding-left:1em;\r\n}\r\n\r\n.addAssignmentFormLabel {\r\n  margin-right:10px;\r\n}\r\n\r\n.homieTitle {\r\n  color: #1e5f85;\r\n  text-align: center;\r\n}\r\n\r\n.courseActions {\r\n  padding-right: 3px;\r\n}", ""]);
+exports.push([module.i, "html {\r\n    position: relative;\r\n    min-height: 100%;\r\n}\r\n\r\nbody {\r\n    margin: 0 0 10px;\r\n    background-color:whitesmoke\r\n}\r\n\r\n.card-header {\r\n  cursor: pointer;\r\n}\r\n\r\n#footer {\r\n  background-color: #DFE2DB;\r\n  position:absolute;\r\n  bottom:0;\r\n  left: 0;\r\n  width:100%;\r\n  border-top: 1px solid;\r\n  font-size: smaller;\r\n  height: 20px;\r\n  overflow:hidden;\r\n\r\n}\r\n\r\n.assignmentList {\r\n  text-align: center;\r\n}\r\n\r\n.resourceList li{\r\n  list-style-type: none;\r\n} \r\n\r\n.resourceList {\r\n  text-align: left; \r\n}\r\n\r\n.resourceList li div span {\r\n  padding-left:1em;\r\n}\r\n\r\n.addAssignmentFormLabel {\r\n  margin-right:10px;\r\n}\r\n\r\n.homieTitle {\r\n  color: #1e5f85;\r\n  text-align: center;\r\n}\r\n\r\n.courseActions {\r\n  cursor: pointer;\r\n  padding-right: 4px;\r\n  \r\n}\r\n\r\n\r\n.divider {\r\n  height: 1px;\r\n  margin: 9px 0;\r\n  overflow: hidden;\r\n  background-color: #e5e5e5;\r\n}", ""]);
 
 // exports
 
@@ -65252,7 +65292,7 @@ var NavBarCourseActions = function NavBarCourseActions(_ref) {
         text = _ref.text;
     return _react2.default.createElement(
         'span',
-        { className: 'courseActions' },
+        null,
         _react2.default.createElement(_RemoveClassModalButton2.default, { id: 'c' + value, title: text })
     );
 };

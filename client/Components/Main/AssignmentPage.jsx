@@ -7,7 +7,7 @@ import Footer from './../Footer.jsx';
 const AssignmentPage = (props) =>
         (
         <div>
-            <AssignmentNavBar courses={props.courses} />
+            <AssignmentNavBar courses={props.courses} resetCourses={props.resetCourses}/>
             <AssignmentListContainer assignments={props.assignments}
             loadAssignments={props.loadAssignments} />
             <Footer />

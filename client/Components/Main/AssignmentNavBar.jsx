@@ -2,14 +2,26 @@ import React from 'react';
 import Logo from '../../images/piazza.png'; // Homie Logo
 import NavBarCourse from './NavBarCourse.jsx';
 import localStorageService from './../../Scripts/localStorageService.js';
-const AssignmentNavBar = ({ courses }) => {
+const AssignmentNavBar = ({ courses, resetCourses }) => {
 
     let filteredClasses = localStorageService.getFilteredList();
+    let showResetButton = filteredClasses.length != 0;
+
 
 
     const coursesDropDown = courses
-    .filter(course => !filteredClasses.includes(parseInt(course.value)))
-    .map(course => <NavBarCourse key={`c${course.value}`} {...course} />);
+        .filter(course => !filteredClasses.includes(parseInt(course.value)))
+        .map(course => <NavBarCourse key={`c${course.value}`} {...course} />);
+
+    if (showResetButton) {
+        coursesDropDown.push(<li key="divider" className="divider"></li>)
+        coursesDropDown.push(
+            <li key="reseter">
+                <span className="dropdown-item">
+                <i onClick={resetCourses} className="fa fa-undo courseActions" aria-hidden="true"></i>Reset Courses</span>
+            </li>
+        )
+    }
 
     return <div className="container">
         <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
@@ -28,6 +40,10 @@ const AssignmentNavBar = ({ courses }) => {
                         <a className="nav-link dropdown-toggle" id="navbarDropdown1" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
                         <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
                             {coursesDropDown}
+
+
+
+
                         </ul>
                     </li>
                 </ul>

@@ -2,7 +2,7 @@ import React from 'react'
 import RemoveClassModalButton from './RemoveClassModalButton.jsx';
 
 const NavBarCourseActions = ({ value, text }) =>
-    <span className="courseActions">
+    <span >
         <RemoveClassModalButton id={`c${value}`} title={text} />
     </span>
 
