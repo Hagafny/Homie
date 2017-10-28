@@ -8,7 +8,8 @@ const AssignmentList = (props) => {
     let assignments = props.assignments.map(assignment => {
         return <Assignment data={assignment} key={assignment.id}
             onDoneChecked={props.onDoneChecked}
-            onShowCallback={props.onShowCallback} />
+            onShowCallback={props.onShowCallback}
+            options={props.options} />
   } );
         return (
             <div>

@@ -96,7 +96,8 @@ export default class AssignmentsPage extends React.Component {
                     assignments={this.state.assignments}
                     onDoneChecked={this.onDoneCheckedCallback}
                     onShowCallback={this.onShowCallback}
-                    filterAssignment={this.filterAssignment} />
+                    filterAssignment={this.filterAssignment}
+                    options={this.props.options} />
             )
     }
 }

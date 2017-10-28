@@ -42,7 +42,7 @@ export default class Assignment extends React.Component {
     render() {
         return (
             <div className="card">
-                <AssignmentHeader data={this.props.data} status={this.state.status} endDate={this.props.data.end_date} onShowCallback={this.props.onShowCallback} />
+                <AssignmentHeader data={this.props.data} status={this.state.status} endDate={this.props.data.end_date} onShowCallback={this.props.onShowCallback} options={this.props.options} />
                 <AssignmentBody data={this.props.data} onDoneChecked={this.props.onDoneChecked} />
             </div>
         )

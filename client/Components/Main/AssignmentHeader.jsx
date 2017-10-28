@@ -8,6 +8,8 @@ export default class AssignmentTitle extends React.Component {
         this.state = {
             color: this.getHeaderColor(this.props.status)
         }
+
+        this.onCollapse = this.onCollapse.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,9 +50,14 @@ export default class AssignmentTitle extends React.Component {
 
     render() {
         return (
-            <div data-toggle="collapse" href={`#${this.props.data.id}`} aria-expanded={this.props.data.viewState.show} aria-controls={this.props.data.id} className={`card-header ${this.state.color}`} role="tab" onClick={this.onCollapse.bind(this)}>
+            <div data-toggle="collapse" 
+            href={`#${this.props.data.id}`} 
+            aria-expanded={this.props.data.viewState.show} 
+            aria-controls={this.props.data.id} 
+            className={`card-header ${this.state.color}`}
+             role="tab" onClick={this.onCollapse}>
                 <h5>
-                    {this.props.data.title} - <DueDate endDate={this.props.endDate} />
+                    {this.props.data.title} - <DueDate endDate={this.props.endDate} options={this.props.options} />
                 </h5>
             </div>
         )

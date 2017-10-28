@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import AssignmentPage from './AssignmentPage.jsx';
-import { addToFilteredList, getFilteredList, resetFilteredList } from './../../Scripts/localStorageService.js';
+import localStorageService from './../../Scripts/localStorageService.js';
 
 export default class AssignmentsPage extends React.Component {
     constructor(props) {
@@ -10,13 +10,15 @@ export default class AssignmentsPage extends React.Component {
             assignments: [],
             allAssignments: [],
             courses: [],
-            allCourses: []
+            allCourses: [],
+            options: localStorageService.getOptions()
         };
 
         this.loadAssignments = this.loadAssignments.bind(this);
         this.loadAssignmentsAndSetState = this.loadAssignmentsAndSetState.bind(this);
         this.filterCourse = this.filterCourse.bind(this);
         this.resetCourses = this.resetCourses.bind(this);
+        this.changeOption = this.changeOption.bind(this);
     }
 
     componentDidMount() {
@@ -71,8 +73,8 @@ export default class AssignmentsPage extends React.Component {
     }
 
     filterCourse(courseId) {
-        addToFilteredList(courseId, () => {
-            let filteredClasses = getFilteredList();
+        localStorageService.addToFilteredList(courseId, () => {
+            let filteredClasses = localStorageService.getFilteredList();
             let assignments = this.state.assignments.filter(assignment => !filteredClasses.includes(assignment.course_id));
             let courses = this.state.courses.filter(course => !filteredClasses.includes(course.id));
 
@@ -85,13 +87,21 @@ export default class AssignmentsPage extends React.Component {
     }
 
     resetCourses() {
-        resetFilteredList();
+        localStorageService.resetFilteredList();
         this.setState({
             assignments: this.state.allAssignments,
             courses: this.state.allCourses
         });
     }
 
+    changeOption(option, optionValue) {
+        localStorageService.changeOption(option, optionValue, () => {
+            this.setState({
+                options: localStorageService.getOptions()
+            })
+        });
+
+    }
     render() {  
         return (
             <AssignmentPage
@@ -99,7 +109,9 @@ export default class AssignmentsPage extends React.Component {
                 resetCourses={this.resetCourses}
                 filterCourse={this.filterCourse}
                 assignments={this.state.assignments}
-                loadAssignments={this.loadAssignmentsAndSetState} />
+                loadAssignments={this.loadAssignmentsAndSetState}
+                options={this.state.options}
+                changeOptions={this.changeOption} />
         )
     }
 }

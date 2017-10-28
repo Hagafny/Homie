@@ -5,7 +5,6 @@ export default class DoneButton extends React.Component {
 
     constructor(props) {
         super(props)
-
     }
 
     doneChecked(e) {

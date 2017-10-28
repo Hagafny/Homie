@@ -1,6 +1,7 @@
 import AssignmentState from './../Classes/AssignmentState.js';
 const assignmentsStateKey = 'assignmentsState';
 const filteredClassesKey = 'filteredClasses';
+const optionsKey = 'homieOptions';
 
 initializeAssignmentsState();
 
@@ -12,6 +13,30 @@ function initializeAssignmentsState() {
     let filteredList = getFilteredList();
     if (!filteredList)
         resetFilteredList();
+
+    let options = getOptions();
+    if (!options) 
+        saveOptions({
+            date: 1,
+            time: 1
+        });
+}
+
+function changeOption(option, optionValue, cb) {
+    let options = getOptions();
+    options[option] = optionValue;
+    saveOptions(options);
+
+    if (typeof cb === typeof Function)
+    cb();
+}
+
+function getOptions()  {
+    return JSON.parse(localStorage.getItem(optionsKey));
+}
+
+function saveOptions(options) {
+    localStorage.setItem(optionsKey, JSON.stringify(options));
 }
 
 let changeDoneState = (assignmentId, doneState, cb) => {
@@ -86,7 +111,10 @@ module.exports = {
     refreshViewState: refreshViewState,
     getFilteredList: getFilteredList,
     addToFilteredList: addToFilteredList,
-    resetFilteredList: resetFilteredList
+    resetFilteredList: resetFilteredList,
+
+    getOptions: getOptions,
+    changeOption: changeOption
 }
 
 function createDefaultStateForNewAssignments(assignments) {
