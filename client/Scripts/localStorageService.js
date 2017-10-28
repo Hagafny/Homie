@@ -5,7 +5,6 @@ const filteredClassesKey = 'filteredClasses';
 initializeAssignmentsState();
 
 function initializeAssignmentsState() {
-
     let assignmentsState = getAssignmentsState();
     if (!assignmentsState)
         saveAssignmentsState({});
@@ -33,7 +32,7 @@ let changeState = (assignmentId, state, stateValue, cb) => {
 }
 
 let setupAssignmentsState = (assignments, cb) => {
-    removeOldAssignments(assignments);
+    //removeOldAssignments(assignments);
     createDefaultStateForNewAssignments(assignments);
     if (typeof cb === typeof Function)
         cb();
@@ -105,17 +104,17 @@ function createDefaultStateForNewAssignments(assignments) {
     saveAssignmentsState(assignmentsState);
 }
 
-function removeOldAssignments(assignments) {
-    let assignmentsState = getAssignmentsState();
-    let newAssignments = {};
-    for (let id in assignmentsState) {
-        let filteredClasses = getFilteredList();
-        if (assignmetsContains(assignments, id)) {
-            newAssignments[id] = assignmentsState[id];
-        }
-    }
-    saveAssignmentsState(newAssignments);
-}
+// function removeOldAssignments(assignments) {
+//     let assignmentsState = getAssignmentsState();
+//     let newAssignments = {};
+//     for (let id in assignmentsState) {
+//         let filteredClasses = getFilteredList();
+//         if (assignmetsContains(assignments, id)) {
+//             newAssignments[id] = assignmentsState[id];
+//         }
+//     }
+//     saveAssignmentsState(newAssignments);
+// }
 
 function assignmetsContains(assignmets, id) {
     let found = false;
