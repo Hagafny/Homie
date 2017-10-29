@@ -1,8 +1,8 @@
-const authService = require('../../auth/logicService');
+const { verifyLogin } = require('../../auth/logicService');
 
 let login = (req, res) => {
-    let { email, password, class_id } = req.body;
-    authService.verifyLogin(email, password, class_id, (err, authToken) => {
+    let { email, password, class_ids } = req.body;
+    verifyLogin(email, password, class_ids, (err, authToken) => {
         if (err) {
             res.status(401).json({
                 meesage: err

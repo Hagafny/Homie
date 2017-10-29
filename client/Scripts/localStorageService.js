@@ -170,4 +170,3 @@ function assignmentIsFiltered(filteredClasses, id) {
     }
     return found;
 }
-

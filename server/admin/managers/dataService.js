@@ -15,7 +15,7 @@ let saveManager = (manager, cb) => {
     let values = [
         manager.email,
         manager.password,
-        manager.class_id
+        manager.class_ids
     ]
 
     db.one(sql, values)
@@ -32,8 +32,10 @@ let editManager = (manager, cb) => {
     let values = [
         manager.email,
         manager.password,
-        manager.class_id
+        manager.class_ids
     ];
+
+    console.log(values);
 
     db.none(sql, values)
         .then(cb)

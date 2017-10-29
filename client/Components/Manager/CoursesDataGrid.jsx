@@ -12,14 +12,14 @@ export default class CoursesDataGrid extends React.Component {
         return {
             gridName: "Course",
             endpoints: {
-                fetchItems: `${baseEndpointUrl}/${this.props.classId}`,
+                fetchItems: `${baseEndpointUrl}/${this.props.classIds}`,
                 saveItem: baseEndpointUrl,
                 editItem: baseEndpointUrl,
                 deleteItem: baseEndpointUrl
             },
             extraData: {
                 saveItem: {
-                    class_id: this.props.classId
+                    class_id: this.props.classIds
                 }
             },
             columns: [

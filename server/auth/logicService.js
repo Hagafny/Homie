@@ -1,7 +1,7 @@
 const dataService = require('../admin/managers/dataService');
 const encryptor = require('./../MD5encryptor');
 
-let verifyLogin = (email, password, classId, cb) => {
+let verifyLogin = (email, password, classIds, cb) => {
     password = encryptor(password);
     dataService.getManagerByEmailAndPassword(email, password, (error, manager) => {
         if (error != null) {
@@ -9,8 +9,8 @@ let verifyLogin = (email, password, classId, cb) => {
             cb(error);
         }
         
-        if (manager.class_id == 0 || classId == manager.class_id) {
-            let authToken = `${manager.id}_${manager.class_id}`;
+        if (manager.class_ids == 0 || managerHasValidAccess(classIds, manager.class_ids)) {
+            let authToken = `${manager.id}_${manager.class_ids}`;
             cb(null, authToken);
         }
         else {
@@ -25,3 +25,9 @@ let service = {
 };
 
 module.exports = service;
+
+const managerHasValidAccess = (requestedClassIdsForLogin, classIdsOfManager) => {
+    requestedClassIdsForLogin = requestedClassIdsForLogin.split('&');
+    classIdsOfManager = classIdsOfManager.split('&');
+    return requestedClassIdsForLogin.every(classId => classIdsOfManager.indexOf(classId) >= 0);
+}

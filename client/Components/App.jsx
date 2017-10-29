@@ -7,15 +7,16 @@ import LoginPage from './LoginPage.jsx';
 import { isAuthenticated } from '../Scripts/auth.js';
 
 const PrivateRoute = (data) => {
-  let classId = data.computedMatch.params.classId ? data.computedMatch.params.classId : 0;
+  let classIds = data.computedMatch.params.classIds ? data.computedMatch.params.classIds : '0';
+
   let Component = data.component;
   return (
     <Route render={props => (
-      isAuthenticated(classId) ? (
-        <Component {...props} classId={classId} />
+      isAuthenticated(classIds) ? (
+        <Component {...props} classIds={classIds} />
       ) : (
           <Redirect to={{
-            pathname: `/login/${classId}`,
+            pathname: `/login/${classIds}`,
             state: { from: props.location }
           }} />
         )
@@ -31,10 +32,10 @@ export default class App extends React.Component {
           <Redirect to="/class/1" />
         )} />
 
-        <PrivateRoute path='/manager/:classId' component={ManagerPage} />
+        <PrivateRoute path='/manager/:classIds' component={ManagerPage} />
         <PrivateRoute path='/admin' component={AdminPage} />
         <Route path='/class/:classIds' component={AssignmentPageContainer} />
-        <Route path='/login/:classId' component={LoginPage} />
+        <Route path='/login/:classIds' component={LoginPage} />
       </Switch>
     )
   }

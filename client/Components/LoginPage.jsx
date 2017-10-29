@@ -35,7 +35,7 @@ class LoginPage extends React.Component {
         event.preventDefault();
         let url = "/api/auth/login/";
         let data = this.state;
-        data.class_id = this.props.match.params.classId;
+        data.class_ids = this.props.match.params.classIds;
 
         let config = {
             headers: { 'Content-Type': 'application/json; charset=utf-8' }
@@ -44,7 +44,7 @@ class LoginPage extends React.Component {
         axios.post(url, data, config)
             .then((response) => {
                 if (response.status == 200) {
-                    let redirectionURL = data.class_id == 0? '/admin' : `/manager/${data.class_id}`;
+                    let redirectionURL = data.class_ids == 0? '/admin' : `/manager/${data.class_ids}`;
                     window.location.replace(redirectionURL);
                 }
             })

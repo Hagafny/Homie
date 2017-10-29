@@ -28,7 +28,7 @@ export default class ManagersDataGrid extends React.Component {
                     editable: true
                 },
                 {
-                    key: 'class_id',
+                    key: 'class_ids',
                     name: 'Class',
                     editable: true
                 },

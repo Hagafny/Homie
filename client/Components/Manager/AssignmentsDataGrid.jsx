@@ -16,7 +16,7 @@ export default class AssignmentsDataGrid extends React.Component {
         return {
             gridName: "Assignment",
             endpoints: {
-                fetchItems: `${baseEndpointUrl}manager/${this.props.classId}`,
+                fetchItems: `${baseEndpointUrl}manager/${this.props.classIds}`,
                 saveItem: baseEndpointUrl,
                 editItem: baseEndpointUrl,
                 deleteItem: baseEndpointUrl
@@ -53,8 +53,8 @@ export default class AssignmentsDataGrid extends React.Component {
     }
 
     componentDidMount() {
-        let classId = this.props.classId;
-        this.getCourses(classId, (courses) => {
+        let classIds = this.props.classIds;
+        this.getCourses(classIds, (courses) => {
             let data = this.state;
             data.assignmentGridData.columns[0].dropdownOptions = courses;
             data.showDataGrid = true;
@@ -62,8 +62,8 @@ export default class AssignmentsDataGrid extends React.Component {
         });
     }
 
-    getCourses(classId, cb) {
-        axios.get(`/api/courses/basic/${classId}`)
+    getCourses(classIds, cb) {
+        axios.get(`/api/courses/basic/${classIds}`)
             .then(res => {
                 cb(res.data);
             });
