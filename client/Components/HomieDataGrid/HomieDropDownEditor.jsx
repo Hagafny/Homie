@@ -31,14 +31,3 @@ export default class HomieDropDownEditor extends EditorBase {
   }
 }
 
-HomieDropDownEditor.propTypes = {
-  options: React.PropTypes.arrayOf(React.PropTypes.oneOfType([
-    React.PropTypes.string,
-    React.PropTypes.shape({
-      id: React.PropTypes.string,
-      title: React.PropTypes.string,
-      value: React.PropTypes.string,
-      text: React.PropTypes.string
-    })
-  ])).isRequired
-};

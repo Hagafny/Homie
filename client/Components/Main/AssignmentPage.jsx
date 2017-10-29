@@ -10,7 +10,7 @@ const AssignmentPage = (props) =>
             <AssignmentNavBar courses={props.courses} resetCourses={props.resetCourses} 
                  options={props.options} changeOptions={props.changeOptions}/>
             <AssignmentListContainer assignments={props.assignments}
-            loadAssignments={props.loadAssignments} options={props.options}/>
+            loadAssignments={props.loadAssignments} loadAssignmentsNoState={props.loadAssignmentsNoState} options={props.options}/>
             <Footer />
             <RemoveClassModal filterCourse={props.filterCourse} />
         </div>

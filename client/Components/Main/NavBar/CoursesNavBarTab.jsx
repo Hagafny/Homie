@@ -22,7 +22,7 @@ const CoursesNavBarTab = ({ courses, resetCourses }) => {
     }
 
     return  (<li className="nav-item active dropdown">
-                        <a className="nav-link dropdown-toggle" id="coursesDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
+                        <a className="nav-link dropdown-toggle clickable" id="coursesDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
                         <ul className="dropdown-menu" aria-labelledby="coursesDropDown">
                             {coursesDropDown}
                         </ul>

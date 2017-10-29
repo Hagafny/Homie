@@ -2,8 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import AssignmentPage from './AssignmentPage.jsx';
 import localStorageService from './../../Scripts/localStorageService.js';
+import countdownTick from './../../Scripts/countdownTick.js';
 
-export default class AssignmentsPage extends React.Component {
+export default class AssignmentsPageContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,17 +23,63 @@ export default class AssignmentsPage extends React.Component {
     }
 
     componentDidMount() {
-        let gatherDataPromise = [this.loadAssignments(), this.loadCourses()];
-        Promise.all(gatherDataPromise)
-        .then(values => {
+        this.loadAssignments()
+            .then(assignments => {
+
+                this.setState({
+                    allAssignments: assignments
+                })
+
+
+                localStorageService.setupAssignmentsState(assignments, () => {
+                    this.performClientSideModifications(assignments);
+                    this.tick();
+                });
+            })
+
+        this.loadCourses().then(courses => {
             this.setState({
-                assignments: values[0],
-                allAssignments: values[0],
-                courses: values[1],
-                allCourses: values[1]
-            });
+                courses: courses,
+                allCourses: courses
+            })
         })
-        .catch(err => alert(err)); 
+    }
+
+    performClientSideModifications(assignments) {
+        let filteredClasses = localStorageService.getFilteredList();
+
+        assignments = assignments || this.state.assignments;
+        assignments = assignments.filter(assignment => !filteredClasses.includes(assignment.course_id));
+
+        assignments = localStorageService.refreshViewState(assignments);
+        assignments = assignments.map((assignment) => {
+            assignment.end_date = getTimezonedDate(assignment.end_date);
+            return assignment;
+        })
+
+        assignments.sort(assignmentSorter);
+        this.setState({ assignments });
+    }
+
+    tick() {
+
+        let assignments = this.state.assignments;
+
+        let assignmentsLength = assignments.length;
+        for (let i = 0; i < assignmentsLength; i++) {
+            if (!assignments[i]) //Validators
+                continue;
+
+            let dateUntilEnd = countdownTick(assignments[i].end_date);
+
+            if (!dateUntilEnd) { //Removing assignment when it's done.
+                assignments.splice(i, 1);
+            }
+
+            assignments[i].countdown = dateUntilEnd;
+        }
+
+        this.setState({ assignments });
     }
 
     loadCourses() {
@@ -63,7 +110,6 @@ export default class AssignmentsPage extends React.Component {
     }
 
     loadAssignmentsAndSetState() {
-
         return new Promise((resolve, ) => {
             this.loadAssignments().then((assignments) => {
                 this.setState({ assignments });
@@ -102,7 +148,7 @@ export default class AssignmentsPage extends React.Component {
         });
 
     }
-    render() {  
+    render() {
         return (
             <AssignmentPage
                 courses={this.state.courses}
@@ -110,8 +156,32 @@ export default class AssignmentsPage extends React.Component {
                 filterCourse={this.filterCourse}
                 assignments={this.state.assignments}
                 loadAssignments={this.loadAssignmentsAndSetState}
+                loadAssignmentsNoState={this.loadAssignments}
                 options={this.state.options}
                 changeOptions={this.changeOption} />
         )
     }
+}
+
+function assignmentSorter(a, b) {
+    if (a.viewState.done != b.viewState.done) {
+        return a.viewState.done ? 1 : -1;
+    }
+    else {
+        return a.end_date - b.end_date;
+    }
+}
+
+
+function getTimezonedDate(dateString) {
+    if (typeof dateString == "object")
+        return dateString;
+
+    let endDate = new Date(dateString);
+
+    if (location.hostname != "localhost") {
+        endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
+    }
+
+    return endDate;
 }

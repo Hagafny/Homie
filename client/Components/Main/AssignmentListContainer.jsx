@@ -4,20 +4,26 @@ import AssignmentList from './AssignmentList.jsx';
 import localStorageService from './../../Scripts/localStorageService.js';
 import countdownTick from './../../Scripts/countdownTick.js';
 
-export default class AssignmentsPage extends React.Component {
+export default class AssignmentListContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            assignments: props.assignments,
+            assignments: [],
         };
 
         this.onDoneCheckedCallback = this.onDoneCheckedCallback.bind(this);
         this.onShowCallback = this.onShowCallback.bind(this);
-        this.filterAssignment = this.filterAssignment.bind(this);
         this.tick = this.tick.bind(this);
     }
 
     componentDidMount() {
+        this.props.loadAssignmentsNoState().then(assignments => {
+            localStorageService.setupAssignmentsState(assignments, () => {
+                this.performClientSideModifications(assignments);
+                this.tick();
+            });
+        });
+
         const timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
 
         this.refreshAssignmentsInterval = setInterval(this.props.loadAssignments, timeIntervalBetweenFetchingData);
@@ -29,21 +35,20 @@ export default class AssignmentsPage extends React.Component {
         clearInterval(this.tickInterval);
     }
 
-    componentWillReceiveProps({ assignments }) {
-        localStorageService.setupAssignmentsState(assignments, () => {
-            this.performClientSideModifications(assignments);
+    componentWillReceiveProps(nextProps) {
+        localStorageService.setupAssignmentsState(nextProps.assignments, () => {
+            this.performClientSideModifications(nextProps.assignments);
         });
     }
 
     tick() {
 
-        let assignments = this.state.assignments;
-
+        let assignments = this.state.assignments;;
         let assignmentsLength = assignments.length;
         for (let i = 0; i < assignmentsLength; i++) {
             if (!assignments[i]) //Validators
                 continue;
-                
+
             let dateUntilEnd = countdownTick(assignments[i].end_date);
 
             if (!dateUntilEnd) { //Removing assignment when it's done.
@@ -84,21 +89,15 @@ export default class AssignmentsPage extends React.Component {
         });
     }
 
-    filterAssignment(id) {
-      //  localStorageService.addToFilteredList(id, () => {
-      //      this.performClientSideModifications();
-      //  });
-    }
 
     render() {
-            return (
-                <AssignmentList
-                    assignments={this.state.assignments}
-                    onDoneChecked={this.onDoneCheckedCallback}
-                    onShowCallback={this.onShowCallback}
-                    filterAssignment={this.filterAssignment}
-                    options={this.props.options} />
-            )
+        return (
+            <AssignmentList
+                assignments={this.state.assignments}
+                onDoneChecked={this.onDoneCheckedCallback}
+                onShowCallback={this.onShowCallback}
+                options={this.props.options} />
+        )
     }
 }
 
