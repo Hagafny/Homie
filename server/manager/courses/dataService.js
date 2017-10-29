@@ -50,9 +50,6 @@ let editCourse = (course, cb) => {
         course.classboost_id
     ];
 
-    console.log(sql);
-    console.log(values);
-    
     db.none(sql, values)
         .then(cb)
         .catch(error => {

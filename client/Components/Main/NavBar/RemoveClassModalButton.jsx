@@ -15,6 +15,6 @@ export default class RemoveClassModalButton extends React.Component {
 
     render() {
         return (
-            <span className="navBarCourseAction"><i onClick={this.onClick} className="fa fa-window-close courseActions" aria-hidden="true"></i></span>);
+            <span className="navBarCourseAction"><i onClick={this.onClick} className="fa fa-trash courseActions" aria-hidden="true"></i></span>);
     }
 }

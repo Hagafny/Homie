@@ -23,8 +23,8 @@ export default class OptionsNavBarTab extends React.Component {
         const { date, time } = this.props.options;
 
         return (<li className="nav-item active dropdown">
-            <a className="nav-link dropdown-toggle" id="navbarDropdown1" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
+            <a className="nav-link dropdown-toggle" id="optionsDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
+            <ul className="dropdown-menu" aria-labelledby="optionsDropDown">
                <DateOptionToggle selectedDate={date} onDateOptionSelect={this.onDateOptionSelect} />
                <TimeOptionToggle selectedTime={time} onTimeOptionSelect={this.onTimeOptionSelect} />
             </ul>

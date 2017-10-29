@@ -15,15 +15,15 @@ const CoursesNavBarTab = ({ courses, resetCourses }) => {
         coursesDropDown.push(<li key="divider" className="divider"></li>)
         coursesDropDown.push(
             <li key="reseter">
-                <span className="dropdown-item">
-                <i onClick={resetCourses} className="fa fa-undo courseActions" aria-hidden="true"></i>Reset Courses</span>
+                <span className="dropdown-item clickable" onClick={resetCourses}>
+                <i className="fa fa-undo courseActions" aria-hidden="true"></i>Reset Courses</span>
             </li>
         )
     }
 
     return  (<li className="nav-item active dropdown">
-                        <a className="nav-link dropdown-toggle" id="navbarDropdown1" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
-                        <ul className="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <a className="nav-link dropdown-toggle" id="coursesDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
+                        <ul className="dropdown-menu" aria-labelledby="coursesDropDown">
                             {coursesDropDown}
                         </ul>
                     </li>)            
