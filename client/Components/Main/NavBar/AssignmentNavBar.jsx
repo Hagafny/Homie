@@ -1,7 +1,7 @@
 import React from 'react';
 import CoursesNavBarTab from './CoursesNavBarTab.jsx';
 import OptionsNavBarTab from './OptionsNavBarTab.jsx';
-import Logo from '../../../images/piazza.png'; // Homie Logo
+import Logo from '../../../images/HomieBlueTH.png'; // Homie Logo
 const AssignmentNavBar = (props) => {
     return <div className="container">
         <nav className="navbar navbar-toggleable-md navbar-light bg-faded">

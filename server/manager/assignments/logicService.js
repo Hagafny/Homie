@@ -9,6 +9,8 @@ let getAssingments = (classIds, cb) => {
 }
 
 let saveAssignment = (assignment, cb) => {
+    //Support hebrew dates that are copied from Moodle in a DD/MM/YYY format
+    assignment.endDate = handleEndDates(assignment.endDate);
     dataService.saveAssignment(assignment, cb);
 }
 

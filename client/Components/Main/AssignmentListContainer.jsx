@@ -17,12 +17,12 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     componentDidMount() {
-        this.props.loadAssignmentsNoState().then(assignments => {
-            localStorageService.setupAssignmentsState(assignments, () => {
-                this.performClientSideModifications(assignments);
-                this.tick();
-            });
-        });
+        // this.props.loadAssignmentsNoState().then(assignments => {
+        //     localStorageService.setupAssignmentsState(assignments, () => {
+        //         this.performClientSideModifications(assignments);
+        //         this.tick();
+        //     });
+        // });
 
         const timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
 
@@ -38,6 +38,7 @@ export default class AssignmentListContainer extends React.Component {
     componentWillReceiveProps(nextProps) {
         localStorageService.setupAssignmentsState(nextProps.assignments, () => {
             this.performClientSideModifications(nextProps.assignments);
+          //  this.tick();
         });
     }
 
