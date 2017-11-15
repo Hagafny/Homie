@@ -112,3 +112,11 @@ body {
   transition: all 0.4s ease-in-out;
   background: #0275d8;
 }
+
+.assignment_card {
+  border-radius: 46px;
+}
+
+.assignment_card > .card_assignment_header {
+  border-radius: 26px;
+}
