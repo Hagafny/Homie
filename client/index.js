@@ -1,5 +1,6 @@
 require('es6-promise').polyfill();
 import 'jquery';
+import 'popper.js'
 import 'tether';
 import 'bootstrap';
 import './Scripts/googleAnalytics.js';

@@ -1,9 +1,9 @@
 let getClassesBasic = () => {
-    return `SELECT id, name FROM classes`;
+    return `SELECT id, name FROM classes ORDER BY id ASC`;
 }
 
 let getClasses = () => {
-    return `SELECT * FROM classes`;
+    return `SELECT * FROM classes ORDER BY id ASC`;
 }
 
 let saveClass = () => {

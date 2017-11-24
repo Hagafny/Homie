@@ -27,11 +27,10 @@ export default class AssignmentsDataGrid extends React.Component {
                     name: 'Course',
                 },
                 {
-                    key: 'ex',
-                    name: 'Exercise #',
+                    key: 'title',
+                    name: 'Title',
                     width: 100,
                     editable: true,
-                    type: "number"
                 },
                 {
                     key: 'endDate',
@@ -47,6 +46,12 @@ export default class AssignmentsDataGrid extends React.Component {
                     key: 'moodleId',
                     name: 'Moodle ID',
                     editable: true
+                },
+                {
+                    key: 'information',
+                    name: 'Extra Info',
+                    editable: true,
+                    type: "textarea"
                 }
             ]
         }

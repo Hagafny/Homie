@@ -38,7 +38,8 @@ let assignmentMapper = (assignment) => {
         id: assignment.id,
         endDate: dateformat(assignment.end_date, 'd mmmm yyyy, h:MM TT'),
         homeworkUrl: assignment.homework_url ? assignment.homework_url : "",
-        ex: assignment.ex,
+        title: assignment.title,
+        information: assignment.information,
         moodleId: assignment.moodle_id ? assignment.moodle_id : "",
         courseId: assignment.course_id
     }

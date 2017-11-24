@@ -16,7 +16,8 @@ const HtmlWebpackExtentionPluginConfig = new HtmlWebpackExtentionPlugin({
 const ProvidePlugin = new webpack.ProvidePlugin({
   $: "jquery",
   jQuery: "jquery",
-  Tether: "tether"
+  Tether: "tether",
+  Popper: "popper.js"
 });
 
 module.exports = {

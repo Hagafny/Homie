@@ -3,7 +3,7 @@
 const getAssingments = (classIds) => {
     const inIds = classIds.join(',');
     return `SELECT ass.*, cr.id as course_id,
-       cr.title,
+       cr.title as course_title,
        cr.piazza_id,
        cr.drive_lectures_url,
        cr.drive_recitations_url,

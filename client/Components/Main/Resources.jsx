@@ -8,6 +8,7 @@ const gdrive = require(`./../../images/gdrive.png`);
 const piazza = require(`./../../images/piazza.png`);
 const classboost = require(`./../../images/classboost.png`);
 const word = require('./../../images/word.png');
+const excel = require('./../../images/excel.png');
 
 export default class Resources extends React.Component {
 
@@ -25,11 +26,13 @@ export default class Resources extends React.Component {
     checkHWSourceUrl(imageUrl) {
         if (!imageUrl)
             return;
-        
+
         if (imageUrl.includes("zip"))
             return winzip;
         else if (imageUrl.includes("docx"))
             return word;
+        else if (imageUrl.includes("xlsx"))
+            return excel;
         else
             return pdf;
     }

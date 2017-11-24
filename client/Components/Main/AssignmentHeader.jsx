@@ -57,7 +57,7 @@ export default class AssignmentTitle extends React.Component {
             className={`card-header ${this.state.color} card_assignment_header`}
              role="tab" onClick={this.onCollapse}>
                 <h5>
-                    {this.props.data.title} - <DueDate endDate={this.props.endDate} options={this.props.options} />
+                    {this.props.data.course_title} - <DueDate endDate={this.props.endDate} options={this.props.options} />
                 </h5>
             </div>
         )

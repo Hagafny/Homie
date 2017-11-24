@@ -15,9 +15,10 @@ let saveAssignment = (assignment, cb) => {
     let values = [
         assignment.homeworkUrl,
         assignment.courseId,
-        assignment.ex,
+        assignment.title,
         assignment.endDate,
-        assignment.moodleId
+        assignment.moodleId,
+        assignment.information
     ]
     db.one(sql, values)
         .then((data) => {
@@ -33,9 +34,10 @@ let editAssignment = (assignment, cb) => {
     let values = [
         assignment.homeworkUrl,
         assignment.courseId,
-        assignment.ex,
+        assignment.title,
         assignment.endDate,
-        assignment.moodleId
+        assignment.moodleId,
+        assignment.information
     ];
     db.none(sql, values)
         .then(cb)

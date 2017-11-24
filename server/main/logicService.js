@@ -18,9 +18,10 @@ let assignmentMapper = (assignment) => {
     const moodleUrl = assignment.moodle_id ? `http://moodle.idc.ac.il/${currentSchoolYear}/mod/assign/view.php?id=${assignment.moodle_id}` : null;
     return {
         id: `a${assignment.id}`,
-        title: assignment.title,
+        course_title: assignment.course_title,
         end_date: assignment.end_date,
-        ex: assignment.ex,
+        title: assignment.title,
+        information: assignment.information,
         course_id: parseInt(assignment.course_id),
         resources: {
             homework: assignment.homework_url,

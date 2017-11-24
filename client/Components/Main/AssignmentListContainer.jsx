@@ -79,6 +79,12 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     onDoneCheckedCallback(id, doneState) {
+
+        //Close the assignments when it's done
+        if (doneState) 
+            localStorageService.changeShowState(id, false);
+        
+
         localStorageService.changeDoneState(id, doneState, () => {
             this.performClientSideModifications();
         });
