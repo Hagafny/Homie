@@ -35,8 +35,6 @@ let editManager = (manager, cb) => {
         manager.class_ids
     ];
 
-    console.log(values);
-
     db.none(sql, values)
         .then(cb)
         .catch(error => {

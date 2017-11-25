@@ -8,6 +8,7 @@ let stripRule = {
     exclude: /node_modules/,
     loader: stripLoader //remove console.log across all files.
 };
-
+devConfig.plugins[0].options.hash = true;
 devConfig.module.rules.push(stripRule);
+
 module.exports = devConfig; 

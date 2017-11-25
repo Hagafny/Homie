@@ -1,7 +1,7 @@
 {
   "name": "Homie",
   "version": "1.3.0",
-  "description": "IDC Assignments Page",
+  "description": "Homework Helper",
   "author": "Ron Hagafny",
   "main": "server/app.js",
   "license": "MIT",
