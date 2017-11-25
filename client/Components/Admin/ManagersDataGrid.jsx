@@ -6,8 +6,8 @@ export default class ManagersDataGrid extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            managerGridData: this.getManagersConfig(),
-            showDataGrid: false
+            managerGridData: this.getManagersConfig()
+          //  showDataGrid: false
         }
     }
 
@@ -42,12 +42,12 @@ export default class ManagersDataGrid extends React.Component {
     }
 
     componentDidMount() {
-        this.getClasses((classes) => {
-            let data = this.state;
-            data.managerGridData.columns[1].dropdownOptions = classes;
-            data.showDataGrid = true;
-            this.setState({ data });
-        });
+        // this.getClasses((classes) => {
+        //     let data = this.state;
+        //     data.managerGridData.columns[1].dropdownOptions = classes;
+        //     data.showDataGrid = true;
+        //     this.setState({ data });
+        // });
     }
 
     getClasses(cb) {
@@ -58,8 +58,8 @@ export default class ManagersDataGrid extends React.Component {
     }
 
     render() {
-        if (!this.state.showDataGrid)
-            return false;
+        // if (!this.state.showDataGrid)
+        //     return false;
 
         return (<HomieDataGrid {...this.state.managerGridData} />);
     }

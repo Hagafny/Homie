@@ -1,6 +1,6 @@
 {
   "name": "Homie",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "IDC Assignments Page",
   "author": "Ron Hagafny",
   "main": "server/app.js",
