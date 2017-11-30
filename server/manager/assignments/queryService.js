@@ -5,7 +5,7 @@ FROM
    FROM assignments AS ass
    WHERE end_date > CURRENT_TIMESTAMP + INTERVAL '-1 days' ) AS ass
 LEFT JOIN courses AS cr ON ass.course_id = cr.id WHERE cr.class_id IN (${classIds})
-ORDER BY end_date ASC`;
+ORDER BY end_date ASC,id ASC`;
 }
 
 let saveAssignment = () => {

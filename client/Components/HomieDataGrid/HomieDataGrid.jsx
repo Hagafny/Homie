@@ -87,11 +87,14 @@ export default class HomieDataGrid extends React.Component {
     $(`#add${this.props.gridName}Modal`).modal('show');
   }
 
-  save(item) {
+  save(item, cb) {
     $(`#add${this.props.gridName}Modal`).modal('hide');
     $(`#add${this.props.gridName}Form`)[0].reset();
 
     this.saveOnServer(item, this.showNewItemOnGrid);
+
+    if (typeof cb === typeof Function)
+      cb();
   }
 
   saveOnServer(item, cb) {

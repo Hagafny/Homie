@@ -4,7 +4,6 @@ export default class AssignmentTitle extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log(props);
 
         this.state = {
             color: this.getHeaderColor(this.props.status)

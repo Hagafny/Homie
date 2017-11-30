@@ -1,7 +1,7 @@
 import React from 'react'
 import SelectBox from './SelectBox.jsx';
 
-const AddFormInput = (props) => {
+const AddFormField = (props) => {
 
     let selectedInput;
 
@@ -29,7 +29,7 @@ const AddFormTextInput = (props) => {
 
 const AddFormTextAreaInput = (props) => {
     return (
-        <textarea className="form-control" name={props.name} onChange={props.handleInputChange}> </textarea>
+        <textarea className="form-control" name={props.name} onChange={props.handleInputChange}></textarea>
     )
 }
 
@@ -39,4 +39,4 @@ const AddFormSelectInput = (props) => {
     )
 }
 
-export default AddFormInput;
+export default AddFormField;

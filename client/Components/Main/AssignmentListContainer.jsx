@@ -38,7 +38,7 @@ export default class AssignmentListContainer extends React.Component {
     componentWillReceiveProps(nextProps) {
         localStorageService.setupAssignmentsState(nextProps.assignments, () => {
             this.performClientSideModifications(nextProps.assignments);
-          //  this.tick();
+            //  this.tick();
         });
     }
 
@@ -81,9 +81,9 @@ export default class AssignmentListContainer extends React.Component {
     onDoneCheckedCallback(id, doneState) {
 
         //Close the assignments when it's done
-        if (doneState) 
+        if (doneState)
             localStorageService.changeShowState(id, false);
-        
+
 
         localStorageService.changeDoneState(id, doneState, () => {
             this.performClientSideModifications();
@@ -108,12 +108,18 @@ export default class AssignmentListContainer extends React.Component {
     }
 }
 
+// First order by done > not done, then by end date. If end dates are equeal, show the one who was added first as the first one.
 function assignmentSorter(a, b) {
     if (a.viewState.done != b.viewState.done) {
         return a.viewState.done ? 1 : -1;
     }
     else {
-        return a.end_date - b.end_date;
+        let dateDiference = a.end_date - b.end_date;
+        if (dateDiference != 0)
+            return dateDiference;
+        else {
+            return parseInt(a.id.substring(1)) - parseInt(b.id.substring(1));
+        }
     }
 }
 

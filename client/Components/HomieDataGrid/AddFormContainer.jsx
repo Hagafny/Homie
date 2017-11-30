@@ -6,12 +6,22 @@ export default class AddFormContainer extends Component {
         super(props);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.resetState = this.resetState.bind(this);
+    }
+
+    resetState() {
+        for (let name in this.state) {
+            this.setState({
+                [name]: ''
+            });
+        }
     }
 
     handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+
         this.setState({
             [name]: value
         });
@@ -19,7 +29,8 @@ export default class AddFormContainer extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.save(this.state);
+        // Save and then completely reset state so that everything will be blank
+        this.props.save(this.state, this.resetState());
     }
     render() {
         return (
