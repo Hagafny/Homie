@@ -39,6 +39,7 @@
     "react-addons-update": "^15.6.2",
     "react-data-grid": "^2.0.54",
     "react-data-grid-addons": "^2.0.55",
+    "react-datepicker": "^0.61.0",
     "react-dom": "^16.1.1",
     "react-flip-move": "^2.9.12",
     "react-multi-toggle": "^1.0.18",
