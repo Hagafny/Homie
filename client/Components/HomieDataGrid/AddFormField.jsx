@@ -9,9 +9,9 @@ const AddFormField = (props) => {
         selectedInput = <AddFormSelectInput name={props.data.key} handleInputChange={props.handleInputChange} options={props.data.dropdownOptions} dropDownName={props.data.name} />;
     else if (props.data.type == "textarea")
         selectedInput = <AddFormTextAreaInput name={props.data.key} handleInputChange={props.handleInputChange} />;
+
     else
         selectedInput = <AddFormTextInput name={props.data.key} handleInputChange={props.handleInputChange} type={props.data.type ? props.data.type : "text"} />
-
 
     return (
         <div className="form-group">
@@ -23,7 +23,7 @@ const AddFormField = (props) => {
 
 const AddFormTextInput = (props) => {
     return (
-        <input type={props.type} className="form-control" name={props.name} onChange={props.handleInputChange}/>
+        <input type={props.type} className="form-control" name={props.name} onChange={props.handleInputChange} />
     )
 }
 

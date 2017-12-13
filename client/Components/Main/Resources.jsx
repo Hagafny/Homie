@@ -9,6 +9,7 @@ const piazza = require(`./../../images/piazza.png`);
 const classboost = require(`./../../images/classboost.png`);
 const word = require('./../../images/word.png');
 const excel = require('./../../images/excel.png');
+const powerpoint = require('./../../images/powerpoint.png');
 
 export default class Resources extends React.Component {
 
@@ -33,6 +34,8 @@ export default class Resources extends React.Component {
             return word;
         else if (imageUrl.includes("xlsx"))
             return excel;
+        else if(imageUrl.includes("pptx"))
+            return powerpoint;
         else
             return pdf;
     }

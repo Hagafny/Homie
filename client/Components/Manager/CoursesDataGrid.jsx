@@ -81,12 +81,12 @@ export default class CoursesDataGrid extends React.Component {
     }
 
     componentDidMount() {
-        let classIds = this.props.classIds;
-        const isManagingASingleClass = classIds.indexOf("&") == -1;
+        const isManagingASingleClass = this.props.classIds.indexOf("&") == -1;
+        // If we manage 1 class, we don't need to get the classes from the database to show the user, just return.
         if (isManagingASingleClass)
             return;
-
-        this.getClasses(classIds, (classes) => {
+            
+        this.getClasses(this.props.classIds, (classes) => {
             let data = this.state;
             data.coursesGridData.columns[1].dropdownOptions = classes;
             data.showDataGrid = true;
