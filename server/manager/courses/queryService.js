@@ -8,7 +8,8 @@ let getCourses = (classIds) => {
     drive_lectures_url, 
     drive_recitations_url, 
     classboost_id,
-    moodle_course_id
+    moodle_course_id,
+    class_id 
     FROM courses WHERE class_id IN (${classIds}) ORDER BY title`;
 }
 
@@ -17,10 +18,10 @@ let saveCourse = () => {
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`;
 }
 
-let editCourse = (classId) => {
-    return `UPDATE courses SET (title, drive_lectures_url, drive_recitations_url, piazza_id, classboost_id, moodle_course_id)
-     = ($1, $2, $3, $4, $5, $6)
-  WHERE id = ${classId}`;
+let editCourse = (courseId) => {
+    return `UPDATE courses SET (title, drive_lectures_url, drive_recitations_url, piazza_id, classboost_id, moodle_course_id, class_id)
+     = ($1, $2, $3, $4, $5, $6, $7)
+  WHERE id = ${courseId}`;
 }
 
 let deleteCourse = (courseId) => {

@@ -100,7 +100,6 @@ export default class AssignmentsPageContainer extends React.Component {
             let classIds = this.props.match.params.classIds || 1
             axios.get(`/api/assignments/${classIds}`)
                 .then(assignmentRes => {
-                    console.log(assignmentRes.data);
                     resolve(assignmentRes.data);
                 })
                 .catch(err => {

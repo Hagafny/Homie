@@ -1,5 +1,5 @@
-let getClassesBasic = () => {
-    return `SELECT id, name FROM classes ORDER BY id ASC`;
+let getClassesBasic = (classIds) => {
+    return `SELECT id, name FROM classes WHERE id IN (${classIds}) ORDER BY id ASC`;
 }
 
 let getClasses = () => {

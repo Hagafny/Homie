@@ -49,7 +49,8 @@ let editCourse = (course, cb) => {
         course.drive_recitations_url,
         course.piazza_id,
         course.classboost_id,
-        course.moodle_course_id
+        course.moodle_course_id,
+        course.class_id
     ];
 
     db.none(sql, values)

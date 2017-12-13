@@ -11871,7 +11871,7 @@ var HomieDataGrid = function (_React$Component) {
     value: function saveOnServer(item, cb) {
       var saveItemURL = this.props.endpoints.saveItem;
 
-      if (this.props.hasOwnProperty("extraData")) {
+      if (this.props.hasOwnProperty("extraData") && this.props.hasOwnProperty("saveItem")) {
         var extraData = this.props.extraData.saveItem;
         item = (0, _reactAddonsUpdate2.default)(item, { $merge: extraData });
       }
@@ -11923,6 +11923,11 @@ var HomieDataGrid = function (_React$Component) {
     value: function editItem(item, cb) {
       var editItemURL = this.props.endpoints.editItem;
       var data = JSON.stringify(item);
+
+      if (this.props.hasOwnProperty("extraData") && this.props.hasOwnProperty("editItem")) {
+        var extraData = this.props.extraData.editItem;
+        item = (0, _reactAddonsUpdate2.default)(item, { $merge: extraData });
+      }
 
       var config = {
         headers: { 'Content-Type': 'application/json; charset=utf-8' }
@@ -26794,7 +26799,6 @@ var AssignmentsPageContainer = function (_React$Component) {
             return new Promise(function (resolve, reject) {
                 var classIds = _this4.props.match.params.classIds || 1;
                 _axios2.default.get('/api/assignments/' + classIds).then(function (assignmentRes) {
-                    console.log(assignmentRes.data);
                     resolve(assignmentRes.data);
                 }).catch(function (err) {
                     reject(err);
@@ -27813,7 +27817,6 @@ var Resources = function (_React$Component) {
     function Resources(props) {
         _classCallCheck(this, Resources);
 
-        console.log(props);
         return _possibleConstructorReturn(this, (Resources.__proto__ || Object.getPrototypeOf(Resources)).call(this, props));
     }
 
@@ -28051,6 +28054,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _axios = __webpack_require__(12);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _HomieDataGrid = __webpack_require__(15);
 
 var _HomieDataGrid2 = _interopRequireDefault(_HomieDataGrid);
@@ -28071,15 +28078,54 @@ var CoursesDataGrid = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (CoursesDataGrid.__proto__ || Object.getPrototypeOf(CoursesDataGrid)).call(this, props));
 
-        _this.state = _this.getCoursesConfig();
+        var isManagingASingleClass = _this.props.classIds.indexOf("&") == -1;
+        _this.state = {
+            coursesGridData: _this.getCoursesConfig(isManagingASingleClass),
+            showDataGrid: isManagingASingleClass // If we manage a single page, there's no need to delay the page to get the classses dropdown from the server.
+        };
         return _this;
     }
 
     _createClass(CoursesDataGrid, [{
         key: 'getCoursesConfig',
-        value: function getCoursesConfig() {
+        value: function getCoursesConfig(isManagingASingleClass) {
             var baseEndpointUrl = "/api/courses/";
-            return {
+
+            var columns = [];
+            columns.push({
+                key: 'title',
+                name: 'Name',
+                editable: true
+            });
+
+            if (!isManagingASingleClass) columns.push({
+                key: 'class_id',
+                name: 'Class'
+            });
+
+            var lastColumns = [{
+                key: 'moodle_course_id',
+                name: 'Moodle ID',
+                editable: true
+            }, {
+                key: 'drive_lectures_url',
+                name: 'Lectures URL',
+                editable: true
+            }, {
+                key: 'drive_recitations_url',
+                name: 'Recitations URL',
+                editable: true
+            }, {
+                key: 'piazza_id',
+                name: 'Piazza ID',
+                editable: true
+            }, {
+                key: 'classboost_id',
+                name: 'ClassBoost ID',
+                editable: true
+            }];
+
+            var config = {
                 gridName: "Course",
                 endpoints: {
                     fetchItems: baseEndpointUrl + '/' + this.props.classIds,
@@ -28087,42 +28133,51 @@ var CoursesDataGrid = function (_React$Component) {
                     editItem: baseEndpointUrl,
                     deleteItem: baseEndpointUrl
                 },
-                extraData: {
+                columns: columns.concat(lastColumns)
+            };
+
+            if (isManagingASingleClass) {
+                config.extraData = {
                     saveItem: {
                         class_id: this.props.classIds
+                    },
+                    editItem: {
+                        class_id: this.props.classIds
                     }
-                },
-                columns: [{
-                    key: 'title',
-                    name: 'Name',
-                    editable: true
-                }, {
-                    key: 'moodle_course_id',
-                    name: 'Moodle ID',
-                    editable: true
-                }, {
-                    key: 'drive_lectures_url',
-                    name: 'Lectures URL',
-                    editable: true
-                }, {
-                    key: 'drive_recitations_url',
-                    name: 'Recitations URL',
-                    editable: true
-                }, {
-                    key: 'piazza_id',
-                    name: 'Piazza ID',
-                    editable: true
-                }, {
-                    key: 'classboost_id',
-                    name: 'ClassBoost ID',
-                    editable: true
-                }]
-            };
+                };
+            }
+
+            return config;
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var classIds = this.props.classIds;
+            var isManagingASingleClass = classIds.indexOf("&") == -1;
+            if (isManagingASingleClass) return;
+
+            this.getClasses(classIds, function (classes) {
+                var data = _this2.state;
+                data.coursesGridData.columns[1].dropdownOptions = classes;
+                data.showDataGrid = true;
+                _this2.setState({ data: data });
+            });
+        }
+    }, {
+        key: 'getClasses',
+        value: function getClasses(classIds, cb) {
+
+            _axios2.default.get('/api/classes/basic/' + classIds).then(function (res) {
+                cb(res.data);
+            });
         }
     }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_HomieDataGrid2.default, this.state);
+            if (!this.state.showDataGrid) return false;
+            return _react2.default.createElement(_HomieDataGrid2.default, this.state.coursesGridData);
         }
     }]);
 

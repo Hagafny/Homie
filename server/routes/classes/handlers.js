@@ -1,7 +1,8 @@
 const logicService = require('../../admin/classes/logicService');
 
 let getClassesBasic = (req, res) => {
-    logicService.getClassesBasic((classes) => {
+    let classIds = req.params.ids.split('&');
+    logicService.getClassesBasic(classIds, (classes) => {
         res.json(classes);
     });
 }

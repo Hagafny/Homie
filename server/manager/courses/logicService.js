@@ -47,6 +47,7 @@ let courseBasicMapper = (course) => {
 let courseMapper = (course) => {
     return {
         id: course.id,
+        class_id: course.class_id,
         title: course.title,
         drive_lectures_url: course.drive_lectures_url ? course.drive_lectures_url: "",
         drive_recitations_url: course.drive_recitations_url ? course.drive_recitations_url: "",

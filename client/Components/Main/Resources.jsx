@@ -13,7 +13,6 @@ const excel = require('./../../images/excel.png');
 export default class Resources extends React.Component {
 
     constructor(props) {
-        console.log(props);
         super(props);
     }
 

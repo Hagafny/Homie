@@ -3,7 +3,6 @@ const dataService = require('./dataService');
 let getAssingments = (classIds, cb) => {
     dataService.getAssingments(classIds, (rows) => {
         let modifiedRows = rows.map(assignmentMapper);
-        console.log(modifiedRows);
         cb(modifiedRows);
     })
 }
@@ -18,7 +17,6 @@ let assignmentMapper = (assignment) => {
     const currentSchoolYear = 2018;
     const moodleSubmitUrl = assignment.moodle_id ? `http://moodle.idc.ac.il/${currentSchoolYear}/mod/assign/view.php?id=${assignment.moodle_id}` : null;
     const moodleUrl = assignment.moodle_course_id ? `http://moodle.idc.ac.il/${currentSchoolYear}/course/view.php?id=${assignment.moodle_course_id}` : null;
-    console.log(moodleUrl);
     return {
         id: `a${assignment.id}`,
         course_title: assignment.course_title,

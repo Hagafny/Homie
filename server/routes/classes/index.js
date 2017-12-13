@@ -5,7 +5,7 @@ const authMiddleware = require('../../authMiddleware.js');
 
 classes.use(authMiddleware);
 
-classes.get('/basic/', handlers.getClassesBasic);
+classes.get('/basic/:ids', handlers.getClassesBasic);
 classes.get('/', handlers.get);
 classes.post('/', handlers.save);
 classes.put('/', handlers.edit);
