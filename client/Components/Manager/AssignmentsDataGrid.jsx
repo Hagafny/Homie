@@ -29,7 +29,7 @@ export default class AssignmentsDataGrid extends React.Component {
                 {
                     key: 'title',
                     name: 'Title',
-                    width: 100,
+                    width: 180,
                     editable: true,
                 },
                 {

@@ -13,6 +13,7 @@ const excel = require('./../../images/excel.png');
 export default class Resources extends React.Component {
 
     constructor(props) {
+        console.log(props);
         super(props);
     }
 
@@ -20,7 +21,7 @@ export default class Resources extends React.Component {
         if (!imageUrl)
             return;
 
-        return imageUrl.includes("moodle") ? moodle : gdrive;
+        return imageUrl.includes("moodle_submit") ? moodle : gdrive;
     }
 
     checkHWSourceUrl(imageUrl) {
@@ -42,7 +43,8 @@ export default class Resources extends React.Component {
         return (
             <ul className="resourceList">
                 <li><Resource url={this.props.data.homework} img={this.checkHWSourceUrl(this.props.data.homework)} >HW</Resource> </li>
-                <li><Resource url={this.props.data.moodle} img={moodle}>Submit</Resource></li>
+                <li><Resource url={this.props.data.moodle_submit} img={moodle}>Submit Page</Resource></li>
+                <li><Resource url={this.props.data.moodle_url} img={moodle}>Moodle</Resource></li>
                 <li><Resource url={this.props.data.lecture} img={this.checkDataSourceUrl(this.props.data.lecture)}>Lecture</Resource></li>
                 <li><Resource url={this.props.data.recitation} img={this.checkDataSourceUrl(this.props.data.recitation)}>Recitation</Resource></li>
                 <li><Resource prefix={"https://piazza.com/class/"} url={this.props.data.piazza} img={piazza}>Piazza</Resource></li>

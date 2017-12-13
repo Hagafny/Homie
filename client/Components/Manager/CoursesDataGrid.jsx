@@ -29,6 +29,11 @@ export default class CoursesDataGrid extends React.Component {
                     editable: true
                 },
                 {
+                    key: 'moodle_course_id',
+                    name: 'Moodle ID',
+                    editable: true
+                },
+                {
                     key: 'drive_lectures_url',
                     name: 'Lectures URL',
                     editable: true

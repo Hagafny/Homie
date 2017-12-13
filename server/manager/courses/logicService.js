@@ -51,6 +51,7 @@ let courseMapper = (course) => {
         drive_lectures_url: course.drive_lectures_url ? course.drive_lectures_url: "",
         drive_recitations_url: course.drive_recitations_url ? course.drive_recitations_url: "",
         classboost_id: course.classboost_id ? course.classboost_id : "" ,
-        piazza_id: course.piazza_id ? course.piazza_id : "" 
+        piazza_id: course.piazza_id ? course.piazza_id : "",
+        moodle_course_id: course.moodle_course_id ? course.moodle_course_id: ""
     }
 }

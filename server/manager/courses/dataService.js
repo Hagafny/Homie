@@ -28,6 +28,7 @@ let saveCourse = (course, cb) => {
         course.piazza_id,
         course.classboost_id,
         course.class_id,
+        course.moodle_course_id,
         course.year
     ]
 
@@ -47,7 +48,8 @@ let editCourse = (course, cb) => {
         course.drive_lectures_url,
         course.drive_recitations_url,
         course.piazza_id,
-        course.classboost_id
+        course.classboost_id,
+        course.moodle_course_id
     ];
 
     db.none(sql, values)

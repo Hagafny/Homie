@@ -7,7 +7,8 @@ const getAssingments = (classIds) => {
        cr.piazza_id,
        cr.drive_lectures_url,
        cr.drive_recitations_url,
-       cr.classboost_id
+       cr.classboost_id,
+       cr.moodle_course_id
 FROM
   (SELECT *
    FROM assignments AS ass

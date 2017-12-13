@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import AssignmentList from './AssignmentList.jsx';
 import localStorageService from './../../Scripts/localStorageService.js';
 import countdownTick from './../../Scripts/countdownTick.js';
