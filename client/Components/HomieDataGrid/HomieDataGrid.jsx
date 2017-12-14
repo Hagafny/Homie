@@ -99,8 +99,7 @@ export default class HomieDataGrid extends React.Component {
 
   saveOnServer(item, cb) {
     var saveItemURL = this.props.endpoints.saveItem;
-
-    if (this.props.hasOwnProperty("extraData") && this.props.hasOwnProperty("saveItem")) {
+    if (this.props.hasOwnProperty("extraData") && this.props.extraData.hasOwnProperty("saveItem")) {
       let extraData = this.props.extraData.saveItem;
       item = update(item, { $merge: extraData });
     }
@@ -146,7 +145,7 @@ export default class HomieDataGrid extends React.Component {
     var editItemURL = this.props.endpoints.editItem;
     var data = JSON.stringify(item);
 
-    if (this.props.hasOwnProperty("extraData") && this.props.hasOwnProperty("editItem")) {
+    if (this.props.hasOwnProperty("extraData") && this.props.extraData.hasOwnProperty("editItem")) {
       let extraData = this.props.extraData.editItem;
       item = update(item, { $merge: extraData });
     }
