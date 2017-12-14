@@ -11,9 +11,9 @@ const AssignmentNavBar = (props) => {
                 <span className="navbar-toggler-icon"></span>
             </button>
             <span className="navbar-brand" >
-                <img src={StudentUnionLogo} width="30" height="30" className="d-inline-block align-top" alt="" />
                 <img src={Logo} width="30" height="30" className="d-inline-block align-top" alt="" />
-                &nbsp; Homie
+                <img src={StudentUnionLogo} width="30" height="30" className="d-inline-block align-top" alt="" />
+                Homie
             </span>
 
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">

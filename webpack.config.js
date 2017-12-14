@@ -51,5 +51,7 @@ module.exports = {
       }
     ]
   },
-  plugins: [HtmlWebpackPluginConfig, ProvidePlugin, HtmlWebpackExtentionPluginConfig]
+  plugins: [HtmlWebpackPluginConfig, ProvidePlugin, HtmlWebpackExtentionPluginConfig, new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify('production')
+  }), ]
 }
