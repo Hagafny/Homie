@@ -29,8 +29,7 @@ let assignmentMapper = (assignment) => {
             moodle_submit: moodleSubmitUrl,
             moodle_url: moodleUrl,
             piazza: assignment.piazza_id,
-            lecture: assignment.drive_lectures_url,
-            recitation: assignment.drive_recitations_url,
+            gdrive: assignment.drive_lectures_url,
             classboost: assignment.classboost_id
         }
     }

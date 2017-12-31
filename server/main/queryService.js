@@ -6,7 +6,6 @@ const getAssingments = (classIds) => {
        cr.title as course_title,
        cr.piazza_id,
        cr.drive_lectures_url,
-       cr.drive_recitations_url,
        cr.classboost_id,
        cr.moodle_course_id
 FROM

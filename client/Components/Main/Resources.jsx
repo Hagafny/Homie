@@ -47,8 +47,7 @@ export default class Resources extends React.Component {
                 <li><Resource url={this.props.data.homework} img={this.checkHWSourceUrl(this.props.data.homework)} >HW</Resource> </li>
                 <li><Resource url={this.props.data.moodle_submit} img={moodle}>Submit Page</Resource></li>
                 <li><Resource url={this.props.data.moodle_url} img={moodle}>Moodle</Resource></li>
-                <li><Resource url={this.props.data.lecture} img={this.checkDataSourceUrl(this.props.data.lecture)}>Lecture</Resource></li>
-                <li><Resource url={this.props.data.recitation} img={this.checkDataSourceUrl(this.props.data.recitation)}>Recitation</Resource></li>
+                <li><Resource url={this.props.data.gdrive} img={gdrive}>Google Drive</Resource></li>
                 <li><Resource prefix={"https://piazza.com/class/"} url={this.props.data.piazza} img={piazza}>Piazza</Resource></li>
                 <li><Resource prefix={"https://www.classboost.co.il/Pages/OfcoursePages/CourseMeetings.aspx?CourseID="} url={this.props.data.classboost} img={classboost}>ClassBoost</Resource></li>
             </ul>

@@ -24,7 +24,6 @@ let saveCourse = (course, cb) => {
     let values = [
         course.title,
         course.drive_lectures_url,
-        course.drive_recitations_url,
         course.piazza_id,
         course.classboost_id,
         course.class_id,
@@ -46,7 +45,6 @@ let editCourse = (course, cb) => {
     let values = [
         course.title,
         course.drive_lectures_url,
-        course.drive_recitations_url,
         course.piazza_id,
         course.classboost_id,
         course.moodle_course_id,

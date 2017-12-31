@@ -35,12 +35,7 @@ export default class CoursesDataGrid extends React.Component {
         },
         {
             key: 'drive_lectures_url',
-            name: 'Lectures URL',
-            editable: true
-        },
-        {
-            key: 'drive_recitations_url',
-            name: 'Recitations URL',
+            name: 'Google Drive URL',
             editable: true
         },
         {
