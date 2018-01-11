@@ -1,7 +1,7 @@
 import React from 'react';
 import CoursesNavBarTab from './CoursesNavBarTab.jsx';
 import OptionsNavBarTab from './OptionsNavBarTab.jsx';
-import Logo from '../../../images/HomieBlueTH.png'; // Homie Logo
+import Logo from '../../../images/HomieLogo.png'; // Homie Logo
 import StudentUnionLogo from '../../../images/StudentUnion.png'; // Student Union Logo
 const AssignmentNavBar = (props) => {
 
