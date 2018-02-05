@@ -7,7 +7,7 @@ Homie helps students maximize their productivity and efficiency by letting them 
 
 ### Tech
 
-Parachuters uses a number of open source projects to work properly:
+Homie uses a number of open source projects to work properly:
 
 * [React] - client side framework
 * [node.js] - evented I/O for the backend
