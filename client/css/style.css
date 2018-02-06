@@ -120,3 +120,8 @@ body {
 .assignment_card > .card_assignment_header {
   border-radius: 26px;
 }
+
+a.noStyle {
+  color: black;
+  text-decoration: none;
+}
