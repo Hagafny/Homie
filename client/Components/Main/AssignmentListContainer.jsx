@@ -2,8 +2,7 @@ import React from 'react';
 import AssignmentList from './AssignmentList.jsx';
 import localStorageService from './../../Scripts/localStorageService.js';
 import countdownTick from './../../Scripts/countdownTick.js';
-import soundEffect1 from './../../audio/kaching.mp3';
-import soundEffect2 from './../../audio/ding.mp3';
+import soundEffect from './../../audio/kaching.mp3';
 
 export default class AssignmentListContainer extends React.Component {
     constructor(props) {
@@ -18,13 +17,6 @@ export default class AssignmentListContainer extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.loadAssignmentsNoState().then(assignments => {
-        //     localStorageService.setupAssignmentsState(assignments, () => {
-        //         this.performClientSideModifications(assignments);
-        //         this.tick();
-        //     });
-        // });
-
         const timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
 
         this.refreshAssignmentsInterval = setInterval(this.props.loadAssignments, timeIntervalBetweenFetchingData);
@@ -83,11 +75,11 @@ export default class AssignmentListContainer extends React.Component {
         //Close the assignments when it's done and add the sound effect
         if (doneState) {
             localStorageService.changeShowState(id, false);
-        }
 
-        let audioShit = (Math.floor(Math.random() * 2) == 0) ? this.audio1 : this.audio2;
-        console.log(audioShit);
-        audioShit.play();
+            if (localStorageService.getOptions().sound)
+                this.audio.play();
+
+        }
 
         localStorageService.changeDoneState(id, doneState, () => {
             this.performClientSideModifications();
@@ -108,8 +100,7 @@ export default class AssignmentListContainer extends React.Component {
                     onDoneChecked={this.onDoneCheckedCallback}
                     onShowCallback={this.onShowCallback}
                     options={this.props.options} />
-                <audio ref={(audio) => this.audio1 = audio} src={soundEffect1} />
-                <audio ref={(audio) => this.audio2 = audio} src={soundEffect2} />
+                <audio ref={(audio) => this.audio = audio} src={soundEffect} />
             </div>
         )
     }
