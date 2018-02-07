@@ -2,7 +2,7 @@ import React from 'react';
 import AssignmentList from './AssignmentList.jsx';
 import localStorageService from './../../Scripts/localStorageService.js';
 import countdownTick from './../../Scripts/countdownTick.js';
-import soundEffect from './../../audio/kaching3.mp3';
+import soundEffect from './../../audio/kaching.mp3';
 
 export default class AssignmentListContainer extends React.Component {
     constructor(props) {
