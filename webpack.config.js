@@ -41,17 +41,21 @@ module.exports = {
         test: /\.(png|jpg)$/,
         loader: 'url-loader?limit=5000&name=images/[hash:6].[ext]'
       }, // inline base64 URLs for <=5k images, direct URLs for the rest 
-      { 
+      {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff" 
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
       },
-      { 
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, 
-        loader: "file-loader" 
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
+      },
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader'
       }
     ]
   },
   plugins: [HtmlWebpackPluginConfig, ProvidePlugin, HtmlWebpackExtentionPluginConfig, new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify('production')
-  }), ]
+  }),]
 }

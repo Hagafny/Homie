@@ -10,15 +10,15 @@ const AssignmentList = (props) => {
             onDoneChecked={props.onDoneChecked}
             onShowCallback={props.onShowCallback}
             options={props.options} />
-  } );
-        return (
-            <div>
-                <div className="container assignmentList" role="tablist">
-                    <FlipMove duration={750} easing="ease">
-                        {assignments}
-                    </FlipMove>
-                </div>
-            </div>);
+    });
+    return (
+        <div>
+            <div className="container assignmentList" role="tablist">
+                <FlipMove duration={750} easing="ease">
+                    {assignments}
+                </FlipMove>
+            </div>
+        </div>);
 }
 
 export default AssignmentList;
