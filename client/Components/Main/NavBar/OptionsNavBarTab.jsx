@@ -1,5 +1,5 @@
 import React from 'react';
-import SoundOptionToggle from './SoundOptionToggle.jsx';
+// import SoundOptionToggle from './SoundOptionToggle.jsx';
 import DateOptionToggle from './DateOptionToggle.jsx';
 import TimeOptionToggle from './TimeOptionToggle.jsx';
 
@@ -30,7 +30,7 @@ export default class OptionsNavBarTab extends React.Component {
         return (<li className="nav-item active dropdown">
             <a className="nav-link dropdown-toggle clickable" id="optionsDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options</a>
             <ul className="dropdown-menu" aria-labelledby="optionsDropDown">
-                <SoundOptionToggle selectedSound={sound} onSoundOptionSelect={this.onSoundOptionSelect} />
+                {/* <SoundOptionToggle selectedSound={sound} onSoundOptionSelect={this.onSoundOptionSelect} /> */}
                 <DateOptionToggle selectedDate={date} onDateOptionSelect={this.onDateOptionSelect} />
                 <TimeOptionToggle selectedTime={time} onTimeOptionSelect={this.onTimeOptionSelect} />
             </ul>

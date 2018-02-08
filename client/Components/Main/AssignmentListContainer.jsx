@@ -2,7 +2,7 @@ import React from 'react';
 import AssignmentList from './AssignmentList.jsx';
 import localStorageService from './../../Scripts/localStorageService.js';
 import countdownTick from './../../Scripts/countdownTick.js';
-import soundEffect from './../../audio/kaching.mp3';
+//import soundEffect from './../../audio/kaching.mp3';
 
 export default class AssignmentListContainer extends React.Component {
     constructor(props) {
@@ -76,8 +76,8 @@ export default class AssignmentListContainer extends React.Component {
         if (doneState) {
             localStorageService.changeShowState(id, false);
 
-            if (localStorageService.getOptions().sound)
-                this.audio.play();
+            // if (localStorageService.getOptions().sound)
+            //     this.audio.play();
 
         }
 
@@ -94,14 +94,14 @@ export default class AssignmentListContainer extends React.Component {
 
     render() {
         return (
-            <div>
-                <AssignmentList
-                    assignments={this.state.assignments}
-                    onDoneChecked={this.onDoneCheckedCallback}
-                    onShowCallback={this.onShowCallback}
-                    options={this.props.options} />
-                <audio ref={(audio) => this.audio = audio} src={soundEffect} />
-            </div>
+            // <div>
+            <AssignmentList
+                assignments={this.state.assignments}
+                onDoneChecked={this.onDoneCheckedCallback}
+                onShowCallback={this.onShowCallback}
+                options={this.props.options} />
+            /*{ <audio ref={(audio) => this.audio = audio} src={soundEffect} /> */
+            /* </div> */
         )
     }
 }
