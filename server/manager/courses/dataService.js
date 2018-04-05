@@ -28,7 +28,8 @@ let saveCourse = (course, cb) => {
         course.classboost_id,
         course.class_id,
         course.moodle_course_id,
-        course.year
+        course.year,
+        course.trello_id
     ]
 
     db.one(sql, values)
@@ -48,7 +49,8 @@ let editCourse = (course, cb) => {
         course.piazza_id,
         course.classboost_id,
         course.moodle_course_id,
-        course.class_id
+        course.class_id,
+        course.trello_id
     ];
 
     db.none(sql, values)

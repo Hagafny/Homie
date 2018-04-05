@@ -8,7 +8,7 @@ let getCoursesBasic = (classIds, cb) => {
 }
 
 let getCourses = (classIds, cb) => {
-    dataService.getCourses(classIds, (rows) => {
+    dataService.getCourses(classIds, (rows) => { 
         let modifiedRows = rows.map(courseMapper);
         cb(modifiedRows);
     });
@@ -52,6 +52,7 @@ let courseMapper = (course) => {
         drive_lectures_url: course.drive_lectures_url ? course.drive_lectures_url: "",
         classboost_id: course.classboost_id ? course.classboost_id : "" ,
         piazza_id: course.piazza_id ? course.piazza_id : "",
-        moodle_course_id: course.moodle_course_id ? course.moodle_course_id: ""
+        moodle_course_id: course.moodle_course_id ? course.moodle_course_id: "",
+        trello_id: course.trello_id ? course.trello_id: ""
     }
 }

@@ -47,6 +47,11 @@ export default class CoursesDataGrid extends React.Component {
             key: 'classboost_id',
             name: 'ClassBoost ID',
             editable: true
+        },
+        {
+            key: 'trello_id',
+            name: 'Trello ID',
+            editable: true
         }];
 
 
@@ -80,7 +85,7 @@ export default class CoursesDataGrid extends React.Component {
         // If we manage 1 class, we don't need to get the classes from the database to show the user, just return.
         if (isManagingASingleClass)
             return;
-            
+
         this.getClasses(this.props.classIds, (classes) => {
             let data = this.state;
             data.coursesGridData.columns[1].dropdownOptions = classes;

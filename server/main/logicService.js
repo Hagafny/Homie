@@ -30,7 +30,8 @@ let assignmentMapper = (assignment) => {
             moodle_url: moodleUrl,
             piazza: assignment.piazza_id,
             gdrive: assignment.drive_lectures_url,
-            classboost: assignment.classboost_id
+            classboost: assignment.classboost_id,
+            trello: assignment.trello_id
         }
     }
 }

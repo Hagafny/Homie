@@ -1,13 +1,13 @@
 //TODO: Get rid of the INTERVAL 3/2 hours - this will break if we're on another country or daylight savings time
 //We need to save the date as UTC and remove this later.
 const getAssingments = (classIds) => {
-    const inIds = classIds.join(',');
     return `SELECT ass.*, cr.id as course_id,
        cr.title as course_title,
        cr.piazza_id,
        cr.drive_lectures_url,
        cr.classboost_id,
-       cr.moodle_course_id
+       cr.moodle_course_id,
+       cr.trello_id
 FROM
   (SELECT *
    FROM assignments AS ass
