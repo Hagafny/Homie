@@ -50,6 +50,9 @@ export default class AssignmentTitle extends React.Component {
 
     render() {
         let seperator = this.props.data.title ? '-' : '';
+        let headerStyle = {
+            color: 'white'
+        };
         return (
             <div data-toggle="collapse" 
             href={`#${this.props.data.id}`} 
@@ -57,7 +60,7 @@ export default class AssignmentTitle extends React.Component {
             aria-controls={this.props.data.id} 
             className={`card-header ${this.state.color} card_assignment_header`}
              role="tab" onClick={this.onCollapse}>
-                <h5>
+                <h5 style={headerStyle}>
                     {this.props.data.course_title} {seperator} {this.props.data.title} - <DueDate endDate={this.props.endDate} options={this.props.options} />
                 </h5>
             </div>
