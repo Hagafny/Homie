@@ -35,6 +35,10 @@ class LoginPage extends React.Component {
         event.preventDefault();
         let url = "/api/auth/login/";
         let data = this.state;
+
+        data.email = data.email.trim().toLowerCase();
+        data.password = data.password.trim();
+
         data.class_ids = this.props.match.params.classIds;
 
         let config = {

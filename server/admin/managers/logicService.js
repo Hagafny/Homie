@@ -6,12 +6,16 @@ let getManagers = (cb) => {
 }
 
 let saveManager = (manager, cb) => {
-    manager.password = encryptor(manager.password);
+    manager.email = manager.email.trim().toLowerCase();
+    manager.password = encryptor(manager.password.trim());
+
     dataService.saveManager(manager, cb);
 }
 
 let editManager = (manager, cb) => {
-   // manager.password = encryptor(manager.password);
+    manager.email = manager.email.trim().toLowerCase();
+    manager.password = encryptor(manager.password.trim());
+
     dataService.editManager(manager, cb);
 }
 
@@ -25,5 +29,7 @@ let service = {
     editManager: editManager,
     deleteManager, deleteManager
 };
+
+
 
 module.exports = service;
