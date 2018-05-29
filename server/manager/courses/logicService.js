@@ -38,9 +38,12 @@ let service = {
 module.exports = service;
 
 let courseBasicMapper = (course) => {
+    const currentSchoolYear = 2018;
+    const moodleUrl = `http://moodle.idc.ac.il/${currentSchoolYear}/course/view.php?id=${course.moodle_course_id}`;
     return {
         value: course.id,
-        text: course.title
+        text: course.title,
+        url: moodleUrl
     }
 }
 

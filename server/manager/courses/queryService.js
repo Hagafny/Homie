@@ -1,5 +1,5 @@
 let getCoursesBasic = (classIds) => {
-    return `SELECT id, title FROM courses WHERE class_id IN (${classIds}) ORDER BY title`;
+    return `SELECT id, title, moodle_course_id FROM courses WHERE class_id IN (${classIds}) ORDER BY title`;
 }
 
 let getCourses = (classIds) => {
