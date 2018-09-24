@@ -1,12 +1,13 @@
 const pgp = require('pg-promise')();
-const parse = require('pg-connection-string').parse;
 
-const connectionString = process.env.DATABASE_URL || "postgres://jvtbnwwrwltemx:3b58a1ca37657704321d9b83da14f7c44ff41e33d8bdbc1fd27416c8caf9c97b@ec2-54-247-166-129.eu-west-1.compute.amazonaws.com:5432/d8cg3vb6m5pl2l";
+const config = require('./config/config');
+let dbConfig = config.db;
 
-let config = parse(connectionString);
-config.ssl = true;
-config.poolSize = 20;
+var logger = require('./util/logger');
+logger.log(config.db);
 
-let db = pgp(config);
+dbConfig.poolSize = 20;
+
+let db = pgp(dbConfig);
 
 module.exports = db;

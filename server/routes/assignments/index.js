@@ -1,7 +1,7 @@
 const router = require('express').Router;
 const assignments = router();
 const handlers = require('./handlers');
-const authMiddleware = require('../../authMiddleware.js');
+const authMiddleware = require('../../middleware/authMiddleware');
 
 //This call is public for everyone
 assignments.get('/:ids', handlers.getAssignments);

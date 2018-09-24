@@ -1,7 +1,7 @@
 const router = require('express').Router;
 const classes = router();
 const handlers = require('./handlers');
-const authMiddleware = require('../../authMiddleware.js');
+const authMiddleware = require('../../middleware/authMiddleware');
 
 classes.use(authMiddleware);
 

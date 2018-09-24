@@ -1,5 +1,5 @@
 const dataService = require('./dataService');
-const encryptor = require('./../../MD5encryptor');
+const encryptor = require('../../util/MD5encryptor');
 
 let getManagers = (cb) => {
     dataService.getManagers(cb);

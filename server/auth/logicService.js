@@ -1,5 +1,5 @@
 const dataService = require('../admin/managers/dataService');
-const encryptor = require('./../MD5encryptor');
+const encryptor = require('../util/MD5encryptor');
 
 let verifyLogin = (email, password, classIds, cb) => {
     password = encryptor(password.trim());
