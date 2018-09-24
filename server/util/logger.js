@@ -24,7 +24,7 @@ let logger = {
           // can log all the properties and color it
           var string = JSON.stringify(arg, null, 2);
           return tag + '  ' + string.cyan;
-        } else {
+        } else if (arg != undefined) {
           return tag + '  ' + arg.cyan;
         }
       });
