@@ -9,19 +9,21 @@ const soundOptions = [
   {
     displayName: 'Off',
     value: 0
-  },
+  }
 ];
-const SoundOptionToggle = (props) => {
-    return (
-        <li>
-        <span>
+const SoundOptionToggle = props => {
+  return (
+    <li>
+      <span>
         <MultiToggle
           options={soundOptions}
           selectedOption={props.selectedSound}
           onSelectOption={props.onSoundOptionSelect}
-          label="Sound:"/>
-      </span>             
-    </li>)
-}
+          label="Sound:"
+        />
+      </span>
+    </li>
+  );
+};
 
 export default SoundOptionToggle;

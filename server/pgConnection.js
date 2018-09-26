@@ -1,10 +1,11 @@
 const pgp = require('pg-promise')();
+const config = require('./config/config');
 
-let dbConfig = {
-    ...require('./config/config').db,
-    poolSize: 20
-}
+const dbConfig = {
+  ...config.db,
+  poolSize: 20
+};
 
-let db = pgp(dbConfig);
+const db = pgp(dbConfig);
 
 module.exports = db;

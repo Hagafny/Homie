@@ -1,5 +1,4 @@
-const router = require('express').Router;
-const courses = router();
+const courses = require('express').Router();
 const handlers = require('./handlers');
 const authMiddleware = require('../../middleware/authMiddleware');
 
@@ -12,4 +11,4 @@ courses.post('/', handlers.save);
 courses.put('/', handlers.edit);
 courses.delete('/:id', handlers.remove);
 
-module.exports = courses; 
+module.exports = courses;

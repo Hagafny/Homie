@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
-const Option = (props) => <option value={props.value}>{props.children}</option>
+const Option = ({ value, children }) => <option value={value}>{children}</option>;
 export default Option;

@@ -1,46 +1,46 @@
 const logicService = require('../../admin/classes/logicService');
 
-let getClassesBasic = (req, res) => {
-    let classIds = req.params.ids.split('&');
-    logicService.getClassesBasic(classIds, (classes) => {
-        res.json(classes);
+const getClassesBasic = (req, res) => {
+  const classIds = req.params.ids.split('&');
+  logicService.getClassesBasic(classIds, classes => {
+    res.json(classes);
+  });
+};
+
+const get = (req, res) => {
+  logicService.getClasses(classes => {
+    res.json(classes);
+  });
+};
+
+const save = (req, res) => {
+  logicService.saveClass(req.body, newClassId => {
+    res.status(200).json({
+      status: 200,
+      id: newClassId
     });
-}
+  });
+};
 
+const edit = (req, res) => {
+  logicService.editClass(req.body, () => {
+    res.status(200).json({ status: 200 });
+  });
+};
 
-let get = (req, res) => {
-    logicService.getClasses((classes) => {
-        res.json(classes);
-    });
-}
+const remove = (req, res) => {
+  const classId = req.params.id;
+  logicService.deleteClass(classId, () => {
+    res.status(200).json({ status: 200 });
+  });
+};
 
-let save = (req, res) => {
-    logicService.saveClass(req.body, (newClassId) => {
-        res.status(200).json(
-            {
-                status: 200,
-                id: newClassId
-            });
-    });
-}
+const service = {
+  getClassesBasic,
+  get,
+  save,
+  edit,
+  remove
+};
 
-let edit = (req, res) => {
-    logicService.editClass(req.body, () => {
-        res.status(200).json({ status: 200 });
-    })
-}
-
-let remove = (req, res) => {
-    let classId = req.params.id;
-    logicService.deleteClass(classId, () => {
-        res.status(200).json({ status: 200 });
-    })
-}
-
-module.exports = {
-        getClassesBasic: getClassesBasic,
-    get: get,
-    save: save,
-    edit: edit,
-    remove: remove
-}
+module.exports = service;

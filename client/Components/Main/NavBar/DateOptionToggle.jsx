@@ -9,19 +9,21 @@ const dateOptions = [
   {
     displayName: 'M/D/Y',
     value: 2
-  },
+  }
 ];
-const DateOptionToggle = (props) => {
-    return (
-        <li>
-        <span>
+const DateOptionToggle = props => {
+  return (
+    <li>
+      <span>
         <MultiToggle
           options={dateOptions}
           selectedOption={props.selectedDate}
           onSelectOption={props.onDateOptionSelect}
-          label="Date Format:"/>
-      </span>             
-    </li>)
-}
+          label="Date Format:"
+        />
+      </span>
+    </li>
+  );
+};
 
 export default DateOptionToggle;

@@ -9,24 +9,25 @@ export default class HomieDataGridToolbar extends React.Component {
   }
   onAddRow() {
     if (this.props.onAddRow !== null && this.props.onAddRow instanceof Function) {
-      this.props.onAddRow({newRowIndex: this.props.numberOfRows});
+      this.props.onAddRow({ newRowIndex: this.props.numberOfRows });
     }
   }
 
   renderAddRowButton() {
-    if (this.props.onAddRow ) {
-      return (<button type="button" className="btn" onClick={this.onAddRow}>
-        {this.props.addRowButtonText}
-      </button>);
+    if (this.props.onAddRow) {
+      return (
+        <button type="button" className="btn" onClick={this.onAddRow}>
+          {this.props.addRowButtonText}
+        </button>
+      );
     }
   }
 
   render() {
     return (
       <div className="react-grid-Toolbar">
-        <div className="tools">
-          {this.renderAddRowButton()}
-        </div>
-      </div>);
+        <div className="tools">{this.renderAddRowButton()}</div>
+      </div>
+    );
   }
-};
+}

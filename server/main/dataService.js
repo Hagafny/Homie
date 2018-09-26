@@ -1,17 +1,13 @@
 const queryService = require('./queryService');
 const db = require('./../pgConnection');
 
-let getAssingments = (classIds, cb) => {
-    let sql = queryService.getAssingments(classIds);
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const getAssingments = (classIds, cb) => {
+  const sql = queryService.getAssingments(classIds);
+  db.any(sql).then(cb);
+};
 
-let service = {
-    getAssingments: getAssingments
+const service = {
+  getAssingments
 };
 
 module.exports = service;

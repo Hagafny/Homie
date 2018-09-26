@@ -7,6 +7,4 @@ const logger = require('./server/util/logger');
 
 app.listen(config.port);
 
-logger.log('listening on ' + config.port);
-
-
+logger.log(`listening on ${config.port}`);

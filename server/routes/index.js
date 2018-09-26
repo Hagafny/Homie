@@ -1,5 +1,4 @@
 const routes = require('express').Router();
-
 const assignments = require('./assignments');
 const courses = require('./courses');
 const classes = require('./classes');

@@ -1,65 +1,49 @@
 const queryService = require('./queryService');
 const db = require('./../../pgConnection');
 
-let getAssingments = (classIds, cb) => {
-    let sql = queryService.getAssingments(classIds);
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const getAssingments = (classIds, cb) => {
+  const sql = queryService.getAssingments(classIds);
+  db.any(sql).then(cb);
+};
 
-let saveAssignment = (assignment, cb) => {
-    let sql = queryService.saveAssignment();
-    let values = [
-        assignment.homeworkUrl,
-        assignment.courseId,
-        assignment.title,
-        assignment.endDate,
-        assignment.moodleId,
-        assignment.information
-    ]
-    db.one(sql, values)
-        .then((data) => {
-            cb(data.id);
-        })
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const saveAssignment = (assignment, cb) => {
+  const sql = queryService.saveAssignment();
+  const values = [
+    assignment.homeworkUrl,
+    assignment.courseId,
+    assignment.title,
+    assignment.endDate,
+    assignment.moodleId,
+    assignment.information
+  ];
+  db.one(sql, values).then(data => {
+    cb(data.id);
+  });
+};
 
-let editAssignment = (assignment, cb) => {
-    let sql = queryService.editAssignment(assignment.id);
-    let values = [
-        assignment.homeworkUrl,
-        assignment.courseId,
-        assignment.title,
-        assignment.endDate,
-        assignment.moodleId,
-        assignment.information
-    ];
-    db.none(sql, values)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const editAssignment = (assignment, cb) => {
+  const sql = queryService.editAssignment(assignment.id);
+  const values = [
+    assignment.homeworkUrl,
+    assignment.courseId,
+    assignment.title,
+    assignment.endDate,
+    assignment.moodleId,
+    assignment.information
+  ];
+  db.none(sql, values).then(cb);
+};
 
-let deleteAssignment = (assignmentId, cb) => {
-    let sql = queryService.deleteAssignment(assignmentId);
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const deleteAssignment = (assignmentId, cb) => {
+  const sql = queryService.deleteAssignment(assignmentId);
+  db.any(sql).then(cb);
+};
 
-let service = {
-    getAssingments: getAssingments,
-    saveAssignment: saveAssignment,
-    editAssignment: editAssignment,
-    deleteAssignment: deleteAssignment
+const service = {
+  getAssingments,
+  saveAssignment,
+  editAssignment,
+  deleteAssignment
 };
 
 module.exports = service;

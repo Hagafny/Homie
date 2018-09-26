@@ -1,17 +1,20 @@
-import React from 'react'
+import React from 'react';
 
-const Resource = (props) => {
-  if (!props.url)
-    return false;
+const Resource = ({ url, prefix, img, children }) => {
+  if (!url) return false;
 
-  let url = props.prefix ? `${props.prefix}${props.url}` : props.url;
+  const modifiedURl = prefix ? `${prefix}${url}` : url;
   return (
     <div>
-      <img src={props.img} alt="" height="20" width="20" />
-      <span>  <a href={url} target="_blank">{props.children}</a></span>
+      <img src={img} alt="" height="20" width="20" />
+      <span>
+        {' '}
+        <a href={modifiedURl} target="_blank" rel="noopener noreferrer">
+          {children}
+        </a>
+      </span>
     </div>
-
-  )
-}
+  );
+};
 
 export default Resource;

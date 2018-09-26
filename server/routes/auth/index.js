@@ -3,4 +3,4 @@ const handlers = require('./handlers');
 
 validationAPI.post('/login/', handlers.login);
 
-module.exports = validationAPI; 
+module.exports = validationAPI;

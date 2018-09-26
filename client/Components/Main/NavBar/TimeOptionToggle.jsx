@@ -9,19 +9,21 @@ const timeOptions = [
   {
     displayName: 'AM/PM',
     value: 2
-  },
+  }
 ];
-const TimeOptionToggle = (props) => {
-    return (
-        <li>
-        <span>
+const TimeOptionToggle = props => {
+  return (
+    <li>
+      <span>
         <MultiToggle
           options={timeOptions}
           selectedOption={props.selectedTime}
           onSelectOption={props.onTimeOptionSelect}
-          label="Time Format:"/>
-      </span>             
-    </li>)
-}
+          label="Time Format:"
+        />
+      </span>
+    </li>
+  );
+};
 
 export default TimeOptionToggle;

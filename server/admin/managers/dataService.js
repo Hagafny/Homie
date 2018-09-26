@@ -1,74 +1,46 @@
 const queryService = require('./queryService');
 const db = require('./../../pgConnection');
 
-let getManagers = (cb) => {
-    let sql = queryService.getManagers();
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const getManagers = cb => {
+  const sql = queryService.getManagers();
+  db.any(sql).then(cb);
+};
 
-let saveManager = (manager, cb) => {
-    let sql = queryService.saveManager();
-    let values = [
-        manager.email,
-        manager.password,
-        manager.class_ids
-    ]
+const saveManager = (manager, cb) => {
+  const sql = queryService.saveManager();
+  const values = [manager.email, manager.password, manager.class_ids];
 
-    db.one(sql, values)
-        .then((data) => {
-            cb(data.id);
-        })
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+  db.one(sql, values).then(data => {
+    cb(data.id);
+  });
+};
 
-let editManager = (manager, cb) => {
-    let sql = queryService.editManager(manager.id);
-    let values = [
-        manager.email,
-        manager.password,
-        manager.class_ids
-    ];
+const editManager = (manager, cb) => {
+  const sql = queryService.editManager(manager.id);
+  const values = [manager.email, manager.password, manager.class_ids];
 
-    db.none(sql, values)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+  db.none(sql, values).then(cb);
+};
 
-let deleteManager = (managerId, cb) => {
-    let sql = queryService.deleteManager(managerId);
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const deleteManager = (managerId, cb) => {
+  const sql = queryService.deleteManager(managerId);
+  db.any(sql).then(cb);
+};
 
-let getManagerByEmailAndPassword = (email, password, cb) => {
-    let sql = queryService.getManagerByEmailAndPassword(email, password);
+const getManagerByEmailAndPassword = (email, password, cb) => {
+  const sql = queryService.getManagerByEmailAndPassword(email, password);
 
-    db.one(sql)
-        .then((data) => {
-            cb(null, data);
-        })
-        .catch(error => {
-            cb(error)
-        });
-}
+  db.one(sql).then(data => {
+    cb(null, data);
+  });
+};
 
-let service = {
-    getManagers: getManagers,
-    getManagerByEmailAndPassword, getManagerByEmailAndPassword,
-    saveManager: saveManager,
-    editManager: editManager,
-    deleteManager: deleteManager
+const service = {
+  getManagers,
+  getManagerByEmailAndPassword,
+  saveManager,
+  editManager,
+  deleteManager
 };
 
 module.exports = service;

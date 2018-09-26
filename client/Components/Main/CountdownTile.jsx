@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-const CountdownTile = (props) =>  
-            <div>
-                <span className="homieWhite">{props.number}</span>
-                <div className="smalltext homieWhite">{props.title}</div>
-            </div>
-        
+const CountdownTile = ({ number, title }) => (
+  <div>
+    <span className="homieWhite">{number}</span>
+    <div className="smalltext homieWhite">{title}</div>
+  </div>
+);
+
 export default CountdownTile;

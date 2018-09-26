@@ -2,17 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import update from 'react-addons-update';
 import ReactDataGrid from 'react-data-grid';
-import HomieDataGridToolbar from './HomieDataGridToolbar.jsx';
-import HomieDropDownEditor from './HomieDropDownEditor.jsx';
-import HomieDropDownFormatter from './HomieDropDownFormatter.jsx';
-import AddFormContainer from './AddFormContainer.jsx';
+import HomieDataGridToolbar from './HomieDataGridToolbar';
+import HomieDropDownEditor from './HomieDropDownEditor';
+import HomieDropDownFormatter from './HomieDropDownFormatter';
+import AddFormContainer from './AddFormContainer';
 
 export default class HomieDataGrid extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       rows: []
-    }
+    };
 
     this.getRowAt = this.getRowAt.bind(this);
     this.handleAddRow = this.handleAddRow.bind(this);
@@ -20,18 +20,16 @@ export default class HomieDataGrid extends React.Component {
     this.fetchItems = this.fetchItems.bind(this);
     this.save = this.save.bind(this);
     this.showNewItemOnGrid = this.showNewItemOnGrid.bind(this);
-
   }
 
   componentDidMount() {
     this.fetchItems();
   }
 
-
   columnMapper(column) {
-    if (column.hasOwnProperty("dropdownOptions")) {
+    if (column.hasOwnProperty('dropdownOptions')) {
       column.editor = <HomieDropDownEditor options={column.dropdownOptions} />;
-      column.formatter = <HomieDropDownFormatter options={column.dropdownOptions} />
+      column.formatter = <HomieDropDownFormatter options={column.dropdownOptions} />;
     }
 
     return column;
@@ -51,16 +49,17 @@ export default class HomieDataGrid extends React.Component {
     dataGridColumns.push({
       name: 'Delete',
       key: '$delete',
-      getRowMetaData: (row) => row,
+      getRowMetaData: row => row,
       formatter: ({ dependentValues }) => (
         <span>
-          <a href="javascript:;" onClick={() => this.deleteRow(dependentValues.id)}>Delete</a>
+          <a href="javascript:;" onClick={() => this.deleteRow(dependentValues.id)}>
+            Delete
+          </a>
         </span>
-      ),
+      )
     });
 
     return dataGridColumns;
-
   }
   getRowAt(i) {
     return this.state.rows[i];
@@ -74,11 +73,10 @@ export default class HomieDataGrid extends React.Component {
 
   fetchItems() {
     let fetchItemsURl = this.props.endpoints.fetchItems;
-    axios.get(fetchItemsURl)
-      .then(itemsRes => {
-        let items = itemsRes.data;
-        this.setState({ rows: items });
-      })
+    axios.get(fetchItemsURl).then(itemsRes => {
+      let items = itemsRes.data;
+      this.setState({ rows: items });
+    });
   }
 
   //Add Item -------------------------------------
@@ -93,13 +91,12 @@ export default class HomieDataGrid extends React.Component {
 
     this.saveOnServer(item, this.showNewItemOnGrid);
 
-    if (typeof cb === typeof Function)
-      cb();
+    if (typeof cb === typeof Function) cb();
   }
 
   saveOnServer(item, cb) {
     var saveItemURL = this.props.endpoints.saveItem;
-    if (this.props.hasOwnProperty("extraData") && this.props.extraData.hasOwnProperty("saveItem")) {
+    if (this.props.hasOwnProperty('extraData') && this.props.extraData.hasOwnProperty('saveItem')) {
       let extraData = this.props.extraData.saveItem;
       item = update(item, { $merge: extraData });
     }
@@ -110,7 +107,7 @@ export default class HomieDataGrid extends React.Component {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
     };
 
-    axios.post(saveItemURL, data, config).then((response) => {
+    axios.post(saveItemURL, data, config).then(response => {
       if (response.data.status == 200) {
         item.id = response.data.id;
         cb(item);
@@ -124,7 +121,6 @@ export default class HomieDataGrid extends React.Component {
     this.setState({ rows });
   }
 
-
   //Edit Item ------------------------------------
   handleGridRowsUpdated({ fromRow, toRow, updated }) {
     let rows = this.state.rows.slice();
@@ -132,8 +128,7 @@ export default class HomieDataGrid extends React.Component {
     for (let i = fromRow; i <= toRow; i++) {
       let rowToUpdate = rows[i];
       let updatedRow = update(rowToUpdate, { $merge: updated });
-      this.editItem(updatedRow, () => {
-      });
+      this.editItem(updatedRow, () => {});
 
       rows[i] = updatedRow;
     }
@@ -145,7 +140,7 @@ export default class HomieDataGrid extends React.Component {
     var editItemURL = this.props.endpoints.editItem;
     var data = JSON.stringify(item);
 
-    if (this.props.hasOwnProperty("extraData") && this.props.extraData.hasOwnProperty("editItem")) {
+    if (this.props.hasOwnProperty('extraData') && this.props.extraData.hasOwnProperty('editItem')) {
       let extraData = this.props.extraData.editItem;
       item = update(item, { $merge: extraData });
     }
@@ -154,9 +149,8 @@ export default class HomieDataGrid extends React.Component {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
     };
 
-    axios.put(editItemURL, data, config).then((response) => {
-      if (response.data.status == 200)
-        cb();
+    axios.put(editItemURL, data, config).then(response => {
+      if (response.data.status == 200) cb();
     });
   }
 
@@ -165,24 +159,22 @@ export default class HomieDataGrid extends React.Component {
   deleteRow(id) {
     this.removeRowFromServer(id, () => {
       this.removeRowFromGrid(id);
-    })
+    });
   }
 
   removeRowFromServer(id, cb) {
     var deleteItemURL = `${this.props.endpoints.deleteItem}${id}`;
-    axios.delete(deleteItemURL)
-      .then((response) => {
-        if (response.data.status == 200)
-          cb();
-      });
+    axios.delete(deleteItemURL).then(response => {
+      if (response.data.status == 200) cb();
+    });
   }
 
   removeRowFromGrid(id) {
-    this.getRowIndexById(id, (rowIndex) => {
+    this.getRowIndexById(id, rowIndex => {
       let rows = this.state.rows;
       rows.splice(rowIndex, 1);
       this.setState({ rows });
-    })
+    });
   }
 
   getRowIndexById(id, cb) {
@@ -194,7 +186,6 @@ export default class HomieDataGrid extends React.Component {
         found = true;
         cb(i);
       }
-
     }
   }
 
@@ -207,10 +198,21 @@ export default class HomieDataGrid extends React.Component {
           rowGetter={this.getRowAt}
           rowsCount={this.getSize()}
           minHeight={300}
-          toolbar={<HomieDataGridToolbar addRowButtonText={`Add ${this.props.gridName}`} onAddRow={this.handleAddRow} />}
-          onGridRowsUpdated={this.handleGridRowsUpdated} />
+          toolbar={
+            <HomieDataGridToolbar
+              addRowButtonText={`Add ${this.props.gridName}`}
+              onAddRow={this.handleAddRow}
+            />
+          }
+          onGridRowsUpdated={this.handleGridRowsUpdated}
+        />
 
-        <AddFormContainer gridName={this.props.gridName} save={this.save} fields={this.props.columns} />
-      </div>);
+        <AddFormContainer
+          gridName={this.props.gridName}
+          save={this.save}
+          fields={this.props.columns}
+        />
+      </div>
+    );
   }
-};
+}

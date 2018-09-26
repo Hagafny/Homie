@@ -12,9 +12,9 @@ config.env = process.env.NODE_ENV || config.dev;
 let envConfig;
 
 try {
-  envConfig = require('./' + config.env); // /In case it doesn't work for some reason
+  envConfig = require(`./${config.env}`); // /In case it doesn't work for some reason
   envConfig = envConfig || {};
-} catch(e) {
+} catch (e) {
   envConfig = {};
 }
 

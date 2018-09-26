@@ -1,5 +1,4 @@
-const router = require('express').Router;
-const classes = router();
+const classes = require('express').Router();
 const handlers = require('./handlers');
 const authMiddleware = require('../../middleware/authMiddleware');
 
@@ -11,4 +10,4 @@ classes.post('/', handlers.save);
 classes.put('/', handlers.edit);
 classes.delete('/:id', handlers.remove);
 
-module.exports = classes; 
+module.exports = classes;

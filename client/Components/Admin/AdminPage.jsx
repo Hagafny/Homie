@@ -1,33 +1,14 @@
 import React from 'react';
-import ClassesDataGrid from './ClassesDataGrid.jsx';
-import ManagersDataGrid from './ManagersDataGrid.jsx'
-import Footer from './../Footer.jsx';
+import ClassesDataGrid from './ClassesDataGrid';
+import ManagersDataGrid from './ManagersDataGrid';
+import Footer from '../Footer';
 
-export default class AdminPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const AdminPage = () => (
+  <div>
+    <ClassesDataGrid />
+    <ManagersDataGrid />
+    <Footer />
+  </div>
+);
 
-    render() {
-        return (
-            <div>
-                <ClassesDataGrid />
-                <ManagersDataGrid />
-                <Footer />
-            </div>
-        );
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default AdminPage;

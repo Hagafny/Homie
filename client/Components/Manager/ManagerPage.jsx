@@ -1,32 +1,12 @@
 import React from 'react';
-import AssignmentsDataGrid from './AssignmentsDataGrid.jsx'
-import CoursesDataGrid from './CoursesDataGrid.jsx'
+import AssignmentsDataGrid from './AssignmentsDataGrid';
+import CoursesDataGrid from './CoursesDataGrid';
 
-export default class ManagerPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const ManagerPage = ({ classIds }) => (
+  <div>
+    <AssignmentsDataGrid classIds={classIds} />
+    <CoursesDataGrid classIds={classIds} />
+  </div>
+);
 
-    render() {
-        return (
-            <div>
-                <AssignmentsDataGrid classIds={this.props.classIds} />
-                <CoursesDataGrid classIds={this.props.classIds} />
-            </div>
-        );
-
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default ManagerPage;

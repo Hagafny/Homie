@@ -1,5 +1,4 @@
-const router = require('express').Router;
-const managers = router();
+const managers = require('express').Router();
 const handlers = require('./handlers');
 const authMiddleware = require('../../middleware/authMiddleware');
 
@@ -10,4 +9,4 @@ managers.post('/', handlers.save);
 managers.put('/', handlers.edit);
 managers.delete('/:id', handlers.remove);
 
-module.exports = managers; 
+module.exports = managers;

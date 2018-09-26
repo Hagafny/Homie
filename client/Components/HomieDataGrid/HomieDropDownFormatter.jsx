@@ -5,9 +5,9 @@ export default class HomieDropDownFormatter extends React.Component {
     return nextProps.value !== this.props.value;
   }
 
-  render()  {
+  render() {
     let value = this.props.value;
-    let option = this.props.options.filter((v) => {
+    let option = this.props.options.filter(v => {
       return v.value === value;
     })[0];
     if (!option) {
@@ -18,4 +18,4 @@ export default class HomieDropDownFormatter extends React.Component {
 
     return <div title={myValue}>{text}</div>;
   }
-};
+}

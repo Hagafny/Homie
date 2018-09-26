@@ -1,69 +1,43 @@
 const queryService = require('./queryService');
 const db = require('./../../pgConnection');
 
-let getClassesBasic = (classIds, cb) => {
-    let sql = queryService.getClassesBasic(classIds);
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const getClassesBasic = (classIds, cb) => {
+  const sql = queryService.getClassesBasic(classIds);
+  db.any(sql).then(cb);
+};
 
-let getClasses = (cb) => {
-    let sql = queryService.getClasses();
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const getClasses = cb => {
+  const sql = queryService.getClasses();
+  db.any(sql).then(cb);
+};
 
-let saveClass = (cls, cb) => {
-    let sql = queryService.saveClass();
-    let values = [
-        cls.name,
-        cls.starting_year,
-    ]
+const saveClass = (cls, cb) => {
+  const sql = queryService.saveClass();
+  const values = [cls.name, cls.starting_year];
 
-    db.one(sql, values)
-        .then((data) => {
-            cb(data.id);
-        })
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+  db.one(sql, values).then(data => {
+    cb(data.id);
+  });
+};
 
-let editClass = (cls, cb) => {
-    let sql = queryService.editClass(cls.id);
-    let values = [
-        cls.name,
-        cls.starting_year,
-    ];
+const editClass = (cls, cb) => {
+  const sql = queryService.editClass(cls.id);
+  const values = [cls.name, cls.starting_year];
 
-    db.none(sql, values)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+  db.none(sql, values).then(cb);
+};
 
-let deleteClass = (classId, cb) => {
-    let sql = queryService.deleteClass(classId);
-    db.any(sql)
-        .then(cb)
-        .catch(error => {
-            console.log("ERROR:", error);
-        });
-}
+const deleteClass = (classId, cb) => {
+  const sql = queryService.deleteClass(classId);
+  db.any(sql).then(cb);
+};
 
-let service = {
-    getClassesBasic: getClassesBasic,
-    getClasses: getClasses,
-    saveClass: saveClass,
-    editClass: editClass,
-    deleteClass: deleteClass
+const service = {
+  getClassesBasic,
+  getClasses,
+  saveClass,
+  editClass,
+  deleteClass
 };
 
 module.exports = service;
