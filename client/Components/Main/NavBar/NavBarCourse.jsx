@@ -1,17 +1,27 @@
 import React from 'react';
-import NavBarCourseActions from './NavBarCourseActions.jsx';
+import PropTypes from 'prop-types';
+import NavBarCourseActions from './NavBarCourseActions';
 
-const NavBarCourse = props => {
-  return (
-    <li>
-      <span className="dropdown-item">
-        <NavBarCourseActions {...props} />{' '}
-        <a target="_blank" href={props.url} style={{ textDecoration: 'none', color: 'black' }}>
-          {props.text}{' '}
-        </a>
-      </span>
-    </li>
-  );
+const NavBarCourse = ({ text, url, value }) => (
+  <li>
+    <span className="dropdown-item">
+      <NavBarCourseActions value={value} text={text} />
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={url}
+        style={{ textDecoration: 'none', color: 'black' }}
+      >
+        {text}
+      </a>
+    </span>
+  </li>
+);
+
+NavBarCourse.propTypes = {
+  text: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
 };
 
 export default NavBarCourse;

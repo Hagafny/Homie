@@ -1,8 +1,28 @@
 import React from 'react';
 import axios from 'axios';
-import AssignmentPage from './AssignmentPage.jsx';
-import localStorageService from './../../Scripts/localStorageService.js';
-import countdownTick from './../../Scripts/countdownTick.js';
+import AssignmentPage from './AssignmentPage';
+import localStorageService from '../../Scripts/localStorageService';
+import countdownTick from '../../Scripts/countdownTick';
+
+function assignmentSorter(a, b) {
+  if (a.viewState.done !== b.viewState.done) {
+    return a.viewState.done ? 1 : -1;
+  }
+
+  return a.end_date - b.end_date;
+}
+
+function getTimezonedDate(dateString) {
+  if (typeof dateString === 'object') return dateString;
+
+  const endDate = new Date(dateString);
+
+  if (location.hostname !== 'localhost') {
+    endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
+  }
+
+  return endDate;
+}
 
 export default class AssignmentsPageContainer extends React.Component {
   constructor(props) {
@@ -36,20 +56,21 @@ export default class AssignmentsPageContainer extends React.Component {
 
     this.loadCourses().then(courses => {
       this.setState({
-        courses: courses,
+        courses,
         allCourses: courses
       });
     });
   }
 
-  performClientSideModifications(assignments) {
-    let filteredClasses = localStorageService.getFilteredList();
-
-    assignments = assignments || this.state.assignments;
+  performClientSideModifications(asgnments) {
+    const filteredClasses = localStorageService.getFilteredList();
+    let { assignments } = this.state;
+    assignments = asgnments || assignments;
     assignments = assignments.filter(assignment => !filteredClasses.includes(assignment.course_id));
 
     assignments = localStorageService.refreshViewState(assignments);
-    assignments = assignments.map(assignment => {
+    assignments = assignments.map(asgnmt => {
+      const assignment = Object.assign({}, asgnmt);
       assignment.end_date = getTimezonedDate(assignment.end_date);
       return assignment;
     });
@@ -59,18 +80,18 @@ export default class AssignmentsPageContainer extends React.Component {
   }
 
   tick() {
-    let assignments = this.state.assignments;
+    const { assignments } = this.state;
 
-    let assignmentsLength = assignments.length;
-    for (let i = 0; i < assignmentsLength; i++) {
+    const assignmentsLength = assignments.length;
+    for (let i = 0; i < assignmentsLength; i += 1) {
       if (!assignments[i])
-        //Validators
+        // Validators
         continue;
 
-      let dateUntilEnd = countdownTick(assignments[i].end_date);
+      const dateUntilEnd = countdownTick(assignments[i].end_date);
 
       if (!dateUntilEnd) {
-        //Removing assignment when it's done.
+        // Removing assignment when it's done.
         assignments.splice(i, 1);
       }
 
@@ -82,7 +103,8 @@ export default class AssignmentsPageContainer extends React.Component {
 
   loadCourses() {
     return new Promise((resolve, reject) => {
-      let classIds = this.props.match.params.classIds || 1;
+      let { classIds } = this.props.match.params;
+      classIds = classIds || 1;
       axios
         .get(`/api/courses/basic/${classIds}`)
         .then(coursesRes => {
@@ -109,7 +131,7 @@ export default class AssignmentsPageContainer extends React.Component {
   }
 
   loadAssignmentsAndSetState() {
-    return new Promise(resolve => {
+    return new Promise(() => {
       this.loadAssignments().then(assignments => {
         this.setState({ assignments });
       });
@@ -118,11 +140,11 @@ export default class AssignmentsPageContainer extends React.Component {
 
   filterCourse(courseId) {
     localStorageService.addToFilteredList(courseId, () => {
-      let filteredClasses = localStorageService.getFilteredList();
-      let assignments = this.state.assignments.filter(
+      const filteredClasses = localStorageService.getFilteredList();
+      const assignments = this.state.assignments.filter(
         assignment => !filteredClasses.includes(assignment.course_id)
       );
-      let courses = this.state.courses.filter(course => !filteredClasses.includes(course.id));
+      const courses = this.state.courses.filter(course => !filteredClasses.includes(course.id));
 
       this.setState({
         assignments,
@@ -133,9 +155,10 @@ export default class AssignmentsPageContainer extends React.Component {
 
   resetCourses() {
     localStorageService.resetFilteredList();
+    const { allAssignments, allCourses } = this.state;
     this.setState({
-      assignments: this.state.allAssignments,
-      courses: this.state.allCourses
+      assignments: allAssignments,
+      courses: allCourses
     });
   }
 
@@ -160,24 +183,4 @@ export default class AssignmentsPageContainer extends React.Component {
       />
     );
   }
-}
-
-function assignmentSorter(a, b) {
-  if (a.viewState.done != b.viewState.done) {
-    return a.viewState.done ? 1 : -1;
-  } else {
-    return a.end_date - b.end_date;
-  }
-}
-
-function getTimezonedDate(dateString) {
-  if (typeof dateString == 'object') return dateString;
-
-  let endDate = new Date(dateString);
-
-  if (location.hostname != 'localhost') {
-    endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
-  }
-
-  return endDate;
 }

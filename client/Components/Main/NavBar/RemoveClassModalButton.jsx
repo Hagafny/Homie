@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class RemoveClassModalButton extends React.Component {
   constructor(props) {
@@ -7,8 +8,10 @@ export default class RemoveClassModalButton extends React.Component {
   }
 
   onClick() {
-    let { id, title } = this.props;
-    id = id.substr(1); //remove the precedding 'c'
+    let { id } = this.props;
+    const { title } = this.props;
+
+    id = id.substr(1); // Remove the precedding 'c'
     $('.removeClassNameFiller').text(title);
     $('#removeClassModal')
       .attr('data-courseId', id)
@@ -23,3 +26,8 @@ export default class RemoveClassModalButton extends React.Component {
     );
   }
 }
+
+RemoveClassModalButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
+};

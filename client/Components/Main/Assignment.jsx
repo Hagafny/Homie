@@ -1,6 +1,6 @@
 import React from 'react';
-import AssignmentHeader from './AssignmentHeader.jsx';
-import AssignmentBody from './AssignmentBody.jsx';
+import AssignmentHeader from './AssignmentHeader';
+import AssignmentBody from './AssignmentBody';
 
 export default class Assignment extends React.Component {
   constructor(props) {

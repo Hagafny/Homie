@@ -1,19 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import FlipMove from 'react-flip-move';
-import Assignment from './Assignment.jsx';
+import Assignment from './Assignment';
 
 const AssignmentList = props => {
-  let assignments = props.assignments.map(assignment => {
-    return (
-      <Assignment
-        data={assignment}
-        key={assignment.id}
-        onDoneChecked={props.onDoneChecked}
-        onShowCallback={props.onShowCallback}
-        options={props.options}
-      />
-    );
-  });
+
+  let { assignments } = props;
+  const { onDoneChecked, onShowCallback, options } = props;
+  assignments = assignments.map(assignment => (
+    <Assignment
+      data={assignment}
+      key={assignment.id}
+      onDoneChecked={onDoneChecked}
+      onShowCallback={onShowCallback}
+      options={options}
+    />
+  ));
+
   return (
     <div>
       <div className="container assignmentList" role="tablist">
@@ -24,5 +27,7 @@ const AssignmentList = props => {
     </div>
   );
 };
+
+AssignmentList.propTypes = {};
 
 export default AssignmentList;

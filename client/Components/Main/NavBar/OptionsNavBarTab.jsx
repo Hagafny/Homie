@@ -1,30 +1,27 @@
 import React from 'react';
-// import SoundOptionToggle from './SoundOptionToggle.jsx';
-import DateOptionToggle from './DateOptionToggle.jsx';
-import TimeOptionToggle from './TimeOptionToggle.jsx';
+import PropTypes from 'prop-types';
+import DateOptionToggle from './DateOptionToggle';
+import TimeOptionToggle from './TimeOptionToggle';
 
 export default class OptionsNavBarTab extends React.Component {
   constructor(props) {
     super(props);
     this.onDateOptionSelect = this.onDateOptionSelect.bind(this);
     this.onTimeOptionSelect = this.onTimeOptionSelect.bind(this);
-    this.onSoundOptionSelect = this.onSoundOptionSelect.bind(this);
   }
 
   onDateOptionSelect(value) {
-    this.props.changeOptions('date', value);
+    const { changeOptions } = this.props;
+    changeOptions('date', value);
   }
 
   onTimeOptionSelect(value) {
-    this.props.changeOptions('time', value);
-  }
-
-  onSoundOptionSelect(value) {
-    this.props.changeOptions('sound', value);
+    const { changeOptions } = this.props;
+    changeOptions('time', value);
   }
 
   render() {
-    const { date, time, sound } = this.props.options;
+    const { options } = this.props;
 
     return (
       <li className="nav-item active dropdown">
@@ -34,15 +31,27 @@ export default class OptionsNavBarTab extends React.Component {
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          href="#nothing"
         >
           Options
         </a>
         <ul className="dropdown-menu" aria-labelledby="optionsDropDown">
-          {/* <SoundOptionToggle selectedSound={sound} onSoundOptionSelect={this.onSoundOptionSelect} /> */}
-          <DateOptionToggle selectedDate={date} onDateOptionSelect={this.onDateOptionSelect} />
-          <TimeOptionToggle selectedTime={time} onTimeOptionSelect={this.onTimeOptionSelect} />
+          <DateOptionToggle
+            selectedDate={options.date}
+            onDateOptionSelect={this.onDateOptionSelect}
+          />
+          <TimeOptionToggle
+            selectedTime={options.time}
+            onTimeOptionSelect={this.onTimeOptionSelect}
+          />
         </ul>
       </li>
     );
   }
 }
+
+OptionsNavBarTab.propTypes = {
+  changeOptions: PropTypes.func.isRequired,
+  options: PropTypes.shape({ date: PropTypes.number.isRequired, time: PropTypes.number.isRequired })
+    .isRequired
+};

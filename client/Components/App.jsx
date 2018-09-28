@@ -7,9 +7,9 @@ import LoginPage from './LoginPage';
 import { isAuthenticated } from '../Scripts/auth';
 
 const PrivateRoute = data => {
-  let classIds = data.computedMatch.params.classIds ? data.computedMatch.params.classIds : '0';
+  const classIds = data.computedMatch.params.classIds ? data.computedMatch.params.classIds : '0';
 
-  let Component = data.component;
+  const Component = data.component;
   return (
     <Route
       render={props =>
@@ -28,17 +28,14 @@ const PrivateRoute = data => {
   );
 };
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Switch>
-        <Route exact path="/" render={() => <Redirect to="/class/1" />} />
+const App = () => (
+  <Switch>
+    <Route exact path="/" render={() => <Redirect to="/class/1" />} />
+    <PrivateRoute path="/manager/:classIds" component={ManagerPage} />
+    <PrivateRoute path="/admin" component={AdminPage} />
+    <Route path="/class/:classIds" component={AssignmentPageContainer} />
+    <Route path="/login/:classIds" component={LoginPage} />
+  </Switch>
+);
 
-        <PrivateRoute path="/manager/:classIds" component={ManagerPage} />
-        <PrivateRoute path="/admin" component={AdminPage} />
-        <Route path="/class/:classIds" component={AssignmentPageContainer} />
-        <Route path="/login/:classIds" component={LoginPage} />
-      </Switch>
-    );
-  }
-}
+export default App;

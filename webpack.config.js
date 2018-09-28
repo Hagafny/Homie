@@ -21,7 +21,10 @@ const ProvidePlugin = new webpack.ProvidePlugin({
 });
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './client/index.jsx',
+  resolve: {
+    extensions: ['.wasm', '.mjs', '.js', '.jsx', '.json']
+  },
   output: {
     path: path.resolve('dist'),
     filename: 'app.js'

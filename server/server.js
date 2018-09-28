@@ -25,7 +25,6 @@ app.use((err, req, res) => {
   //   return;
   // }
 
-  // logger.error(err.stack);
   res.status(500).send('Error');
 });
 

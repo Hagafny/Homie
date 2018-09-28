@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Resource = ({ url, prefix, img, children }) => {
   if (!url) return false;
@@ -15,6 +16,13 @@ const Resource = ({ url, prefix, img, children }) => {
       </span>
     </div>
   );
+};
+
+Resource.propTypes = {
+  url: PropTypes.string.isRequired,
+  prefix: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired
 };
 
 export default Resource;

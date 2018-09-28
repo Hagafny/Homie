@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CountdownTile from './CountdownTile';
 
 const Countdown = ({ countdown }) => {
@@ -33,6 +34,12 @@ const Countdown = ({ countdown }) => {
   ));
 
   return <div className="countdown">{tiles}</div>;
+};
+
+Countdown.propTypes = {
+  countdown: PropTypes.arrayOf(
+    PropTypes.shape({ number: PropTypes.number.isRequired, title: PropTypes.string.isRequired })
+  ).isRequired
 };
 
 export default Countdown;

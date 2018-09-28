@@ -1,6 +1,6 @@
 import React from 'react';
 import Resource from './Resource';
-import '../../Scripts/includes_polyfill';
+// import '../../Scripts/includes_polyfill';
 
 const pdf = require(`./../../images/pdf.png`);
 const winzip = require(`./../../images/winzip.png`);

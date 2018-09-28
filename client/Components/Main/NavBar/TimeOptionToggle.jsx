@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MultiToggle from 'react-multi-toggle';
 
 const timeOptions = [
@@ -11,19 +12,22 @@ const timeOptions = [
     value: 2
   }
 ];
-const TimeOptionToggle = props => {
-  return (
-    <li>
-      <span>
-        <MultiToggle
-          options={timeOptions}
-          selectedOption={props.selectedTime}
-          onSelectOption={props.onTimeOptionSelect}
-          label="Time Format:"
-        />
-      </span>
-    </li>
-  );
+const TimeOptionToggle = ({ selectedTime, onTimeOptionSelect }) => (
+  <li>
+    <span>
+      <MultiToggle
+        options={timeOptions}
+        selectedOption={selectedTime}
+        onSelectOption={onTimeOptionSelect}
+        label="Time Format:"
+      />
+    </span>
+  </li>
+);
+
+TimeOptionToggle.propTypes = {
+  selectedTime: PropTypes.number.isRequired,
+  onTimeOptionSelect: PropTypes.func.isRequired
 };
 
 export default TimeOptionToggle;

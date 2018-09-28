@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MultiToggle from 'react-multi-toggle';
 
 const dateOptions = [
@@ -11,19 +12,22 @@ const dateOptions = [
     value: 2
   }
 ];
-const DateOptionToggle = props => {
-  return (
-    <li>
-      <span>
-        <MultiToggle
-          options={dateOptions}
-          selectedOption={props.selectedDate}
-          onSelectOption={props.onDateOptionSelect}
-          label="Date Format:"
-        />
-      </span>
-    </li>
-  );
+const DateOptionToggle = ({ selectedDate, onDateOptionSelect }) => (
+  <li>
+    <span>
+      <MultiToggle
+        options={dateOptions}
+        selectedOption={selectedDate}
+        onSelectOption={onDateOptionSelect}
+        label="Date Format:"
+      />
+    </span>
+  </li>
+);
+
+DateOptionToggle.propTypes = {
+  selectedDate: PropTypes.number.isRequired,
+  onDateOptionSelect: PropTypes.func.isRequired
 };
 
 export default DateOptionToggle;

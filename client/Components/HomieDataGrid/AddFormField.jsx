@@ -13,7 +13,7 @@ const AddFormField = props => {
         dropDownName={props.data.name}
       />
     );
-  else if (props.data.type == 'textarea')
+  else if (props.data.type === 'textarea')
     selectedInput = (
       <AddFormTextAreaInput name={props.data.key} handleInputChange={props.handleInputChange} />
     );

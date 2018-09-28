@@ -1,5 +1,7 @@
 import React from 'react';
+
 import DueDate from './DueDate.jsx';
+
 export default class AssignmentTitle extends React.Component {
   constructor(props) {
     super(props);
