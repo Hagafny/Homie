@@ -24,15 +24,23 @@ const editManager = (manager, cb) => {
 
 const deleteManager = (managerId, cb) => {
   const sql = queryService.deleteManager(managerId);
-  db.any(sql).then(cb);
+  db.any(sql)
+    .then(cb)
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const getManagerByEmailAndPassword = (email, password, cb) => {
   const sql = queryService.getManagerByEmailAndPassword(email, password);
 
-  db.one(sql).then(data => {
-    cb(null, data);
-  });
+  db.one(sql)
+    .then(data => {
+      cb(null, data);
+    })
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const service = {

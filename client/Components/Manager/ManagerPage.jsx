@@ -6,7 +6,7 @@ import CoursesDataGrid from './CoursesDataGrid';
 const ManagerPage = ({ classIds }) => (
   <div>
     <AssignmentsDataGrid classIds={classIds} />
-    <CoursesDataGrid classIds={classIds} />
+    {<CoursesDataGrid classIds={classIds} />}
   </div>
 );
 

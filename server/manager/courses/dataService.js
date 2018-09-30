@@ -3,12 +3,20 @@ const db = require('./../../pgConnection');
 
 const getCoursesBasic = (classIds, cb) => {
   const sql = queryService.getCoursesBasic(classIds);
-  db.any(sql).then(cb);
+  db.any(sql)
+    .then(cb)
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const getCourses = (classIds, cb) => {
   const sql = queryService.getCourses(classIds);
-  db.any(sql).then(cb);
+  db.any(sql)
+    .then(cb)
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const saveCourse = (course, cb) => {
@@ -24,9 +32,13 @@ const saveCourse = (course, cb) => {
     course.trello_id
   ];
 
-  db.one(sql, values).then(data => {
-    cb(data.id);
-  });
+  db.one(sql, values)
+    .then(data => {
+      cb(data.id);
+    })
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const editCourse = (course, cb) => {
@@ -41,12 +53,20 @@ const editCourse = (course, cb) => {
     course.trello_id
   ];
 
-  db.none(sql, values).then(cb);
+  db.none(sql, values)
+    .then(cb)
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const deleteCourse = (courseId, cb) => {
   const sql = queryService.deleteCourse(courseId);
-  db.any(sql).then(cb);
+  db.any(sql)
+    .then(cb)
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const service = {

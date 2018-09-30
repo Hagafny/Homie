@@ -1,7 +1,6 @@
 const { verifyLogin } = require('../../auth/logicService');
 
 const login = (req, res) => {
-  // TODO: Broken!! classIds comes from the other side as class_ids <- we need to fix it there!
   const { email, password, classIds } = req.body;
   verifyLogin(email, password, classIds, (err, authToken) => {
     if (err) {

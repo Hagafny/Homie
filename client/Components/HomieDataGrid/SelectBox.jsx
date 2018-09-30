@@ -15,7 +15,7 @@ const SelectBox = ({ options, name, handleInputChange, dropDownName }) => {
   return (
     <select className="form-control" name={name} onChange={handleInputChange}>
       <Option value="0">
-        Please choose
+        {'Please choose '}
         {dropDownName.toLowerCase()}
       </Option>
       {optns}
@@ -25,7 +25,15 @@ const SelectBox = ({ options, name, handleInputChange, dropDownName }) => {
 
 SelectBox.propTypes = {
   name: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired
+  handleInputChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  dropDownName: PropTypes.string.isRequired
 };
 
 export default SelectBox;

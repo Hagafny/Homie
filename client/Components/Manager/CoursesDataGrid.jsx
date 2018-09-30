@@ -4,9 +4,9 @@ import axios from 'axios';
 import HomieDataGrid from '../HomieDataGrid/HomieDataGrid';
 
 export default class CoursesDataGrid extends React.Component {
-  constructor({ props }) {
-    super(props);
-    const { classIds } = this.props;
+  constructor({ classIds }) {
+    super({ classIds });
+
     const isManagingASingleClass = parseInt(classIds.indexOf('&'), 10) === -1;
     this.state = {
       coursesGridData: this.getCoursesConfig(isManagingASingleClass),
@@ -100,7 +100,7 @@ export default class CoursesDataGrid extends React.Component {
     return config;
   }
 
-  static getClasses(classIds, cb) {
+  getClasses(classIds, cb) {
     axios.get(`/api/classes/basic/${classIds}`).then(res => {
       cb(res.data);
     });
@@ -108,9 +108,16 @@ export default class CoursesDataGrid extends React.Component {
 
   render() {
     const { showDataGrid, coursesGridData } = this.state;
-    const { gridName, endpoints, columns } = coursesGridData;
+    const { gridName, endpoints, columns, extraData } = coursesGridData;
     if (!showDataGrid) return false;
-    return <HomieDataGrid gridName={gridName} endpoints={endpoints} columns={columns} />;
+    return (
+      <HomieDataGrid
+        gridName={gridName}
+        endpoints={endpoints}
+        columns={columns}
+        extraData={extraData}
+      />
+    );
   }
 }
 

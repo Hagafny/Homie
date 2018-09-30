@@ -1,21 +1,33 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class HomieDropDownFormatter extends React.Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.value !== this.props.value;
+    const { value } = this.props;
+    return nextProps.value !== value;
   }
 
   render() {
-    let value = this.props.value;
-    let option = this.props.options.filter(v => {
-      return v.value === value;
-    })[0];
+    const { value, options } = this.props;
+    let option = options.filter(v => v.value === value)[0];
+
     if (!option) {
       option = value;
     }
-    let myValue = option.value || option;
-    let text = option.text;
+    const myValue = option.value || option;
+    const { text } = option;
 
     return <div title={myValue}>{text}</div>;
   }
 }
+
+HomieDropDownFormatter.propTypes = {
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  value: PropTypes.string.isRequired
+};

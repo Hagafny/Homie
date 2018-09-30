@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import HomieDataGrid from '../HomieDataGrid/HomieDataGrid';
 
+const getCourses = function getCourses(classIds, cb) {
+  axios.get(`/api/courses/basic/${classIds}`).then(res => {
+    cb(res.data);
+  });
+};
+
 export default class AssignmentsDataGrid extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +20,7 @@ export default class AssignmentsDataGrid extends React.Component {
 
   componentDidMount() {
     const { classIds } = this.props;
-    this.getCourses(classIds, courses => {
+    getCourses(classIds, courses => {
       this.setState(prevState => {
         const data = prevState;
         data.assignmentGridData.columns[0].dropdownOptions = courses;
@@ -71,14 +77,10 @@ export default class AssignmentsDataGrid extends React.Component {
     };
   }
 
-  static getCourses(classIds, cb) {
-    axios.get(`/api/courses/basic/${classIds}`).then(res => {
-      cb(res.data);
-    });
-  }
-
   render() {
-    const { showDataGrid, gridName, endpoints, columns } = this.state;
+    const { showDataGrid, assignmentGridData } = this.state;
+    const { gridName, endpoints, columns } = assignmentGridData;
+
     if (!showDataGrid) return false;
 
     return <HomieDataGrid gridName={gridName} endpoints={endpoints} columns={columns} />;

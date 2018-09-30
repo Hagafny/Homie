@@ -11,7 +11,7 @@ import './css/font-awesome.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import App from './Components/App.jsx';
+import App from './Components/App';
 
 require('es6-promise').polyfill();
 

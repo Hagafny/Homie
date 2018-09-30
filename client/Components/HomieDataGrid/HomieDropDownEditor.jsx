@@ -1,11 +1,12 @@
 import React from 'react';
+
 const {
   editors: { EditorBase }
 } = require('react-data-grid');
-import ReactDOM from 'react-dom';
+
 export default class HomieDropDownEditor extends EditorBase {
   getInputNode() {
-    return ReactDOM.findDOMNode(this);
+    return this.node;
   }
 
   onClick() {
@@ -23,6 +24,9 @@ export default class HomieDropDownEditor extends EditorBase {
         defaultValue={this.props.value}
         onBlur={this.props.onBlur}
         onChange={this.onChange}
+        ref={node => {
+          this.node = node;
+        }}
       >
         {this.renderOptions()}
       </select>
@@ -30,7 +34,7 @@ export default class HomieDropDownEditor extends EditorBase {
   }
 
   renderOptions() {
-    let options = [];
+    const options = [];
     this.props.options.forEach(name => {
       options.push(
         <option key={name.value} value={name.value}>

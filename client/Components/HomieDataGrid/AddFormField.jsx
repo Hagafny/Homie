@@ -2,67 +2,79 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SelectBox from './SelectBox';
 
-const AddFormField = props => {
+const AddFormField = ({ data, handleInputChange }) => {
   let selectedInput;
 
-  if (props.data.hasOwnProperty('dropdownOptions'))
+  if (Object.prototype.hasOwnProperty.call(data, 'dropdownOptions'))
     selectedInput = (
       <AddFormSelectInput
-        name={props.data.key}
-        handleInputChange={props.handleInputChange}
-        options={props.data.dropdownOptions}
-        dropDownName={props.data.name}
+        name={data.key}
+        handleInputChange={handleInputChange}
+        options={data.dropdownOptions}
+        dropDownName={data.name}
       />
     );
-  else if (props.data.type === 'textarea')
-    selectedInput = (
-      <AddFormTextAreaInput name={props.data.key} handleInputChange={props.handleInputChange} />
-    );
+  else if (data.type === 'textarea')
+    selectedInput = <AddFormTextAreaInput name={data.key} handleInputChange={handleInputChange} />;
   else
     selectedInput = (
       <AddFormTextInput
-        name={props.data.key}
-        handleInputChange={props.handleInputChange}
-        type={props.data.type ? props.data.type : 'text'}
+        name={data.key}
+        handleInputChange={handleInputChange}
+        type={data.type ? data.type : 'text'}
       />
     );
 
   return (
     <div className="form-group">
-      <label className="control-label" htmlFor={props.data.key}>
-        {props.data.name}:
+      <label className="control-label" id="s" htmlFor={data.key}>
+        {data.name}
+        {':'}
+
+        {selectedInput}
       </label>
-      {selectedInput}
     </div>
   );
 };
 
-const AddFormTextInput = props => {
-  return (
-    <input
-      type={props.type}
-      className="form-control"
-      name={props.name}
-      onChange={props.handleInputChange}
-    />
-  );
+const AddFormTextInput = ({ type, name, handleInputChange }) => (
+  <input type={type} className="form-control" name={name} onChange={handleInputChange} />
+);
+
+const AddFormTextAreaInput = ({ name, handleInputChange }) => (
+  <textarea className="form-control" name={name} onChange={handleInputChange} />
+);
+
+const AddFormSelectInput = ({ options, name, handleInputChange, dropDownName }) => (
+  <SelectBox
+    options={options}
+    name={name}
+    handleInputChange={handleInputChange}
+    dropDownName={dropDownName}
+  />
+);
+
+AddFormField.propTypes = {
+  data: PropTypes.shape().isRequired,
+  handleInputChange: PropTypes.func.isRequired
 };
 
-const AddFormTextAreaInput = props => {
-  return <textarea className="form-control" name={props.name} onChange={props.handleInputChange} />;
+AddFormTextInput.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired
 };
 
-const AddFormSelectInput = props => {
-  return (
-    <SelectBox
-      options={props.options}
-      name={props.name}
-      handleInputChange={props.handleInputChange}
-      dropDownName={props.dropDownName}
-    />
-  );
+AddFormTextAreaInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired
 };
 
-AddFormField.propTypes = {};
+AddFormSelectInput.propTypes = {
+  options: PropTypes.shape().isRequired,
+  name: PropTypes.string.isRequired,
+  dropDownName: PropTypes.string.isRequired,
+  handleInputChange: PropTypes.func.isRequired
+};
 
 export default AddFormField;

@@ -39,7 +39,7 @@ class LoginPage extends React.Component {
     data.password = data.password.trim();
 
     const { match } = this.props;
-    data.class_ids = match.params.classIds;
+    data.classIds = match.params.classIds;
 
     const config = {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
@@ -49,7 +49,7 @@ class LoginPage extends React.Component {
       .post(url, data, config)
       .then(response => {
         if (response.status === 200) {
-          const redirectionURL = data.class_ids === 0 ? '/admin' : `/manager/${data.class_ids}`;
+          const redirectionURL = data.classIds === 0 ? '/admin' : `/manager/${data.classIds}`;
           window.location.replace(redirectionURL);
         }
       })

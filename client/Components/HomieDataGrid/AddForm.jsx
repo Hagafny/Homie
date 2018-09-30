@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AddFormField from './AddFormField';
 
 const AddForm = ({ fields, handleInputChange, gridName, handleSubmit }) => {
@@ -23,7 +24,7 @@ const AddForm = ({ fields, handleInputChange, gridName, handleSubmit }) => {
               <span className="sr-only">Close</span>
             </button>
             <h4 className="modal-title">
-              Add
+              {'Add'}
               {gridName}
             </h4>
           </div>
@@ -39,6 +40,18 @@ const AddForm = ({ fields, handleInputChange, gridName, handleSubmit }) => {
       </div>
     </div>
   );
+};
+
+AddForm.propTypes = {
+  fields: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  gridName: PropTypes.string.isRequired
 };
 
 export default AddForm;

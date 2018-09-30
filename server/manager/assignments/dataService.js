@@ -16,9 +16,13 @@ const saveAssignment = (assignment, cb) => {
     assignment.moodleId,
     assignment.information
   ];
-  db.one(sql, values).then(data => {
-    cb(data.id);
-  });
+  db.one(sql, values)
+    .then(data => {
+      cb(data.id);
+    })
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const editAssignment = (assignment, cb) => {
@@ -31,12 +35,20 @@ const editAssignment = (assignment, cb) => {
     assignment.moodleId,
     assignment.information
   ];
-  db.none(sql, values).then(cb);
+  db.none(sql, values)
+    .then(cb)
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const deleteAssignment = (assignmentId, cb) => {
   const sql = queryService.deleteAssignment(assignmentId);
-  db.any(sql).then(cb);
+  db.any(sql)
+    .then(cb)
+    .catch(error => {
+      cb(error);
+    });
 };
 
 const service = {

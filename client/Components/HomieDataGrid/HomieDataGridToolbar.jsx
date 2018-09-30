@@ -1,5 +1,7 @@
 import React from 'react';
-import './../../css/react-data-grid-toolbar.css';
+import PropTypes from 'prop-types';
+import '../../css/react-data-grid-toolbar.css';
+
 export default class HomieDataGridToolbar extends React.Component {
   constructor(props) {
     super(props);
@@ -7,20 +9,25 @@ export default class HomieDataGridToolbar extends React.Component {
     this.onAddRow = this.onAddRow.bind(this);
     this.renderAddRowButton = this.renderAddRowButton.bind(this);
   }
+
   onAddRow() {
-    if (this.props.onAddRow !== null && this.props.onAddRow instanceof Function) {
-      this.props.onAddRow({ newRowIndex: this.props.numberOfRows });
+    const { onAddRow, numberOfRows } = this.props;
+    if (onAddRow !== null && onAddRow instanceof Function) {
+      onAddRow({ newRowIndex: numberOfRows });
     }
   }
 
   renderAddRowButton() {
-    if (this.props.onAddRow) {
+    const { onAddRow, addRowButtonText } = this.props;
+    if (onAddRow) {
       return (
         <button type="button" className="btn" onClick={this.onAddRow}>
-          {this.props.addRowButtonText}
+          {addRowButtonText}
         </button>
       );
     }
+
+    return '';
   }
 
   render() {
@@ -31,3 +38,9 @@ export default class HomieDataGridToolbar extends React.Component {
     );
   }
 }
+
+HomieDataGridToolbar.propTypes = {
+  addRowButtonText: PropTypes.string.isRequired,
+  numberOfRows: PropTypes.number.isRequired,
+  onAddRow: PropTypes.func.isRequired
+};
