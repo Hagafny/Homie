@@ -103,7 +103,7 @@ export default class AssignmentListContainer extends React.Component {
 
     assignments = localStorageService.refreshViewState(assignments);
     assignments = assignments.map(asgmnt => {
-      const assignment = Object.assign({}, asgmnt);
+      const assignment = asgmnt;
       assignment.end_date = getTimezonedDate(assignment.end_date);
       return assignment;
     });

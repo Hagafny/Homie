@@ -5,5 +5,8 @@
     "browser": true,
     "es6": true,
     "jquery": true
+  },
+  "rules": {
+    "linebreak-style": ["error", "windows"]
   }
 }

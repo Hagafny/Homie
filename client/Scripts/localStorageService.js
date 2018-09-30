@@ -96,7 +96,7 @@ const setupAssignmentsState = (assignments, cb) => {
 function refreshViewState(assignments) {
   const assignmentsState = getAssignmentsState();
   return assignments.map(asgmnt => {
-    const assignment = Object.assign({}, asgmnt);
+    const assignment = asgmnt;
     assignment.viewState = assignmentsState[assignment.id];
     return assignment;
   });

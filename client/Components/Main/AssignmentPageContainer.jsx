@@ -69,8 +69,8 @@ export default class AssignmentsPageContainer extends React.Component {
     assignments = asgnments || assignments;
     assignments = assignments.filter(assignment => !filteredClasses.includes(assignment.course_id));
     assignments = localStorageService.refreshViewState(assignments);
-    assignments = assignments.map(asgnmt => {
-      const assignment = Object.assign({}, asgnmt);
+    assignments = assignments.map(asgmnt => {
+      const assignment = asgmnt;
       assignment.end_date = getTimezonedDate(assignment.end_date);
       return assignment;
     });

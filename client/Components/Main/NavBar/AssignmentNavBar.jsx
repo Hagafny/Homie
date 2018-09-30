@@ -33,7 +33,7 @@ const AssignmentNavBar = ({ courses, options, resetCourses, changeOptions }) => 
             alt=""
           />
           <a className="noStyle" href={homePageUrl} target="_blank" rel="noopener noreferrer">
-            Homie
+            {'Homie'}
           </a>
         </span>
 

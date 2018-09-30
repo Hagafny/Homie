@@ -12147,7 +12147,7 @@ var setupAssignmentsState = function setupAssignmentsState(assignments, cb) {
 function refreshViewState(assignments) {
   var assignmentsState = getAssignmentsState();
   return assignments.map(function (asgmnt) {
-    var assignment = Object.assign({}, asgmnt);
+    var assignment = asgmnt;
     assignment.viewState = assignmentsState[assignment.id];
     return assignment;
   });
@@ -26408,7 +26408,7 @@ var AssignmentListContainer = function (_React$Component) {
 
       assignments = _localStorageService2.default.refreshViewState(assignments);
       assignments = assignments.map(function (asgmnt) {
-        var assignment = Object.assign({}, asgmnt);
+        var assignment = asgmnt;
         assignment.end_date = getTimezonedDate(assignment.end_date);
         return assignment;
       });
@@ -26650,8 +26650,8 @@ var AssignmentsPageContainer = function (_React$Component) {
         return !filteredClasses.includes(assignment.course_id);
       });
       assignments = _localStorageService2.default.refreshViewState(assignments);
-      assignments = assignments.map(function (asgnmt) {
-        var assignment = Object.assign({}, asgnmt);
+      assignments = assignments.map(function (asgmnt) {
+        var assignment = asgmnt;
         assignment.end_date = getTimezonedDate(assignment.end_date);
         return assignment;
       });
