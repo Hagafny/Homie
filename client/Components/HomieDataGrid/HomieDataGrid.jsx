@@ -34,18 +34,19 @@ export default class HomieDataGrid extends React.Component {
 
     return column;
   }
+
   getColumns() {
-    //Map them from client props
+    // Map them from client props
     let dataGridColumns = this.props.columns.map(this.columnMapper);
 
-    //Add the ID column ad the beginning
+    // Add the ID column ad the beginning
     dataGridColumns.unshift({
       key: 'id',
       name: 'ID',
       width: 60
     });
 
-    //Add the delete column at the end
+    // Add the delete column at the end
     dataGridColumns.push({
       name: 'Delete',
       key: '$delete',
@@ -61,6 +62,7 @@ export default class HomieDataGrid extends React.Component {
 
     return dataGridColumns;
   }
+
   getRowAt(i) {
     return this.state.rows[i];
   }
@@ -69,19 +71,19 @@ export default class HomieDataGrid extends React.Component {
     return this.state.rows.length;
   }
 
-  //Get Items ------------------------------------
+  // Get Items ------------------------------------
 
   fetchItems() {
-    let fetchItemsURl = this.props.endpoints.fetchItems;
+    const fetchItemsURl = this.props.endpoints.fetchItems;
     axios.get(fetchItemsURl).then(itemsRes => {
-      let items = itemsRes.data;
+      const items = itemsRes.data;
       this.setState({ rows: items });
     });
   }
 
-  //Add Item -------------------------------------
+  // Add Item -------------------------------------
 
-  handleAddRow({ newRowIndex }) {
+  handleAddRow() {
     $(`#add${this.props.gridName}Modal`).modal('show');
   }
 
@@ -94,16 +96,17 @@ export default class HomieDataGrid extends React.Component {
     if (typeof cb === typeof Function) cb();
   }
 
-  saveOnServer(item, cb) {
-    var saveItemURL = this.props.endpoints.saveItem;
+  saveOnServer(itm, cb) {
+    const saveItemURL = this.props.endpoints.saveItem;
+    let item = null;
     if (this.props.hasOwnProperty('extraData') && this.props.extraData.hasOwnProperty('saveItem')) {
-      let extraData = this.props.extraData.saveItem;
-      item = update(item, { $merge: extraData });
+      const extraData = this.props.extraData.saveItem;
+      item = update(itm, { $merge: extraData });
     }
 
-    var data = JSON.stringify(item);
+    const data = JSON.stringify(item);
 
-    var config = {
+    const config = {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
     };
 
@@ -116,18 +119,20 @@ export default class HomieDataGrid extends React.Component {
   }
 
   showNewItemOnGrid(item) {
-    let rows = this.state.rows.slice();
+    let { rows } = this.state;
+    rows = rows.slice();
     rows = update(rows, { $push: [item] });
     this.setState({ rows });
   }
 
-  //Edit Item ------------------------------------
+  // Edit Item ------------------------------------
   handleGridRowsUpdated({ fromRow, toRow, updated }) {
-    let rows = this.state.rows.slice();
+    let { rows } = this.state;
+    rows = rows.slice();
 
-    for (let i = fromRow; i <= toRow; i++) {
-      let rowToUpdate = rows[i];
-      let updatedRow = update(rowToUpdate, { $merge: updated });
+    for (let i = fromRow; i <= toRow; i += 1) {
+      const rowToUpdate = rows[i];
+      const updatedRow = update(rowToUpdate, { $merge: updated });
       this.editItem(updatedRow, () => {});
 
       rows[i] = updatedRow;
@@ -136,16 +141,17 @@ export default class HomieDataGrid extends React.Component {
     this.setState({ rows });
   }
 
-  editItem(item, cb) {
-    var editItemURL = this.props.endpoints.editItem;
-    var data = JSON.stringify(item);
-
+  editItem(itm, cb) {
+    const { endpoints } = this.props;
+    const editItemURL = endpoints.editItem;
+    const data = JSON.stringify(item);
+    let item = null;
     if (this.props.hasOwnProperty('extraData') && this.props.extraData.hasOwnProperty('editItem')) {
       let extraData = this.props.extraData.editItem;
-      item = update(item, { $merge: extraData });
+      item = update(itm, { $merge: extraData });
     }
 
-    var config = {
+    const config = {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
     };
 
@@ -154,7 +160,7 @@ export default class HomieDataGrid extends React.Component {
     });
   }
 
-  //Delete Item ------------------------------------
+  // Delete Item ------------------------------------
 
   deleteRow(id) {
     this.removeRowFromServer(id, () => {
@@ -163,26 +169,27 @@ export default class HomieDataGrid extends React.Component {
   }
 
   removeRowFromServer(id, cb) {
-    var deleteItemURL = `${this.props.endpoints.deleteItem}${id}`;
+    const { endpoints } = this.props;
+    const deleteItemURL = `${endpoints.deleteItem}${id}`;
     axios.delete(deleteItemURL).then(response => {
-      if (response.data.status == 200) cb();
+      if (parseInt(response.data.status, 10) === 200) cb();
     });
   }
 
   removeRowFromGrid(id) {
     this.getRowIndexById(id, rowIndex => {
-      let rows = this.state.rows;
+      const { rows } = this.state;
       rows.splice(rowIndex, 1);
       this.setState({ rows });
     });
   }
 
   getRowIndexById(id, cb) {
-    let rows = this.state.rows;
-    let rowCount = this.getSize();
+    const { rows } = this.state;
+    const rowCount = this.getSize();
     let found = false;
-    for (let i = 0; i < rowCount; i++) {
-      if (!found && rows[i].id == id) {
+    for (let i = 0; i < rowCount; i += 1) {
+      if (!found && rows[i].id === id) {
         found = true;
         cb(i);
       }

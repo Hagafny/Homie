@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import HomieDataGrid from '../HomieDataGrid/HomieDataGrid';
 
@@ -20,10 +21,12 @@ export default class CoursesDataGrid extends React.Component {
     if (isManagingASingleClass) return;
 
     this.getClasses(classIds, classes => {
-      const data = this.state;
-      data.coursesGridData.columns[1].dropdownOptions = classes;
-      data.showDataGrid = true;
-      this.setState({ data });
+      this.setState(prevState => {
+        const data = prevState;
+        data.coursesGridData.columns[1].dropdownOptions = classes;
+        data.showDataGrid = true;
+        return data;
+      });
     });
   }
 
@@ -104,7 +107,13 @@ export default class CoursesDataGrid extends React.Component {
   }
 
   render() {
-    if (!this.state.showDataGrid) return false;
-    return <HomieDataGrid {...this.state.coursesGridData} />;
+    const { showDataGrid, coursesGridData } = this.state;
+    const { gridName, endpoints, columns } = coursesGridData;
+    if (!showDataGrid) return false;
+    return <HomieDataGrid gridName={gridName} endpoints={endpoints} columns={columns} />;
   }
 }
+
+CoursesDataGrid.propTypes = {
+  classIds: PropTypes.string.isRequired
+};

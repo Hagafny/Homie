@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SelectBox from './SelectBox';
 
 const AddFormField = props => {
@@ -61,5 +62,7 @@ const AddFormSelectInput = props => {
     />
   );
 };
+
+AddFormField.propTypes = {};
 
 export default AddFormField;

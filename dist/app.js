@@ -11560,17 +11560,17 @@ var HomieDataGrid = function (_React$Component) {
     value: function getColumns() {
       var _this2 = this;
 
-      //Map them from client props
+      // Map them from client props
       var dataGridColumns = this.props.columns.map(this.columnMapper);
 
-      //Add the ID column ad the beginning
+      // Add the ID column ad the beginning
       dataGridColumns.unshift({
         key: 'id',
         name: 'ID',
         width: 60
       });
 
-      //Add the delete column at the end
+      // Add the delete column at the end
       dataGridColumns.push({
         name: 'Delete',
         key: '$delete',
@@ -11606,7 +11606,7 @@ var HomieDataGrid = function (_React$Component) {
       return this.state.rows.length;
     }
 
-    //Get Items ------------------------------------
+    // Get Items ------------------------------------
 
   }, {
     key: 'fetchItems',
@@ -11620,13 +11620,11 @@ var HomieDataGrid = function (_React$Component) {
       });
     }
 
-    //Add Item -------------------------------------
+    // Add Item -------------------------------------
 
   }, {
     key: 'handleAddRow',
-    value: function handleAddRow(_ref2) {
-      var newRowIndex = _ref2.newRowIndex;
-
+    value: function handleAddRow() {
       $('#add' + this.props.gridName + 'Modal').modal('show');
     }
   }, {
@@ -11641,11 +11639,12 @@ var HomieDataGrid = function (_React$Component) {
     }
   }, {
     key: 'saveOnServer',
-    value: function saveOnServer(item, cb) {
+    value: function saveOnServer(itm, cb) {
       var saveItemURL = this.props.endpoints.saveItem;
+      var item = null;
       if (this.props.hasOwnProperty('extraData') && this.props.extraData.hasOwnProperty('saveItem')) {
         var extraData = this.props.extraData.saveItem;
-        item = (0, _reactAddonsUpdate2.default)(item, { $merge: extraData });
+        item = (0, _reactAddonsUpdate2.default)(itm, { $merge: extraData });
       }
 
       var data = JSON.stringify(item);
@@ -11664,23 +11663,26 @@ var HomieDataGrid = function (_React$Component) {
   }, {
     key: 'showNewItemOnGrid',
     value: function showNewItemOnGrid(item) {
-      var rows = this.state.rows.slice();
+      var rows = this.state.rows;
+
+      rows = rows.slice();
       rows = (0, _reactAddonsUpdate2.default)(rows, { $push: [item] });
       this.setState({ rows: rows });
     }
 
-    //Edit Item ------------------------------------
+    // Edit Item ------------------------------------
 
   }, {
     key: 'handleGridRowsUpdated',
-    value: function handleGridRowsUpdated(_ref3) {
-      var fromRow = _ref3.fromRow,
-          toRow = _ref3.toRow,
-          updated = _ref3.updated;
+    value: function handleGridRowsUpdated(_ref2) {
+      var fromRow = _ref2.fromRow,
+          toRow = _ref2.toRow,
+          updated = _ref2.updated;
+      var rows = this.state.rows;
 
-      var rows = this.state.rows.slice();
+      rows = rows.slice();
 
-      for (var i = fromRow; i <= toRow; i++) {
+      for (var i = fromRow; i <= toRow; i += 1) {
         var rowToUpdate = rows[i];
         var updatedRow = (0, _reactAddonsUpdate2.default)(rowToUpdate, { $merge: updated });
         this.editItem(updatedRow, function () {});
@@ -11692,13 +11694,15 @@ var HomieDataGrid = function (_React$Component) {
     }
   }, {
     key: 'editItem',
-    value: function editItem(item, cb) {
-      var editItemURL = this.props.endpoints.editItem;
-      var data = JSON.stringify(item);
+    value: function editItem(itm, cb) {
+      var endpoints = this.props.endpoints;
 
+      var editItemURL = endpoints.editItem;
+      var data = JSON.stringify(item);
+      var item = null;
       if (this.props.hasOwnProperty('extraData') && this.props.extraData.hasOwnProperty('editItem')) {
         var extraData = this.props.extraData.editItem;
-        item = (0, _reactAddonsUpdate2.default)(item, { $merge: extraData });
+        item = (0, _reactAddonsUpdate2.default)(itm, { $merge: extraData });
       }
 
       var config = {
@@ -11710,7 +11714,7 @@ var HomieDataGrid = function (_React$Component) {
       });
     }
 
-    //Delete Item ------------------------------------
+    // Delete Item ------------------------------------
 
   }, {
     key: 'deleteRow',
@@ -11724,9 +11728,11 @@ var HomieDataGrid = function (_React$Component) {
   }, {
     key: 'removeRowFromServer',
     value: function removeRowFromServer(id, cb) {
-      var deleteItemURL = '' + this.props.endpoints.deleteItem + id;
+      var endpoints = this.props.endpoints;
+
+      var deleteItemURL = '' + endpoints.deleteItem + id;
       _axios2.default.delete(deleteItemURL).then(function (response) {
-        if (response.data.status == 200) cb();
+        if (parseInt(response.data.status, 10) === 200) cb();
       });
     }
   }, {
@@ -11736,6 +11742,7 @@ var HomieDataGrid = function (_React$Component) {
 
       this.getRowIndexById(id, function (rowIndex) {
         var rows = _this5.state.rows;
+
         rows.splice(rowIndex, 1);
         _this5.setState({ rows: rows });
       });
@@ -11744,10 +11751,11 @@ var HomieDataGrid = function (_React$Component) {
     key: 'getRowIndexById',
     value: function getRowIndexById(id, cb) {
       var rows = this.state.rows;
+
       var rowCount = this.getSize();
       var found = false;
-      for (var i = 0; i < rowCount; i++) {
-        if (!found && rows[i].id == id) {
+      for (var i = 0; i < rowCount; i += 1) {
+        if (!found && rows[i].id === id) {
           found = true;
           cb(i);
         }
@@ -16774,6 +16782,8 @@ var _LoginPage2 = _interopRequireDefault(_LoginPage);
 
 var _auth = __webpack_require__(109);
 
+var _auth2 = _interopRequireDefault(_auth);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var PrivateRoute = function PrivateRoute(data) {
@@ -16782,7 +16792,7 @@ var PrivateRoute = function PrivateRoute(data) {
   var Component = data.component;
   return _react2.default.createElement(_reactRouterDom.Route, {
     render: function render(props) {
-      return (0, _auth.isAuthenticated)(classIds) ? _react2.default.createElement(Component, _extends({}, props, { classIds: classIds })) : _react2.default.createElement(_reactRouterDom.Redirect, {
+      return _auth2.default.isAuthenticated(classIds) ? _react2.default.createElement(Component, _extends({}, props, { classIds: classIds })) : _react2.default.createElement(_reactRouterDom.Redirect, {
         to: {
           pathname: '/login/' + classIds,
           state: { from: props.location }
@@ -24970,17 +24980,19 @@ var ManagersDataGrid = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ManagersDataGrid.__proto__ || Object.getPrototypeOf(ManagersDataGrid)).call(this, props));
 
-    _this.state = {
-      managerGridData: _this.getManagersConfig()
-      //  showDataGrid: false
-    };
+    _this.state = _this.getManagersConfig();
     return _this;
   }
 
   _createClass(ManagersDataGrid, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_HomieDataGrid2.default, this.state.managerGridData);
+      var _state = this.state,
+          gridName = _state.gridName,
+          endpoints = _state.endpoints,
+          columns = _state.columns;
+
+      return _react2.default.createElement(_HomieDataGrid2.default, { gridName: gridName, endpoints: endpoints, columns: columns });
     }
   }], [{
     key: 'getManagersConfig',
@@ -25216,6 +25228,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _SelectBox = __webpack_require__(81);
 
 var _SelectBox2 = _interopRequireDefault(_SelectBox);
@@ -25270,6 +25286,8 @@ var AddFormSelectInput = function AddFormSelectInput(props) {
     dropDownName: props.dropDownName
   });
 };
+
+AddFormField.propTypes = {};
 
 exports.default = AddFormField;
 
@@ -25559,32 +25577,47 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _Option = __webpack_require__(80);
 
 var _Option2 = _interopRequireDefault(_Option);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SelectBox = function SelectBox(props) {
-  var options = props.options.map(function (option, index) {
+var SelectBox = function SelectBox(_ref) {
+  var options = _ref.options,
+      name = _ref.name,
+      handleInputChange = _ref.handleInputChange,
+      dropDownName = _ref.dropDownName;
+
+  var optns = options.map(function (option, index) {
+    var theKey = index + 1;
     return _react2.default.createElement(
       _Option2.default,
-      { value: option.value, key: index },
+      { value: option.value, key: theKey },
       option.text
     );
   });
 
   return _react2.default.createElement(
     'select',
-    { className: 'form-control', name: props.name, onChange: props.handleInputChange },
+    { className: 'form-control', name: name, onChange: handleInputChange },
     _react2.default.createElement(
       _Option2.default,
       { value: '0' },
-      'Please choose ',
-      props.dropDownName.toLowerCase()
+      'Please choose',
+      dropDownName.toLowerCase()
     ),
-    options
+    optns
   );
+};
+
+SelectBox.propTypes = {
+  name: _propTypes2.default.string.isRequired,
+  handleInputChange: _propTypes2.default.func.isRequired
 };
 
 exports.default = SelectBox;
@@ -25604,42 +25637,50 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var LoginForm = function LoginForm(_ref) {
   var onSubmit = _ref.onSubmit,
       handleEmailChange = _ref.handleEmailChange,
-      handlePasswordChange = _ref.handlePasswordChange,
-      email = _ref.email,
-      password = _ref.password;
+      handlePasswordChange = _ref.handlePasswordChange;
   return _react2.default.createElement(
-    "div",
-    { className: "card container" },
+    'div',
+    { className: 'card container' },
     _react2.default.createElement(
-      "form",
-      { action: "/", onSubmit: onSubmit },
+      'form',
+      { action: '/', onSubmit: onSubmit },
       _react2.default.createElement(
-        "h2",
-        { className: "card-heading" },
-        "Login"
+        'h2',
+        { className: 'card-heading' },
+        'Login'
       ),
       _react2.default.createElement(
-        "div",
-        { className: "field-line" },
-        _react2.default.createElement("input", { type: "text", onChange: handleEmailChange })
+        'div',
+        { className: 'field-line' },
+        _react2.default.createElement('input', { type: 'text', onChange: handleEmailChange })
       ),
       _react2.default.createElement(
-        "div",
-        { className: "field-line" },
-        _react2.default.createElement("input", { type: "password", onChange: handlePasswordChange })
+        'div',
+        { className: 'field-line' },
+        _react2.default.createElement('input', { type: 'password', onChange: handlePasswordChange })
       ),
       _react2.default.createElement(
-        "div",
-        { className: "button-line" },
-        _react2.default.createElement("input", { type: "submit", label: "Log in" })
+        'div',
+        { className: 'button-line' },
+        _react2.default.createElement('input', { type: 'submit', label: 'Log in' })
       )
     )
   );
+};
+
+LoginForm.propTypes = {
+  onSubmit: _propTypes2.default.func.isRequired,
+  handleEmailChange: _propTypes2.default.func.isRequired,
+  handlePasswordChange: _propTypes2.default.func.isRequired
 };
 
 exports.default = LoginForm;
@@ -25726,7 +25767,9 @@ var LoginPage = function (_React$Component) {
       data.email = data.email.trim().toLowerCase();
       data.password = data.password.trim();
 
-      data.class_ids = this.props.match.params.classIds;
+      var match = this.props.match;
+
+      data.class_ids = match.params.classIds;
 
       var config = {
         headers: { 'Content-Type': 'application/json; charset=utf-8' }
@@ -25774,6 +25817,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _AssignmentHeader = __webpack_require__(86);
 
 var _AssignmentHeader2 = _interopRequireDefault(_AssignmentHeader);
@@ -25805,8 +25852,27 @@ var Assignment = function (_React$Component) {
 
   _createClass(Assignment, [{
     key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
+    value: function componentWillReceiveProps() {
       this.changeStatus();
+    }
+  }, {
+    key: 'getAssignmentStatus',
+    value: function getAssignmentStatus() {
+      var data = this.props.data;
+
+      if (data.viewState.done) return 3;
+
+      var countdown = data.countdown;
+
+      if (!countdown) return 0;
+
+      var hoursRemaining = countdown[0].number * 24 + countdown[1].number;
+
+      if (hoursRemaining <= 5) return 2;
+
+      if (hoursRemaining <= 23) return 1;
+
+      return 0;
     }
   }, {
     key: 'changeStatus',
@@ -25815,36 +25881,35 @@ var Assignment = function (_React$Component) {
       this.setState({ status: status });
     }
   }, {
-    key: 'getAssignmentStatus',
-    value: function getAssignmentStatus() {
-      if (this.props.data.viewState.done) return 3;else {
-        var countdown = this.props.data.countdown;
-        if (!countdown) return 0;
-
-        var hoursRemaining = countdown[0].number * 24 + countdown[1].number;
-
-        if (hoursRemaining <= 5) return 2;else if (hoursRemaining <= 23) return 1;else return 0;
-      }
-    }
-  }, {
     key: 'toggleShow',
-    value: function toggleShow(showState) {
-      this.props.onShowCallback(this.props.id, true);
+    value: function toggleShow() {
+      var _props = this.props,
+          id = _props.id,
+          onShowCallback = _props.onShowCallback;
+
+      onShowCallback(id, true);
     }
   }, {
     key: 'render',
     value: function render() {
+      var status = this.state.status;
+      var _props2 = this.props,
+          data = _props2.data,
+          onShowCallback = _props2.onShowCallback,
+          options = _props2.options,
+          onDoneChecked = _props2.onDoneChecked;
+
       return _react2.default.createElement(
         'div',
         { className: 'card assignment_card' },
         _react2.default.createElement(_AssignmentHeader2.default, {
-          data: this.props.data,
-          status: this.state.status,
-          endDate: this.props.data.end_date,
-          onShowCallback: this.props.onShowCallback,
-          options: this.props.options
+          data: data,
+          status: status,
+          endDate: data.end_date,
+          onShowCallback: onShowCallback,
+          options: options
         }),
-        _react2.default.createElement(_AssignmentBody2.default, { data: this.props.data, onDoneChecked: this.props.onDoneChecked })
+        _react2.default.createElement(_AssignmentBody2.default, { data: data, onDoneChecked: onDoneChecked })
       );
     }
   }]);
@@ -25853,6 +25918,15 @@ var Assignment = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Assignment;
+
+
+Assignment.propTypes = {
+  id: _propTypes2.default.string.isRequired,
+  onDoneChecked: _propTypes2.default.func.isRequired,
+  onShowCallback: _propTypes2.default.func.isRequired,
+  options: _propTypes2.default.shape({ date: _propTypes2.default.number.isRequired, time: _propTypes2.default.number.isRequired }).isRequired,
+  data: _propTypes2.default.shape().isRequired
+};
 
 /***/ }),
 /* 85 */
@@ -25869,6 +25943,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _Resources = __webpack_require__(105);
 
 var _Resources2 = _interopRequireDefault(_Resources);
@@ -25883,8 +25961,11 @@ var _Countdown2 = _interopRequireDefault(_Countdown);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AssignmentBody = function AssignmentBody(props) {
-  var collapseStatus = props.data.viewState.show ? 'show' : '';
+var AssignmentBody = function AssignmentBody(_ref) {
+  var data = _ref.data,
+      onDoneChecked = _ref.onDoneChecked;
+
+  var collapseStatus = data.viewState.show ? 'show' : '';
 
   var extraInfo = _react2.default.createElement(
     'div',
@@ -25896,7 +25977,7 @@ var AssignmentBody = function AssignmentBody(props) {
       _react2.default.createElement(
         'div',
         { className: 'col-12' },
-        props.data.information
+        data.information
       )
     ),
     '\xA0'
@@ -25905,7 +25986,7 @@ var AssignmentBody = function AssignmentBody(props) {
   return _react2.default.createElement(
     'div',
     {
-      id: props.data.id,
+      id: data.id,
       className: 'collapse ' + collapseStatus,
       role: 'tabpanel',
       'aria-labelledby': 'headingOne'
@@ -25913,33 +25994,35 @@ var AssignmentBody = function AssignmentBody(props) {
     _react2.default.createElement(
       'div',
       { className: 'card-block' },
-      props.data.information && extraInfo,
+      data.information && extraInfo,
       _react2.default.createElement(
         'div',
         { className: 'row' },
         _react2.default.createElement(
           'div',
           { className: 'col-xs-3 col-sm-4' },
-          _react2.default.createElement(_Resources2.default, { data: props.data.resources })
+          _react2.default.createElement(_Resources2.default, { data: data.resources })
         ),
         _react2.default.createElement(
           'div',
           { className: 'col-xs-3 col-sm-4' },
-          _react2.default.createElement(_DoneButton2.default, {
-            id: props.data.id,
-            done: props.data.viewState.done,
-            onDoneChecked: props.onDoneChecked
-          })
+          _react2.default.createElement(_DoneButton2.default, { id: data.id, done: data.viewState.done, onDoneChecked: onDoneChecked })
         ),
         _react2.default.createElement(
           'div',
           { className: 'col-xs-6 col-sm-4' },
-          _react2.default.createElement(_Countdown2.default, { countdown: props.data.countdown })
+          _react2.default.createElement(_Countdown2.default, { countdown: data.countdown })
         )
       )
     )
   );
 };
+
+AssignmentBody.propTypes = {
+  onDoneChecked: _propTypes2.default.func.isRequired,
+  data: _propTypes2.default.shape().isRequired
+};
+
 exports.default = AssignmentBody;
 
 /***/ }),
@@ -25959,6 +26042,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _DueDate = __webpack_require__(94);
 
 var _DueDate2 = _interopRequireDefault(_DueDate);
@@ -25971,6 +26058,27 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function getHeaderColor(status) {
+  var color = '';
+  switch (status) {
+    case 0:
+    default:
+      color = 'primary';
+      break;
+    case 1:
+      color = 'warning';
+      break;
+    case 2:
+      color = 'danger';
+      break;
+    case 3:
+      color = 'success';
+      break;
+  }
+
+  return 'card-' + color;
+}
+
 var AssignmentTitle = function (_React$Component) {
   _inherits(AssignmentTitle, _React$Component);
 
@@ -25979,8 +26087,10 @@ var AssignmentTitle = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (AssignmentTitle.__proto__ || Object.getPrototypeOf(AssignmentTitle)).call(this, props));
 
+    var status = _this.props.status;
+
     _this.state = {
-      color: _this.getHeaderColor(_this.props.status)
+      color: getHeaderColor(status)
     };
 
     _this.onCollapse = _this.onCollapse.bind(_this);
@@ -25990,7 +26100,7 @@ var AssignmentTitle = function (_React$Component) {
   _createClass(AssignmentTitle, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      this.setState({ color: this.getHeaderColor(nextProps.status) });
+      this.setState({ color: getHeaderColor(nextProps.status) });
     }
   }, {
     key: 'onCollapse',
@@ -25999,59 +26109,50 @@ var AssignmentTitle = function (_React$Component) {
       var self = this;
       var $assignmentHeader = $(e.currentTarget);
       var id = $assignmentHeader.attr('aria-controls');
-      var showState = $(e.currentTarget).attr('aria-expanded') == 'true';
+      var showState = $(e.currentTarget).attr('aria-expanded') === 'true';
       setTimeout(function () {
-        self.props.onShowCallback(id, showState); //I need to setTimeout becuase of weird stuff happening.
+        self.props.onShowCallback(id, showState); // I need to setTimeout becuase of weird stuff happening.
       }, 500);
-    }
-  }, {
-    key: 'getHeaderColor',
-    value: function getHeaderColor(status) {
-      var color = '';
-      switch (status) {
-        case 0:
-        default:
-          color = 'primary';
-          break;
-        case 1:
-          color = 'warning';
-          break;
-        case 2:
-          color = 'danger';
-          break;
-        case 3:
-          color = 'success';
-          break;
-      }
-
-      return 'card-' + color;
     }
   }, {
     key: 'render',
     value: function render() {
-      var seperator = this.props.data.title ? '-' : '';
+      var _props = this.props,
+          data = _props.data,
+          endDate = _props.endDate,
+          options = _props.options;
+      var color = this.state.color;
+
+      var seperator = data.title ? '-' : '';
       return _react2.default.createElement(
         'div',
         {
           'data-toggle': 'collapse',
-          href: '#' + this.props.data.id,
-          'aria-expanded': this.props.data.viewState.show,
-          'aria-controls': this.props.data.id,
-          className: 'card-header ' + this.state.color + ' card_assignment_header',
+          href: '#' + data.id,
+          'aria-expanded': data.viewState.show,
+          'aria-controls': data.id,
+          className: 'card-header ' + color + ' card_assignment_header',
           role: 'tab',
-          onClick: this.onCollapse
+          tabIndex: '0',
+          onClick: this.onCollapse,
+          onKeyPress: this.onCollapse
         },
         _react2.default.createElement(
           'h5',
           { className: 'homieWhite' },
-          this.props.data.course_title,
-          ' ',
-          seperator,
-          ' ',
-          this.props.data.title,
-          ' -',
-          ' ',
-          _react2.default.createElement(_DueDate2.default, { endDate: this.props.endDate, options: this.props.options })
+          data.course_title,
+          _react2.default.createElement(
+            'span',
+            null,
+            seperator
+          ),
+          data.title,
+          _react2.default.createElement(
+            'span',
+            null,
+            ' - '
+          ),
+          _react2.default.createElement(_DueDate2.default, { endDate: endDate, options: options })
         )
       );
     }
@@ -26061,6 +26162,14 @@ var AssignmentTitle = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = AssignmentTitle;
+
+
+AssignmentTitle.propTypes = {
+  data: _propTypes2.default.shape().isRequired,
+  endDate: _propTypes2.default.instanceOf(Date).isRequired,
+  options: _propTypes2.default.shape({ date: _propTypes2.default.number.isRequired, time: _propTypes2.default.number.isRequired }).isRequired,
+  status: _propTypes2.default.number.isRequired
+};
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
@@ -26123,7 +26232,12 @@ var AssignmentList = function AssignmentList(props) {
   );
 };
 
-AssignmentList.propTypes = {};
+AssignmentList.propTypes = {
+  assignments: _propTypes2.default.arrayOf(_propTypes2.default.shape).isRequired,
+  onDoneChecked: _propTypes2.default.func.isRequired,
+  onShowCallback: _propTypes2.default.func.isRequired,
+  options: _propTypes2.default.shape({ date: _propTypes2.default.number.isRequired, time: _propTypes2.default.number.isRequired }).isRequired
+};
 
 exports.default = AssignmentList;
 
@@ -26138,13 +26252,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _AssignmentList = __webpack_require__(87);
 
@@ -26165,6 +26283,30 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function getTimezonedDate(dateString) {
+  if ((typeof dateString === 'undefined' ? 'undefined' : _typeof(dateString)) === 'object') return dateString;
+
+  var endDate = new Date(dateString);
+
+  if (window.location.hostname !== 'localhost') {
+    endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
+  }
+
+  return endDate;
+}
+
+// First order by done > not done, then by end date. If end dates are equeal, show the one who was added first as the first one.
+function assignmentSorter(a, b) {
+  if (a.viewState.done !== b.viewState.done) {
+    return a.viewState.done ? 1 : -1;
+  }
+
+  var dateDiference = a.end_date - b.end_date;
+  if (dateDiference !== 0) return dateDiference;
+
+  return parseInt(a.id.substring(1), 10) - parseInt(b.id.substring(1), 10);
+}
 
 var AssignmentListContainer = function (_React$Component) {
   _inherits(AssignmentListContainer, _React$Component);
@@ -26188,15 +26330,10 @@ var AssignmentListContainer = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var timeIntervalBetweenFetchingData = 1000 * 60 * 30; // 30 minutes
+      var loadAssignments = this.props.loadAssignments;
 
-      this.refreshAssignmentsInterval = setInterval(this.props.loadAssignments, timeIntervalBetweenFetchingData);
+      this.refreshAssignmentsInterval = setInterval(loadAssignments, timeIntervalBetweenFetchingData);
       this.tickInterval = setInterval(this.tick, 1000);
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      clearInterval(this.refreshAssignmentsInterval);
-      clearInterval(this.tickInterval);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -26205,23 +26342,51 @@ var AssignmentListContainer = function (_React$Component) {
 
       _localStorageService2.default.setupAssignmentsState(nextProps.assignments, function () {
         _this2.performClientSideModifications(nextProps.assignments);
-        //  this.tick();
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearInterval(this.refreshAssignmentsInterval);
+      clearInterval(this.tickInterval);
+    }
+  }, {
+    key: 'onShowCallback',
+    value: function onShowCallback(id, showState) {
+      var _this3 = this;
+
+      _localStorageService2.default.changeShowState(id, showState, function () {
+        _this3.performClientSideModifications();
+      });
+    }
+  }, {
+    key: 'onDoneCheckedCallback',
+    value: function onDoneCheckedCallback(id, doneState) {
+      var _this4 = this;
+
+      if (doneState) {
+        _localStorageService2.default.changeShowState(id, false);
+      }
+
+      _localStorageService2.default.changeDoneState(id, doneState, function () {
+        _this4.performClientSideModifications();
       });
     }
   }, {
     key: 'tick',
     value: function tick() {
       var assignments = this.state.assignments;
+
       var assignmentsLength = assignments.length;
-      for (var i = 0; i < assignmentsLength; i++) {
+      for (var i = 0; i < assignmentsLength; i += 1) {
         if (!assignments[i])
-          //Validators
-          continue;
+          // Validators
+          return;
 
         var dateUntilEnd = (0, _countdownTick2.default)(assignments[i].end_date);
 
         if (!dateUntilEnd) {
-          //Removing assignment when it's done.
+          // Removing assignment when it's done.
           assignments.splice(i, 1);
         }
 
@@ -26232,16 +26397,18 @@ var AssignmentListContainer = function (_React$Component) {
     }
   }, {
     key: 'performClientSideModifications',
-    value: function performClientSideModifications(assignments) {
+    value: function performClientSideModifications(asgmnts) {
       var filteredClasses = _localStorageService2.default.getFilteredList();
+      var assignments = this.state.assignments;
 
-      assignments = assignments || this.state.assignments;
+      assignments = asgmnts || assignments;
       assignments = assignments.filter(function (assignment) {
         return !filteredClasses.includes(assignment.course_id);
       });
 
       assignments = _localStorageService2.default.refreshViewState(assignments);
-      assignments = assignments.map(function (assignment) {
+      assignments = assignments.map(function (asgmnt) {
+        var assignment = Object.assign({}, asgmnt);
         assignment.end_date = getTimezonedDate(assignment.end_date);
         return assignment;
       });
@@ -26250,41 +26417,19 @@ var AssignmentListContainer = function (_React$Component) {
       this.setState({ assignments: assignments });
     }
   }, {
-    key: 'onDoneCheckedCallback',
-    value: function onDoneCheckedCallback(id, doneState) {
-      var _this3 = this;
-
-      if (doneState) {
-        _localStorageService2.default.changeShowState(id, false);
-      }
-
-      _localStorageService2.default.changeDoneState(id, doneState, function () {
-        _this3.performClientSideModifications();
-      });
-    }
-  }, {
-    key: 'onShowCallback',
-    value: function onShowCallback(id, showState) {
-      var _this4 = this;
-
-      _localStorageService2.default.changeShowState(id, showState, function () {
-        _this4.performClientSideModifications();
-      });
-    }
-  }, {
     key: 'render',
     value: function render() {
+      var options = this.props.options;
+      var assignments = this.state.assignments;
+
       return (
         // <div>
         _react2.default.createElement(_AssignmentList2.default, {
-          assignments: this.state.assignments,
+          assignments: assignments,
           onDoneChecked: this.onDoneCheckedCallback,
           onShowCallback: this.onShowCallback,
-          options: this.props.options
+          options: options
         })
-        /*{ <audio ref={(audio) => this.audio = audio} src={soundEffect} /> */
-        /* </div> */
-
       );
     }
   }]);
@@ -26292,32 +26437,14 @@ var AssignmentListContainer = function (_React$Component) {
   return AssignmentListContainer;
 }(_react2.default.Component);
 
-// First order by done > not done, then by end date. If end dates are equeal, show the one who was added first as the first one.
-
-
 exports.default = AssignmentListContainer;
-function assignmentSorter(a, b) {
-  if (a.viewState.done != b.viewState.done) {
-    return a.viewState.done ? 1 : -1;
-  } else {
-    var dateDiference = a.end_date - b.end_date;
-    if (dateDiference != 0) return dateDiference;else {
-      return parseInt(a.id.substring(1)) - parseInt(b.id.substring(1));
-    }
-  }
-}
 
-function getTimezonedDate(dateString) {
-  if ((typeof dateString === 'undefined' ? 'undefined' : _typeof(dateString)) == 'object') return dateString;
 
-  var endDate = new Date(dateString);
-
-  if (location.hostname != 'localhost') {
-    endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
-  }
-
-  return endDate;
-}
+AssignmentListContainer.propTypes = {
+  loadAssignments: _propTypes2.default.func.isRequired,
+  options: _propTypes2.default.shape({ date: _propTypes2.default.number.isRequired, time: _propTypes2.default.number.isRequired }).isRequired,
+  assignments: _propTypes2.default.arrayOf(_propTypes2.default.any).isRequired
+};
 
 /***/ }),
 /* 89 */
@@ -26417,6 +26544,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _axios = __webpack_require__(6);
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -26454,7 +26585,7 @@ function getTimezonedDate(dateString) {
 
   var endDate = new Date(dateString);
 
-  if (location.hostname !== 'localhost') {
+  if (window.location.hostname !== 'localhost') {
     endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
   }
 
@@ -26518,7 +26649,6 @@ var AssignmentsPageContainer = function (_React$Component) {
       assignments = assignments.filter(function (assignment) {
         return !filteredClasses.includes(assignment.course_id);
       });
-
       assignments = _localStorageService2.default.refreshViewState(assignments);
       assignments = assignments.map(function (asgnmt) {
         var assignment = Object.assign({}, asgnmt);
@@ -26539,7 +26669,7 @@ var AssignmentsPageContainer = function (_React$Component) {
       for (var i = 0; i < assignmentsLength; i += 1) {
         if (!assignments[i])
           // Validators
-          continue;
+          return;
 
         var dateUntilEnd = (0, _countdownTick2.default)(assignments[i].end_date);
 
@@ -26559,9 +26689,11 @@ var AssignmentsPageContainer = function (_React$Component) {
       var _this3 = this;
 
       return new Promise(function (resolve, reject) {
-        var classIds = _this3.props.match.params.classIds;
+        var match = _this3.props.match;
 
-        classIds = classIds || 1;
+        var _ref = match.params || 1,
+            classIds = _ref.classIds;
+
         _axios2.default.get('/api/courses/basic/' + classIds).then(function (coursesRes) {
           resolve(coursesRes.data);
         }).catch(function (err) {
@@ -26575,7 +26707,11 @@ var AssignmentsPageContainer = function (_React$Component) {
       var _this4 = this;
 
       return new Promise(function (resolve, reject) {
-        var classIds = _this4.props.match.params.classIds || 1;
+        var match = _this4.props.match;
+
+        var _ref2 = match.params || 1,
+            classIds = _ref2.classIds;
+
         _axios2.default.get('/api/assignments/' + classIds).then(function (assignmentRes) {
           resolve(assignmentRes.data);
         }).catch(function (err) {
@@ -26599,12 +26735,16 @@ var AssignmentsPageContainer = function (_React$Component) {
     value: function filterCourse(courseId) {
       var _this6 = this;
 
+      var _state = this.state,
+          assignments = _state.assignments,
+          courses = _state.courses;
+
       _localStorageService2.default.addToFilteredList(courseId, function () {
         var filteredClasses = _localStorageService2.default.getFilteredList();
-        var assignments = _this6.state.assignments.filter(function (assignment) {
+        assignments = assignments.filter(function (assignment) {
           return !filteredClasses.includes(assignment.course_id);
         });
-        var courses = _this6.state.courses.filter(function (course) {
+        courses = courses.filter(function (course) {
           return !filteredClasses.includes(course.id);
         });
 
@@ -26618,9 +26758,9 @@ var AssignmentsPageContainer = function (_React$Component) {
     key: 'resetCourses',
     value: function resetCourses() {
       _localStorageService2.default.resetFilteredList();
-      var _state = this.state,
-          allAssignments = _state.allAssignments,
-          allCourses = _state.allCourses;
+      var _state2 = this.state,
+          allAssignments = _state2.allAssignments,
+          allCourses = _state2.allCourses;
 
       this.setState({
         assignments: allAssignments,
@@ -26641,14 +26781,20 @@ var AssignmentsPageContainer = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _state3 = this.state,
+          courses = _state3.courses,
+          assignments = _state3.assignments,
+          options = _state3.options;
+
+
       return _react2.default.createElement(_AssignmentPage2.default, {
-        courses: this.state.courses,
+        courses: courses,
         resetCourses: this.resetCourses,
         filterCourse: this.filterCourse,
-        assignments: this.state.assignments,
+        assignments: assignments,
         loadAssignments: this.loadAssignmentsAndSetState,
         loadAssignmentsNoState: this.loadAssignments,
-        options: this.state.options,
+        options: options,
         changeOptions: this.changeOption
       });
     }
@@ -26658,6 +26804,11 @@ var AssignmentsPageContainer = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = AssignmentsPageContainer;
+
+
+AssignmentsPageContainer.propTypes = {
+  match: _propTypes2.default.shape().isRequired
+};
 
 /***/ }),
 /* 91 */
@@ -26993,6 +27144,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _CoursesNavBarTab = __webpack_require__(96);
 
 var _CoursesNavBarTab2 = _interopRequireDefault(_CoursesNavBarTab);
@@ -27013,9 +27168,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // Student Union Logo
 
-var AssignmentNavBar = function AssignmentNavBar(props) {
-  var homePageUrl = 'https://tryhomieapp.herokuapp.com/';
+var AssignmentNavBar = function AssignmentNavBar(_ref) {
+  var courses = _ref.courses,
+      options = _ref.options,
+      resetCourses = _ref.resetCourses,
+      changeOptions = _ref.changeOptions;
 
+  var homePageUrl = 'https://tryhomieapp.herokuapp.com/';
   return _react2.default.createElement(
     'div',
     { className: 'container' },
@@ -27062,13 +27221,21 @@ var AssignmentNavBar = function AssignmentNavBar(props) {
         _react2.default.createElement(
           'ul',
           { className: 'navbar-nav mr-auto mt-2 mt-md-0' },
-          _react2.default.createElement(_CoursesNavBarTab2.default, { courses: props.courses, resetCourses: props.resetCourses }),
-          _react2.default.createElement(_OptionsNavBarTab2.default, { options: props.options, changeOptions: props.changeOptions })
+          _react2.default.createElement(_CoursesNavBarTab2.default, { courses: courses, resetCourses: resetCourses }),
+          _react2.default.createElement(_OptionsNavBarTab2.default, { options: options, changeOptions: changeOptions })
         )
       )
     )
   );
 }; // Homie Logo
+
+
+AssignmentNavBar.propTypes = {
+  courses: _propTypes2.default.shape().isRequired,
+  options: _propTypes2.default.shape().isRequired,
+  changeOptions: _propTypes2.default.func.isRequired,
+  resetCourses: _propTypes2.default.func.isRequired
+};
 exports.default = AssignmentNavBar;
 
 /***/ }),
@@ -27088,11 +27255,17 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _NavBarCourse = __webpack_require__(98);
 
 var _NavBarCourse2 = _interopRequireDefault(_NavBarCourse);
 
 var _localStorageService = __webpack_require__(16);
+
+var _localStorageService2 = _interopRequireDefault(_localStorageService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27100,11 +27273,11 @@ var CoursesNavBarTab = function CoursesNavBarTab(_ref) {
   var courses = _ref.courses,
       resetCourses = _ref.resetCourses;
 
-  var filteredClasses = (0, _localStorageService.getFilteredList)();
-  var showResetButton = filteredClasses.length != 0;
+  var filteredClasses = _localStorageService2.default.getFilteredList();
+  var showResetButton = filteredClasses.length !== 0;
 
   var coursesDropDown = courses.filter(function (course) {
-    return !filteredClasses.includes(parseInt(course.value));
+    return !filteredClasses.includes(parseInt(course.value, 10));
   }).map(function (course) {
     return _react2.default.createElement(_NavBarCourse2.default, _extends({ key: 'c' + course.value }, course));
   });
@@ -27116,7 +27289,13 @@ var CoursesNavBarTab = function CoursesNavBarTab(_ref) {
       { key: 'reseter' },
       _react2.default.createElement(
         'span',
-        { className: 'dropdown-item clickable', onClick: resetCourses },
+        {
+          role: 'tab',
+          tabIndex: '0',
+          className: 'dropdown-item clickable',
+          onClick: resetCourses,
+          onKeyPress: resetCourses
+        },
         _react2.default.createElement('i', { className: 'fa fa-undo courseActions', 'aria-hidden': 'true' }),
         'Reset Courses'
       )
@@ -27144,6 +27323,11 @@ var CoursesNavBarTab = function CoursesNavBarTab(_ref) {
       coursesDropDown
     )
   );
+};
+
+CoursesNavBarTab.propTypes = {
+  courses: _propTypes2.default.shape().isRequired,
+  resetCourses: _propTypes2.default.func.isRequired
 };
 
 exports.default = CoursesNavBarTab;
@@ -27568,6 +27752,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27591,10 +27779,12 @@ var RemoveClassModalButton = function (_React$Component) {
   _createClass(RemoveClassModalButton, [{
     key: 'onClick',
     value: function onClick() {
+      var filterCourse = this.props.filterCourse;
+
       var $modal = $('#removeClassModal');
       var courseId = $modal.attr('data-courseId');
       $modal.modal('hide');
-      this.props.filterCourse(courseId);
+      filterCourse(courseId);
     }
   }, {
     key: 'render',
@@ -27642,7 +27832,7 @@ var RemoveClassModalButton = function (_React$Component) {
                 null,
                 'Warning!'
               ),
-              'Clicking "Remove Class" will permanently remove',
+              'Clicking &aposRemove Class&apos will permanently remove',
               _react2.default.createElement('span', { className: 'removeClassNameFiller' }),
               'from this page'
             ),
@@ -27670,6 +27860,11 @@ var RemoveClassModalButton = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = RemoveClassModalButton;
+
+
+RemoveClassModalButton.propTypes = {
+  filterCourse: _propTypes2.default.func.isRequired
+};
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
@@ -27739,25 +27934,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _Resource = __webpack_require__(104);
 
 var _Resource2 = _interopRequireDefault(_Resource);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// import '../../Scripts/includes_polyfill';
 
 var pdf = __webpack_require__(179);
 var winzip = __webpack_require__(183);
@@ -27770,113 +27959,96 @@ var excel = __webpack_require__(176);
 var powerpoint = __webpack_require__(181);
 var trello = __webpack_require__(182);
 
-var Resources = function (_React$Component) {
-  _inherits(Resources, _React$Component);
+var checkHWSourceUrl = function checkHWSourceUrl(imageUrl) {
+  if (!imageUrl) return '';
 
-  function Resources() {
-    _classCallCheck(this, Resources);
+  var imageToReturn = void 0;
 
-    return _possibleConstructorReturn(this, (Resources.__proto__ || Object.getPrototypeOf(Resources)).apply(this, arguments));
-  }
+  if (imageUrl.includes('zip')) imageToReturn = winzip;
 
-  _createClass(Resources, [{
-    key: 'checkDataSourceUrl',
-    value: function checkDataSourceUrl(imageUrl) {
-      if (!imageUrl) return;
+  if (imageUrl.includes('docx')) imageToReturn = word;else if (imageUrl.includes('xlsx')) imageToReturn = excel;else if (imageUrl.includes('pptx')) imageToReturn = powerpoint;else imageToReturn = pdf;
 
-      return imageUrl.includes('moodle_submit') ? moodle : gdrive;
-    }
-  }, {
-    key: 'checkHWSourceUrl',
-    value: function checkHWSourceUrl(imageUrl) {
-      if (!imageUrl) return;
+  return imageToReturn;
+};
 
-      if (imageUrl.includes('zip')) return winzip;else if (imageUrl.includes('docx')) return word;else if (imageUrl.includes('xlsx')) return excel;else if (imageUrl.includes('pptx')) return powerpoint;
+var Resources = function Resources(_ref) {
+  var data = _ref.data;
+  return _react2.default.createElement(
+    'ul',
+    { className: 'resourceList' },
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _Resource2.default,
+        { url: data.homework, img: checkHWSourceUrl(data.homework) },
+        'HW'
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _Resource2.default,
+        { url: data.moodle_submit, img: moodle },
+        'Submit Page'
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _Resource2.default,
+        { url: data.moodle_url, img: moodle },
+        'Moodle'
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _Resource2.default,
+        { prefix: 'https://trello.com/b/', url: data.trello, img: trello },
+        'Trello'
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _Resource2.default,
+        { url: data.gdrive, img: gdrive },
+        'Google Drive'
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _Resource2.default,
+        { prefix: 'https://piazza.com/class/', url: data.piazza, img: piazza },
+        'Piazza'
+      )
+    ),
+    _react2.default.createElement(
+      'li',
+      null,
+      _react2.default.createElement(
+        _Resource2.default,
+        {
+          prefix: 'https://www.classboost.co.il/Pages/OfcoursePages/CourseMeetings.aspx?CourseID=',
+          url: data.classboost,
+          img: classboost
+        },
+        'ClassBoost'
+      )
+    )
+  );
+};
 
-      return pdf;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'ul',
-        { className: 'resourceList' },
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            _Resource2.default,
-            {
-              url: this.props.data.homework,
-              img: this.checkHWSourceUrl(this.props.data.homework)
-            },
-            'HW'
-          )
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            _Resource2.default,
-            { url: this.props.data.moodle_submit, img: moodle },
-            'Submit Page'
-          )
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            _Resource2.default,
-            { url: this.props.data.moodle_url, img: moodle },
-            'Moodle'
-          )
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            _Resource2.default,
-            { prefix: 'https://trello.com/b/', url: this.props.data.trello, img: trello },
-            'Trello'
-          )
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            _Resource2.default,
-            { url: this.props.data.gdrive, img: gdrive },
-            'Google Drive'
-          )
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            _Resource2.default,
-            { prefix: 'https://piazza.com/class/', url: this.props.data.piazza, img: piazza },
-            'Piazza'
-          )
-        ),
-        _react2.default.createElement(
-          'li',
-          null,
-          _react2.default.createElement(
-            _Resource2.default,
-            {
-              prefix: 'https://www.classboost.co.il/Pages/OfcoursePages/CourseMeetings.aspx?CourseID=',
-              url: this.props.data.classboost,
-              img: classboost
-            },
-            'ClassBoost'
-          )
-        )
-      );
-    }
-  }]);
-
-  return Resources;
-}(_react2.default.Component);
+Resources.propTypes = {
+  data: _propTypes2.default.shape().isRequired
+};
 
 exports.default = Resources;
 
@@ -27896,6 +28068,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _axios = __webpack_require__(6);
 
@@ -27936,20 +28112,24 @@ var AssignmentsDataGrid = function (_React$Component) {
       var classIds = this.props.classIds;
 
       this.getCourses(classIds, function (courses) {
-        var data = _this2.state;
-        data.assignmentGridData.columns[0].dropdownOptions = courses;
-        data.showDataGrid = true;
-        _this2.setState({ data: data });
+        _this2.setState(function (prevState) {
+          var data = prevState;
+          data.assignmentGridData.columns[0].dropdownOptions = courses;
+          data.showDataGrid = true;
+          return data;
+        });
       });
     }
   }, {
     key: 'getAssignmentsConfig',
     value: function getAssignmentsConfig() {
       var baseEndpointUrl = '/api/assignments/';
+      var classIds = this.props.classIds;
+
       return {
         gridName: 'Assignment',
         endpoints: {
-          fetchItems: baseEndpointUrl + 'manager/' + this.props.classIds,
+          fetchItems: baseEndpointUrl + 'manager/' + classIds,
           saveItem: baseEndpointUrl,
           editItem: baseEndpointUrl,
           deleteItem: baseEndpointUrl
@@ -27985,9 +28165,15 @@ var AssignmentsDataGrid = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.showDataGrid) return false;
+      var _state = this.state,
+          showDataGrid = _state.showDataGrid,
+          gridName = _state.gridName,
+          endpoints = _state.endpoints,
+          columns = _state.columns;
 
-      return _react2.default.createElement(_HomieDataGrid2.default, this.state.assignmentGridData);
+      if (!showDataGrid) return false;
+
+      return _react2.default.createElement(_HomieDataGrid2.default, { gridName: gridName, endpoints: endpoints, columns: columns });
     }
   }], [{
     key: 'getCourses',
@@ -28002,6 +28188,11 @@ var AssignmentsDataGrid = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = AssignmentsDataGrid;
+
+
+AssignmentsDataGrid.propTypes = {
+  classIds: _propTypes2.default.string.isRequired
+};
 
 /***/ }),
 /* 107 */
@@ -28019,6 +28210,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(1);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _axios = __webpack_require__(6);
 
@@ -28068,10 +28263,12 @@ var CoursesDataGrid = function (_React$Component) {
       if (isManagingASingleClass) return;
 
       this.getClasses(classIds, function (classes) {
-        var data = _this2.state;
-        data.coursesGridData.columns[1].dropdownOptions = classes;
-        data.showDataGrid = true;
-        _this2.setState({ data: data });
+        _this2.setState(function (prevState) {
+          var data = prevState;
+          data.coursesGridData.columns[1].dropdownOptions = classes;
+          data.showDataGrid = true;
+          return data;
+        });
       });
     }
   }, {
@@ -28142,8 +28339,15 @@ var CoursesDataGrid = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      if (!this.state.showDataGrid) return false;
-      return _react2.default.createElement(_HomieDataGrid2.default, this.state.coursesGridData);
+      var _state = this.state,
+          showDataGrid = _state.showDataGrid,
+          coursesGridData = _state.coursesGridData;
+      var gridName = coursesGridData.gridName,
+          endpoints = coursesGridData.endpoints,
+          columns = coursesGridData.columns;
+
+      if (!showDataGrid) return false;
+      return _react2.default.createElement(_HomieDataGrid2.default, { gridName: gridName, endpoints: endpoints, columns: columns });
     }
   }], [{
     key: 'getClasses',
@@ -28158,6 +28362,11 @@ var CoursesDataGrid = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = CoursesDataGrid;
+
+
+CoursesDataGrid.propTypes = {
+  classIds: _propTypes2.default.string.isRequired
+};
 
 /***/ }),
 /* 108 */

@@ -4,7 +4,6 @@ import FlipMove from 'react-flip-move';
 import Assignment from './Assignment';
 
 const AssignmentList = props => {
-
   let { assignments } = props;
   const { onDoneChecked, onShowCallback, options } = props;
   assignments = assignments.map(assignment => (
@@ -28,6 +27,12 @@ const AssignmentList = props => {
   );
 };
 
-AssignmentList.propTypes = {};
+AssignmentList.propTypes = {
+  assignments: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  onDoneChecked: PropTypes.func.isRequired,
+  onShowCallback: PropTypes.func.isRequired,
+  options: PropTypes.shape({ date: PropTypes.number.isRequired, time: PropTypes.number.isRequired })
+    .isRequired
+};
 
 export default AssignmentList;

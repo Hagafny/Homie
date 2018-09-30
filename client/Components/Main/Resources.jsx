@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Resource from './Resource';
-// import '../../Scripts/includes_polyfill';
 
 const pdf = require(`./../../images/pdf.png`);
 const winzip = require(`./../../images/winzip.png`);
@@ -13,70 +13,67 @@ const excel = require('./../../images/excel.png');
 const powerpoint = require('./../../images/powerpoint.png');
 const trello = require('./../../images/trello.png');
 
-export default class Resources extends React.Component {
-  checkDataSourceUrl(imageUrl) {
-    if (!imageUrl) return;
+const checkHWSourceUrl = imageUrl => {
+  if (!imageUrl) return '';
 
-    return imageUrl.includes('moodle_submit') ? moodle : gdrive;
-  }
+  let imageToReturn;
 
-  checkHWSourceUrl(imageUrl) {
-    if (!imageUrl) return;
+  if (imageUrl.includes('zip')) imageToReturn = winzip;
 
-    if (imageUrl.includes('zip')) return winzip;
-    else if (imageUrl.includes('docx')) return word;
-    else if (imageUrl.includes('xlsx')) return excel;
-    else if (imageUrl.includes('pptx')) return powerpoint;
+  if (imageUrl.includes('docx')) imageToReturn = word;
+  else if (imageUrl.includes('xlsx')) imageToReturn = excel;
+  else if (imageUrl.includes('pptx')) imageToReturn = powerpoint;
+  else imageToReturn = pdf;
 
-    return pdf;
-  }
+  return imageToReturn;
+};
 
-  render() {
-    return (
-      <ul className="resourceList">
-        <li>
-          <Resource
-            url={this.props.data.homework}
-            img={this.checkHWSourceUrl(this.props.data.homework)}
-          >
-            HW
-          </Resource>
-        </li>
-        <li>
-          <Resource url={this.props.data.moodle_submit} img={moodle}>
-            Submit Page
-          </Resource>
-        </li>
-        <li>
-          <Resource url={this.props.data.moodle_url} img={moodle}>
-            Moodle
-          </Resource>
-        </li>
-        <li>
-          <Resource prefix="https://trello.com/b/" url={this.props.data.trello} img={trello}>
-            Trello
-          </Resource>
-        </li>
-        <li>
-          <Resource url={this.props.data.gdrive} img={gdrive}>
-            Google Drive
-          </Resource>
-        </li>
-        <li>
-          <Resource prefix="https://piazza.com/class/" url={this.props.data.piazza} img={piazza}>
-            Piazza
-          </Resource>
-        </li>
-        <li>
-          <Resource
-            prefix="https://www.classboost.co.il/Pages/OfcoursePages/CourseMeetings.aspx?CourseID="
-            url={this.props.data.classboost}
-            img={classboost}
-          >
-            ClassBoost
-          </Resource>
-        </li>
-      </ul>
-    );
-  }
-}
+const Resources = ({ data }) => (
+  <ul className="resourceList">
+    <li>
+      <Resource url={data.homework} img={checkHWSourceUrl(data.homework)}>
+        HW
+      </Resource>
+    </li>
+    <li>
+      <Resource url={data.moodle_submit} img={moodle}>
+        Submit Page
+      </Resource>
+    </li>
+    <li>
+      <Resource url={data.moodle_url} img={moodle}>
+        Moodle
+      </Resource>
+    </li>
+    <li>
+      <Resource prefix="https://trello.com/b/" url={data.trello} img={trello}>
+        Trello
+      </Resource>
+    </li>
+    <li>
+      <Resource url={data.gdrive} img={gdrive}>
+        Google Drive
+      </Resource>
+    </li>
+    <li>
+      <Resource prefix="https://piazza.com/class/" url={data.piazza} img={piazza}>
+        Piazza
+      </Resource>
+    </li>
+    <li>
+      <Resource
+        prefix="https://www.classboost.co.il/Pages/OfcoursePages/CourseMeetings.aspx?CourseID="
+        url={data.classboost}
+        img={classboost}
+      >
+        ClassBoost
+      </Resource>
+    </li>
+  </ul>
+);
+
+Resources.propTypes = {
+  data: PropTypes.shape().isRequired
+};
+
+export default Resources;

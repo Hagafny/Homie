@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Resources from './Resources';
 import DoneButton from './DoneButton';
 import Countdown from './Countdown';
 
-const AssignmentBody = props => {
-  const collapseStatus = props.data.viewState.show ? 'show' : '';
+const AssignmentBody = ({ data, onDoneChecked }) => {
+  const collapseStatus = data.viewState.show ? 'show' : '';
 
   const extraInfo = (
     <div>
       {' '}
       <div className="row">
-        <div className="col-12">{props.data.information}</div>
+        <div className="col-12">{data.information}</div>
       </div>
       &nbsp;
     </div>
@@ -18,7 +19,7 @@ const AssignmentBody = props => {
 
   return (
     <div
-      id={props.data.id}
+      id={data.id}
       className={`collapse ${collapseStatus}`}
       role="tabpanel"
       aria-labelledby="headingOne"
@@ -26,24 +27,26 @@ const AssignmentBody = props => {
       <div className="card-block">
         {/* <h6 className="card-title">{props.data.title}</h6> */}
 
-        {props.data.information && extraInfo}
+        {data.information && extraInfo}
         <div className="row">
           <div className="col-xs-3 col-sm-4">
-            <Resources data={props.data.resources} />
+            <Resources data={data.resources} />
           </div>
           <div className="col-xs-3 col-sm-4">
-            <DoneButton
-              id={props.data.id}
-              done={props.data.viewState.done}
-              onDoneChecked={props.onDoneChecked}
-            />
+            <DoneButton id={data.id} done={data.viewState.done} onDoneChecked={onDoneChecked} />
           </div>
           <div className="col-xs-6 col-sm-4">
-            <Countdown countdown={props.data.countdown} />
+            <Countdown countdown={data.countdown} />
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+AssignmentBody.propTypes = {
+  onDoneChecked: PropTypes.func.isRequired,
+  data: PropTypes.shape().isRequired
+};
+
 export default AssignmentBody;

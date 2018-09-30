@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const LoginForm = ({ onSubmit, handleEmailChange, handlePasswordChange, email, password }) => (
+const LoginForm = ({ onSubmit, handleEmailChange, handlePasswordChange }) => (
   <div className="card container">
     <form action="/" onSubmit={onSubmit}>
       <h2 className="card-heading">Login</h2>
@@ -19,5 +20,11 @@ const LoginForm = ({ onSubmit, handleEmailChange, handlePasswordChange, email, p
     </form>
   </div>
 );
+
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  handleEmailChange: PropTypes.func.isRequired,
+  handlePasswordChange: PropTypes.func.isRequired
+};
 
 export default LoginForm;

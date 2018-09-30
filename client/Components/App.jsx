@@ -4,7 +4,7 @@ import AssignmentPageContainer from './Main/AssignmentPageContainer';
 import ManagerPage from './Manager/ManagerPage';
 import AdminPage from './Admin/AdminPage';
 import LoginPage from './LoginPage';
-import { isAuthenticated } from '../Scripts/auth';
+import auth from '../Scripts/auth';
 
 const PrivateRoute = data => {
   const classIds = data.computedMatch.params.classIds ? data.computedMatch.params.classIds : '0';
@@ -13,7 +13,7 @@ const PrivateRoute = data => {
   return (
     <Route
       render={props =>
-        isAuthenticated(classIds) ? (
+        auth.isAuthenticated(classIds) ? (
           <Component {...props} classIds={classIds} />
         ) : (
           <Redirect

@@ -38,7 +38,8 @@ class LoginPage extends React.Component {
     data.email = data.email.trim().toLowerCase();
     data.password = data.password.trim();
 
-    data.class_ids = this.props.match.params.classIds;
+    const { match } = this.props;
+    data.class_ids = match.params.classIds;
 
     const config = {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }

@@ -5,10 +5,7 @@ import HomieDataGrid from '../HomieDataGrid/HomieDataGrid';
 export default class ManagersDataGrid extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      managerGridData: this.getManagersConfig()
-      //  showDataGrid: false
-    };
+    this.state = this.getManagersConfig();
   }
 
   static getManagersConfig() {
@@ -48,6 +45,7 @@ export default class ManagersDataGrid extends React.Component {
   }
 
   render() {
-    return <HomieDataGrid {...this.state.managerGridData} />;
+    const { gridName, endpoints, columns } = this.state;
+    return <HomieDataGrid gridName={gridName} endpoints={endpoints} columns={columns} />;
   }
 }

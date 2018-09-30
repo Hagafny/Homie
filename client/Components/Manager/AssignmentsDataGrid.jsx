@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import HomieDataGrid from '../HomieDataGrid/HomieDataGrid';
 
@@ -14,19 +15,22 @@ export default class AssignmentsDataGrid extends React.Component {
   componentDidMount() {
     const { classIds } = this.props;
     this.getCourses(classIds, courses => {
-      const data = this.state;
-      data.assignmentGridData.columns[0].dropdownOptions = courses;
-      data.showDataGrid = true;
-      this.setState({ data });
+      this.setState(prevState => {
+        const data = prevState;
+        data.assignmentGridData.columns[0].dropdownOptions = courses;
+        data.showDataGrid = true;
+        return data;
+      });
     });
   }
 
   getAssignmentsConfig() {
     const baseEndpointUrl = '/api/assignments/';
+    const { classIds } = this.props;
     return {
       gridName: 'Assignment',
       endpoints: {
-        fetchItems: `${baseEndpointUrl}manager/${this.props.classIds}`,
+        fetchItems: `${baseEndpointUrl}manager/${classIds}`,
         saveItem: baseEndpointUrl,
         editItem: baseEndpointUrl,
         deleteItem: baseEndpointUrl
@@ -74,8 +78,13 @@ export default class AssignmentsDataGrid extends React.Component {
   }
 
   render() {
-    if (!this.state.showDataGrid) return false;
+    const { showDataGrid, gridName, endpoints, columns } = this.state;
+    if (!showDataGrid) return false;
 
-    return <HomieDataGrid {...this.state.assignmentGridData} />;
+    return <HomieDataGrid gridName={gridName} endpoints={endpoints} columns={columns} />;
   }
 }
+
+AssignmentsDataGrid.propTypes = {
+  classIds: PropTypes.string.isRequired
+};

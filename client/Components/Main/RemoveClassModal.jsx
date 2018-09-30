@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class RemoveClassModalButton extends React.Component {
   constructor(props) {
@@ -8,11 +9,13 @@ export default class RemoveClassModalButton extends React.Component {
   }
 
   onClick() {
+    const { filterCourse } = this.props;
     const $modal = $('#removeClassModal');
     const courseId = $modal.attr('data-courseId');
     $modal.modal('hide');
-    this.props.filterCourse(courseId);
+    filterCourse(courseId);
   }
+
   render() {
     return (
       <div
@@ -36,7 +39,7 @@ export default class RemoveClassModalButton extends React.Component {
             </div>
             <div className="modal-body">
               <h6>Warning!</h6>
-              Clicking "Remove Class" will permanently remove
+              Clicking &aposRemove Class&apos will permanently remove
               <span className="removeClassNameFiller" />
               from this page
             </div>
@@ -55,3 +58,7 @@ export default class RemoveClassModalButton extends React.Component {
     );
   }
 }
+
+RemoveClassModalButton.propTypes = {
+  filterCourse: PropTypes.func.isRequired
+};

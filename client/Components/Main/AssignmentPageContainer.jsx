@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import AssignmentPage from './AssignmentPage';
 import localStorageService from '../../Scripts/localStorageService';
@@ -17,7 +18,7 @@ function getTimezonedDate(dateString) {
 
   const endDate = new Date(dateString);
 
-  if (location.hostname !== 'localhost') {
+  if (window.location.hostname !== 'localhost') {
     endDate.setMinutes(endDate.getMinutes() + endDate.getTimezoneOffset());
   }
 
@@ -67,7 +68,6 @@ export default class AssignmentsPageContainer extends React.Component {
     let { assignments } = this.state;
     assignments = asgnments || assignments;
     assignments = assignments.filter(assignment => !filteredClasses.includes(assignment.course_id));
-
     assignments = localStorageService.refreshViewState(assignments);
     assignments = assignments.map(asgnmt => {
       const assignment = Object.assign({}, asgnmt);
@@ -86,7 +86,7 @@ export default class AssignmentsPageContainer extends React.Component {
     for (let i = 0; i < assignmentsLength; i += 1) {
       if (!assignments[i])
         // Validators
-        continue;
+        return;
 
       const dateUntilEnd = countdownTick(assignments[i].end_date);
 
@@ -103,8 +103,9 @@ export default class AssignmentsPageContainer extends React.Component {
 
   loadCourses() {
     return new Promise((resolve, reject) => {
-      let { classIds } = this.props.match.params;
-      classIds = classIds || 1;
+      const { match } = this.props;
+      const { classIds } = match.params || 1;
+
       axios
         .get(`/api/courses/basic/${classIds}`)
         .then(coursesRes => {
@@ -118,7 +119,9 @@ export default class AssignmentsPageContainer extends React.Component {
 
   loadAssignments() {
     return new Promise((resolve, reject) => {
-      let classIds = this.props.match.params.classIds || 1;
+      const { match } = this.props;
+      const { classIds } = match.params || 1;
+
       axios
         .get(`/api/assignments/${classIds}`)
         .then(assignmentRes => {
@@ -139,12 +142,13 @@ export default class AssignmentsPageContainer extends React.Component {
   }
 
   filterCourse(courseId) {
+    let { assignments, courses } = this.state;
     localStorageService.addToFilteredList(courseId, () => {
       const filteredClasses = localStorageService.getFilteredList();
-      const assignments = this.state.assignments.filter(
+      assignments = assignments.filter(
         assignment => !filteredClasses.includes(assignment.course_id)
       );
-      const courses = this.state.courses.filter(course => !filteredClasses.includes(course.id));
+      courses = courses.filter(course => !filteredClasses.includes(course.id));
 
       this.setState({
         assignments,
@@ -169,18 +173,25 @@ export default class AssignmentsPageContainer extends React.Component {
       });
     });
   }
+
   render() {
+    const { courses, assignments, options } = this.state;
+
     return (
       <AssignmentPage
-        courses={this.state.courses}
+        courses={courses}
         resetCourses={this.resetCourses}
         filterCourse={this.filterCourse}
-        assignments={this.state.assignments}
+        assignments={assignments}
         loadAssignments={this.loadAssignmentsAndSetState}
         loadAssignmentsNoState={this.loadAssignments}
-        options={this.state.options}
+        options={options}
         changeOptions={this.changeOption}
       />
     );
   }
 }
+
+AssignmentsPageContainer.propTypes = {
+  match: PropTypes.shape().isRequired
+};
