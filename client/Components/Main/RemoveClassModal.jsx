@@ -30,7 +30,7 @@ export default class RemoveClassModalButton extends React.Component {
           <div className="modal-content">
             <div className="modal-header alert-danger">
               <h5 className="modal-title">
-                Remove
+                {'Remove'}
                 <span className="removeClassNameFiller" />
               </h5>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -39,17 +39,17 @@ export default class RemoveClassModalButton extends React.Component {
             </div>
             <div className="modal-body">
               <h6>Warning!</h6>
-              Clicking &aposRemove Class&apos will permanently remove
+              {'Clicking "Remove Class" will permanently remove'}
               <span className="removeClassNameFiller" />
-              from this page
+              {'from this page'}
             </div>
 
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">
-                Close
+                {'Close'}
               </button>
               <button type="button" className="btn btn-primary" onClick={this.onClick}>
-                Remove Class
+                {'Remove Class'}
               </button>
             </div>
           </div>

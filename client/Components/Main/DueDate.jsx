@@ -45,12 +45,7 @@ export default class DueDate extends React.Component {
 
   render() {
     const { date, time } = this.state;
-    return (
-      <span>
-        {date}
-        {time}
-      </span>
-    );
+    return <span>{`${date} ${time}`}</span>;
   }
 }
 

@@ -13,7 +13,6 @@ const AssignmentBody = ({ data, onDoneChecked }) => {
       <div className="row">
         <div className="col-12">{data.information}</div>
       </div>
-      &nbsp;
     </div>
   );
 

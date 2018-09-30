@@ -25979,8 +25979,7 @@ var AssignmentBody = function AssignmentBody(_ref) {
         { className: 'col-12' },
         data.information
       )
-    ),
-    '\xA0'
+    )
   );
 
   return _react2.default.createElement(
@@ -26123,7 +26122,7 @@ var AssignmentTitle = function (_React$Component) {
           options = _props.options;
       var color = this.state.color;
 
-      var seperator = data.title ? '-' : '';
+      var seperator = data.title ? ' - ' : '';
       return _react2.default.createElement(
         'div',
         {
@@ -26141,11 +26140,7 @@ var AssignmentTitle = function (_React$Component) {
           'h5',
           { className: 'homieWhite' },
           data.course_title,
-          _react2.default.createElement(
-            'span',
-            null,
-            seperator
-          ),
+          seperator,
           data.title,
           _react2.default.createElement(
             'span',
@@ -27109,8 +27104,7 @@ var DueDate = function (_React$Component) {
       return _react2.default.createElement(
         'span',
         null,
-        date,
-        time
+        date + ' ' + time
       );
     }
   }]);
@@ -27832,7 +27826,7 @@ var RemoveClassModalButton = function (_React$Component) {
                 null,
                 'Warning!'
               ),
-              'Clicking &aposRemove Class&apos will permanently remove',
+              'Clicking "Remove Class" will permanently remove',
               _react2.default.createElement('span', { className: 'removeClassNameFiller' }),
               'from this page'
             ),

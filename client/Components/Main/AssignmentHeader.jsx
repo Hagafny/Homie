@@ -52,7 +52,7 @@ export default class AssignmentTitle extends React.Component {
   render() {
     const { data, endDate, options } = this.props;
     const { color } = this.state;
-    const seperator = data.title ? '-' : '';
+    const seperator = data.title ? ' - ' : '';
     return (
       <div
         data-toggle="collapse"
@@ -67,7 +67,7 @@ export default class AssignmentTitle extends React.Component {
       >
         <h5 className="homieWhite">
           {data.course_title}
-          <span>{seperator}</span>
+          {seperator}
           {data.title}
           <span> - </span>
           <DueDate endDate={endDate} options={options} />

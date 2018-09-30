@@ -33,7 +33,7 @@ export default class OptionsNavBarTab extends React.Component {
           aria-expanded="false"
           href="#nothing"
         >
-          Options
+          {'Options'}
         </a>
         <ul className="dropdown-menu" aria-labelledby="optionsDropDown">
           <DateOptionToggle

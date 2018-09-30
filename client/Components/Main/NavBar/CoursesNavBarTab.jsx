@@ -23,7 +23,7 @@ const CoursesNavBarTab = ({ courses, resetCourses }) => {
           onKeyPress={resetCourses}
         >
           <i className="fa fa-undo courseActions" aria-hidden="true" />
-          Reset Courses
+          {'Reset Courses'}
         </span>
       </li>
     );
@@ -39,7 +39,7 @@ const CoursesNavBarTab = ({ courses, resetCourses }) => {
         aria-expanded="false"
         href="#no"
       >
-        Courses
+        {'Courses'}
       </a>
 
       <ul className="dropdown-menu" aria-labelledby="coursesDropDown">

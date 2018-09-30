@@ -32,32 +32,32 @@ const Resources = ({ data }) => (
   <ul className="resourceList">
     <li>
       <Resource url={data.homework} img={checkHWSourceUrl(data.homework)}>
-        HW
+        {'HW'}
       </Resource>
     </li>
     <li>
       <Resource url={data.moodle_submit} img={moodle}>
-        Submit Page
+        {'Submit Page'}
       </Resource>
     </li>
     <li>
       <Resource url={data.moodle_url} img={moodle}>
-        Moodle
+        {'Moodle'}
       </Resource>
     </li>
     <li>
       <Resource prefix="https://trello.com/b/" url={data.trello} img={trello}>
-        Trello
+        {'Trello'}
       </Resource>
     </li>
     <li>
       <Resource url={data.gdrive} img={gdrive}>
-        Google Drive
+        {'Google Drive'}
       </Resource>
     </li>
     <li>
       <Resource prefix="https://piazza.com/class/" url={data.piazza} img={piazza}>
-        Piazza
+        {'Piazza'}
       </Resource>
     </li>
     <li>
@@ -66,7 +66,7 @@ const Resources = ({ data }) => (
         url={data.classboost}
         img={classboost}
       >
-        ClassBoost
+        {'ClassBoost'}
       </Resource>
     </li>
   </ul>
