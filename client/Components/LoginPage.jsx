@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import LoginForm from './LoginForm';
 
-class LoginPage extends React.Component {
+class LoginPage extends React.PureComponent {
   constructor(props) {
     super(props);
 

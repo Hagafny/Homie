@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../../css/react-data-grid-toolbar.css';
 
-export default class HomieDataGridToolbar extends React.Component {
+export default class HomieDataGridToolbar extends React.PureComponent {
   constructor(props) {
     super(props);
 

@@ -18,7 +18,7 @@ const columnMapper = clm => {
   return column;
 };
 
-export default class HomieDataGrid extends React.Component {
+export default class HomieDataGrid extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

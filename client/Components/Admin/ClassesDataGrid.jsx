@@ -24,7 +24,7 @@ const getClassesConfig = () => ({
   ]
 });
 
-export default class ClassesDataGrid extends React.Component {
+export default class ClassesDataGrid extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = getClassesConfig();

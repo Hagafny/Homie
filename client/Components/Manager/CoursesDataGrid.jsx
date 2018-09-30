@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import HomieDataGrid from '../HomieDataGrid/HomieDataGrid';
 
+const getClasses = (classIds, cb) => {
+  axios.get(`/api/classes/basic/${classIds}`).then(res => {
+    cb(res.data);
+  });
+};
+
 export default class CoursesDataGrid extends React.Component {
   constructor({ classIds }) {
     super({ classIds });
@@ -20,7 +26,7 @@ export default class CoursesDataGrid extends React.Component {
     // If we manage 1 class, we don't need to get the classes from the database to show the user, just return.
     if (isManagingASingleClass) return;
 
-    this.getClasses(classIds, classes => {
+    getClasses(classIds, classes => {
       this.setState(prevState => {
         const data = prevState;
         data.coursesGridData.columns[1].dropdownOptions = classes;
@@ -98,12 +104,6 @@ export default class CoursesDataGrid extends React.Component {
     }
 
     return config;
-  }
-
-  getClasses(classIds, cb) {
-    axios.get(`/api/classes/basic/${classIds}`).then(res => {
-      cb(res.data);
-    });
   }
 
   render() {

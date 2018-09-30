@@ -29,7 +29,7 @@ const getManagersConfig = () => ({
   ]
 });
 
-export default class ManagersDataGrid extends React.Component {
+export default class ManagersDataGrid extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = getManagersConfig();
