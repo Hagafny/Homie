@@ -5,11 +5,11 @@ import MultiToggle from 'react-multi-toggle';
 const timeOptions = [
   {
     displayName: '24H',
-    value: 1
+    value: 2
   },
   {
     displayName: 'AM/PM',
-    value: 2
+    value: 1
   }
 ];
 const TimeOptionToggle = ({ selectedTime, onTimeOptionSelect }) => (

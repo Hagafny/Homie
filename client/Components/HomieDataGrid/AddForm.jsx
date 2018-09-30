@@ -23,13 +23,10 @@ const AddForm = ({ fields, handleInputChange, gridName, handleSubmit }) => {
               <span aria-hidden="true">&times;</span>
               <span className="sr-only">Close</span>
             </button>
-            <h4 className="modal-title">
-              {'Add'}
-              {gridName}
-            </h4>
+            <h4 className="modal-title">{`Add ${gridName}`}</h4>
           </div>
 
-          <form id={`add${gridName}Form`} onSubmit={handleSubmit}>
+          <form id={`add ${gridName}Form`} onSubmit={handleSubmit}>
             <div className="modal-body">{flds}</div>
 
             <div className="modal-footer">

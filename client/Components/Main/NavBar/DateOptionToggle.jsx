@@ -5,11 +5,11 @@ import MultiToggle from 'react-multi-toggle';
 const dateOptions = [
   {
     displayName: 'D/M/Y',
-    value: 1
+    value: 2
   },
   {
     displayName: 'M/D/Y',
-    value: 2
+    value: 1
   }
 ];
 const DateOptionToggle = ({ selectedDate, onDateOptionSelect }) => (

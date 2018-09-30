@@ -88,7 +88,6 @@ export default class AssignmentListContainer extends React.Component {
         // Removing assignment when it's done.
         assignments.splice(i, 1);
       }
-
       assignments[i].countdown = dateUntilEnd;
     }
 
@@ -116,7 +115,6 @@ export default class AssignmentListContainer extends React.Component {
     const { options } = this.props;
     const { assignments } = this.state;
     return (
-      // <div>
       <AssignmentList
         assignments={assignments}
         onDoneChecked={this.onDoneCheckedCallback}
