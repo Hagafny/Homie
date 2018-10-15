@@ -31,6 +31,7 @@ const PrivateRoute = data => {
 const App = () => (
   <Switch>
     <Route exact path="/" render={() => <Redirect to="/class/1" />} />
+    <Route exact path="/manager/0" render={() => <Redirect to="/admin" />} />
     <PrivateRoute path="/manager/:classIds" component={ManagerPage} />
     <PrivateRoute path="/admin" component={AdminPage} />
     <Route path="/class/:classIds" component={AssignmentPageContainer} />
