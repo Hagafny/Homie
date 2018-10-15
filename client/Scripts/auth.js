@@ -14,7 +14,7 @@ const isAuthenticated = classIds => {
   if (!authToken) return false;
 
   const classToken = authToken.split('_')[1];
-  return classToken === 0 || managerHasValidAccess(classIds, classToken);
+  return parseInt(classToken, 10) === 0 || managerHasValidAccess(classIds, classToken);
 };
 
 exports.isAuthenticated = isAuthenticated;
