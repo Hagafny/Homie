@@ -1,7 +1,7 @@
 const dataService = require('./dataService');
 
 const assignmentMapper = assignment => {
-  const currentSchoolYear = 2018;
+  const currentSchoolYear = 2019;
   const moodleSubmitUrl = assignment.moodle_id
     ? `http://moodle.idc.ac.il/${currentSchoolYear}/mod/assign/view.php?id=${assignment.moodle_id}`
     : null;

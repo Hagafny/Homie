@@ -1,7 +1,7 @@
 const dataService = require('./dataService');
 
 const courseBasicMapper = course => {
-  const currentSchoolYear = 2018;
+  const currentSchoolYear = 2019;
   const moodleUrl = `http://moodle.idc.ac.il/${currentSchoolYear}/course/view.php?id=${
     course.moodle_course_id
   }`;
