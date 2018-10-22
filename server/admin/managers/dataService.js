@@ -1,6 +1,11 @@
 const queryService = require('./queryService');
 const db = require('./../../pgConnection');
 
+const getManager = (managerId, cb) => {
+  const sql = queryService.getManager(managerId);
+  db.one(sql).then(cb);
+};
+
 const getManagers = cb => {
   const sql = queryService.getManagers();
   db.any(sql).then(cb);
@@ -44,6 +49,7 @@ const getManagerByEmailAndPassword = (email, password, cb) => {
 };
 
 const service = {
+  getManager,
   getManagers,
   getManagerByEmailAndPassword,
   saveManager,
