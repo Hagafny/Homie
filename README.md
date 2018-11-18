@@ -1,6 +1,8 @@
-# Homie
+# Homie 
 
 Homie helps students maximize their productivity and efficiency by letting them access and track their assignments.
+
+[Homie API]
 
 ### Version
 1.5.0
@@ -33,6 +35,7 @@ Open the app at the port mentioned.
 ### Author
 Ron Hagafny
 
+   [Homie API]: <https://app.swaggerhub.com/apis/Hagafny/Homie_API/1.0.0>
    [homie]: <https://github.com/Hagafny/Homie.git>
    [React]: https://reactjs.org/
    [node.js]: <http://nodejs.org>
