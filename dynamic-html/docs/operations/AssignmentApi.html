@@ -1,0 +1,125 @@
+<div class="main-content">
+  <h2><a name=""></a></h2>
+  <p>This is the  API</p>
+
+  <h2><a name="assignmentsIdDelete"></a>assignmentsIdDelete</h2>
+  <hr>
+  <p></p>
+  <p>Used by the manager in the manager page</p>
+  <h3 class="section">URL</h3>
+  <code>http://www.idchomie.com/api/assignments/{id}</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>DELETE</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="inline_response_200_1"><a href="">inline_response_200_1</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">id</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">The ID of the assignment that needs to be deleted</p>
+	  </li>
+  </ul>
+  <h2><a name="assignmentsIdsGet"></a>assignmentsIdsGet</h2>
+  <hr>
+  <p></p>
+  <p>Can be used to either get assignments of 1 class or multiple. Used when we load assignments at the main page</p>
+  <h3 class="section">URL</h3>
+  <code>http://www.idchomie.com/api/assignments/{ids}</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>GET</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="FullAssignments"><a href="">FullAssignments</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">ids</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">the ID or IDs of the classs. Use &#x27;&amp;&#x27; if more than 1 class. For example &#x27;11&amp;16&#x27;</p>
+	  </li>
+  </ul>
+  <h2><a name="assignmentsManagerIdsGet"></a>assignmentsManagerIdsGet</h2>
+  <hr>
+  <p></p>
+  <p>Can be used to either get assignments of 1 class or multiple. Used in the manager page to load only the relevant information of the assignments that we need</p>
+  <h3 class="section">URL</h3>
+  <code>http://www.idchomie.com/api/assignments/manager/{ids}</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>GET</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="BasicAssignmentsWithIds"><a href="">BasicAssignmentsWithIds</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      <span class="param-in">Path: </span>
+      
+      
+      <span class="param-name">ids</span>
+      <span class="param-type">Integer</span>
+      
+      <p class="param-description">the ID or IDs of the classs. Use &#x27;&amp;&#x27; if more than 1 class. For example &#x27;11&amp;16&#x27;</p>
+	  </li>
+  </ul>
+  <h2><a name="assignmentsPost"></a>assignmentsPost</h2>
+  <hr>
+  <p></p>
+  <p>Used by the manager in the manager page</p>
+  <h3 class="section">URL</h3>
+  <code>http://www.idchomie.com/api/assignments</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>POST</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="inline_response_200_2"><a href="">inline_response_200_2</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      
+      
+      <span class="param-in">Body: </span>
+      <span class="param-name">body</span>
+      <span class="param-type">BasicAssignment(BasicAssignment)</span>
+      
+      <p class="param-description"></p>
+	  </li>
+  </ul>
+  <h2><a name="assignmentsPut"></a>assignmentsPut</h2>
+  <hr>
+  <p></p>
+  <p>Used by the manager in the manager page</p>
+  <h3 class="section">URL</h3>
+  <code>http://www.idchomie.com/api/assignments</code>
+  <h3 class="section">HTTP Method</h3>
+  <code>PUT</code>
+  <h3 class="section">Response Type</h3>
+  <div class="model" data-model="inline_response_200_1"><a href="">inline_response_200_1</a></div>
+  <h3 class="section">Parameters</h3>
+  <ul>
+	  <li class="parameter">
+      
+      
+      
+      
+      <span class="param-in">Body: </span>
+      <span class="param-name">body</span>
+      <span class="param-type"></span>
+      
+      <p class="param-description"></p>
+	  </li>
+  </ul>
+</div>
