@@ -7,5 +7,4 @@ const dbConfig = {
 };
 
 const db = pgp(dbConfig);
-
 module.exports = db;

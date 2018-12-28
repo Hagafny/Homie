@@ -7,25 +7,24 @@ const formatDate = (dueDate, dateOption) => {
   const years = dueDate.getFullYear();
   const months = formatNumber(dueDate.getMonth() + 1);
   const days = formatNumber(dueDate.getDate());
-  return dateOption === 1 ? `${days}/${months}/${years}` : `${months}/${days}/${years}`;
+  return dateOption === 2 ? `${days}/${months}/${years}` : `${months}/${days}/${years}`;
 };
 
 const formatTime = (dueDate, timeOption) => {
   const minutes = formatNumber(dueDate.getMinutes());
   let hours = dueDate.getHours();
   let suffix = '';
-  if (timeOption === 2) {
+  if (timeOption === 1) {
     suffix = hours >= 12 ? ' PM' : ' AM';
     hours %= 12;
-    hours = hours === 0 ? hours : 12; // the hour '0' should be '12'
+    hours = hours !== 0 ? hours : 12; // the hour '0' should be '12'
   }
 
   hours = formatNumber(hours);
-
   return `${hours}:${minutes}${suffix}`;
 };
 
-const formatFullDate = (dueDate, options = { date: 1, time: 1 }) => ({
+const formatFullDate = (dueDate, options) => ({
   date: formatDate(dueDate, options.date),
   time: formatTime(dueDate, options.time)
 });
@@ -39,7 +38,7 @@ export default class DueDate extends React.Component {
   componentWillReceiveProps(newProps) {
     const { endDate, options } = this.props;
     if (newProps.options !== options) {
-      this.setState(formatFullDate(endDate, options));
+      this.setState(formatFullDate(endDate, newProps.options));
     }
   }
 

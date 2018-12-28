@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import DateOptionToggle from './DateOptionToggle';
 import TimeOptionToggle from './TimeOptionToggle';
 
-export default class OptionsNavBarTab extends React.PureComponent {
+export default class OptionsNavBarTab extends React.Component {
   constructor(props) {
     super(props);
     this.onDateOptionSelect = this.onDateOptionSelect.bind(this);

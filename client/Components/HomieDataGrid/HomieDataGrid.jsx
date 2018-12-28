@@ -123,7 +123,6 @@ export default class HomieDataGrid extends React.Component {
       const { saveItem } = extraData;
       item = update(itm, { $merge: saveItem });
     }
-
     const data = JSON.stringify(item);
     const config = {
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
