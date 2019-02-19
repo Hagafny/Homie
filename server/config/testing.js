@@ -5,6 +5,7 @@ module.exports = {
   logging: false,
   db: {
     ...parse(process.env.DATABASE_URL),
-    ssl: true
+    ssl: true,
+    schema: 'public'
   }
 };
