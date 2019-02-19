@@ -9,7 +9,8 @@ const stripRule = {
   exclude: /node_modules/,
   loader: stripLoader // Remove console.log across all files.
 };
-devConfig.module.rules.push(stripRule);
+
+//devConfig.module.rules.push(stripRule);
 
 devConfig.plugins[0].options.hash = true; // Add hashes to prod version for cache busting
 
