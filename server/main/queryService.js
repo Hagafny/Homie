@@ -10,9 +10,9 @@ const getAssingments = classIds =>
        cr.trello_id
 FROM
   (SELECT *
-   FROM assignments AS ass
+   FROM public.assignments AS ass
    WHERE end_date > CURRENT_TIMESTAMP + INTERVAL '2 hours' ) AS ass
-LEFT JOIN courses AS cr ON ass.course_id = cr.id WHERE cr.class_id IN (${classIds})
+LEFT JOIN public.courses AS cr ON ass.course_id = cr.id WHERE cr.class_id IN (${classIds})
   ORDER BY end_date ASC;`;
 
 const service = {

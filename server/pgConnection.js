@@ -6,7 +6,5 @@ const dbConfig = {
   poolSize: 20
 };
 
-console.log(dbConfig);
-
 const db = pgp(dbConfig);
 module.exports = db;
